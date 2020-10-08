@@ -1,1 +1,20 @@
-<h1>井字棋。为什么看不到呢，是因为我没做完</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>聊天室</h1>
+    输入消息：<input id="a" type="text"><button onclick="">发送</button>
+    <pre id="b"></pre>
+    <script>
+      alert("qq检测到你是：2356305976，昵称系统制作中。");
+      var msgs = "[2020/10/8 19:11]zhangyichen: 哈哈，我做的聊天室<br>[2020/10/8 19:13]zhangyichen: 来聊天";
+      function fa(){
+        msgs += '<br>[无法获取时间]2356305976: '+$('#a').val();
+        $("pre").html(msgs);
+      };
+      $("pre").html(msgs);
+    </script>
+  </body>
+</html>
