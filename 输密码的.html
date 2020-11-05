@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <title>输密码</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  
+  <body>
+    <script>
+      $(function() {
+        $("#s").click(function() {
+          if ($("#i").val() == "123456") {
+            $("#a").fadeOut(500);
+            $("#b").fadeIn(1000);
+          } else {
+            alert("密码错误");
+          };
+
+        });
+      });
+    </script>
+    <div class="container">
+      <div id="a">
+        <div class="form-group">
+          <p>
+            输入密码：
+            <input id="i" type="text" class="form-control">
+          </p>
+          <p>
+            <button id="s" class="btn btn-default">
+              确定
+            </button>
+          </p>
+        </div>
+      </div>
+      <div id="b" style="display:none">
+        <div class="jumbotron">
+          <h1>还没编辑</h1>
+          <p>尚未编辑</p>
+          <div class="jumbotron" style="background-color:#cccccc">
+            <h1>来个套娃</h1>
+            <p>不许套娃</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>
