@@ -15,8 +15,7 @@
       $(function() {
         $("#s").click(function() {
           if ($("#i").val() == "123456") {
-            $("#a").fadeOut(500);
-            $("#b").fadeIn(1000);
+            $("#a").fadeOut(500,function(){$("#b").fadeIn(1000);});
           } else {
             alert("密码错误");
           };
