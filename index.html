@@ -1,107 +1,211 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>myworldzycpc</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link
-      rel="stylesheet"
-      href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+            rel="stylesheet"
+            href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
     />
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
-  </head>
-  <body>
-    <nav class="navbar navbar-default">
-      <nav class="navbar navbar-fixed-top navbar-default">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <nav class="navbar navbar-fixed-top navbar-default">
         <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand"> myworldzycpc</a>
-            <button
-              type="button"
-              class="navbar-toggle"
-              data-toggle="collapse"
-              data-target="#navBar"
-            >
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-          </div>
-          <div class="collapse navbar-collapse navbar-right" id="navBar">
-            <ul class="nav navbar-nav">
-              <li><a href="#">首页</a></li>
-              <li class="dropdown">
-                <a href="https://myworldzycpc.github.io/yourpage/" class="dropdown-toggle" data-toggle="dropdown">
-                  页面整合<span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="https://myworldzycpc.github.io/yourpage/make">制作你的页面</a></li>
-                  <li><a href="https://myworldzycpc.github.io/yourpage/chtml">多信息文本转html</a></li>
-                  <li><a href="https://myworldzycpc.github.io/yourpage/bhtml">在浏览器中编译html</a></li>
+            <div class="navbar-header">
+                <a class="navbar-brand"> myworldzycpc</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navBar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse navbar-right" id="navBar">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">首页</a></li>
+                    <li class="dropdown">
+                        <a href="https://myworldzycpc.github.io/yourpage/" class="dropdown-toggle"
+                           data-toggle="dropdown">
+                            页面整合<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="https://myworldzycpc.github.io/yourpage/make">制作你的页面</a></li>
+                            <li><a href="https://myworldzycpc.github.io/yourpage/chtml">多信息文本转html</a></li>
+                            <li><a href="https://myworldzycpc.github.io/yourpage/bhtml">在浏览器中编译html</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            文件链接<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="https://myworldzycpc.github.io/files/uigrid.js">uigrid.js</a></li>
+                            <li><a href="https://myworldzycpc.github.io/files/minecraft.ttf">minecraft.ttf</a></li>
+                            <li><a href="https://myworldzycpc.github.io/files/fzxs12.ttf">fzxs12.ttf</a></li>
+
+                        </ul>
+                    </li>
                 </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  文件链接<span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">uigrid.js</a></li>
-                  <li><a href="#">minecraft.ttf</a></li>
-                  <li><a href="#">fzxs12.ttf</a></li>
-                  
-                </ul>
-              </li>
-				<li><a href="#">MC JSON聊天文本生成</a></li>
-				<li><a href="#">JSON聊天文本语法PDF</a></li>
-				<li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  给别人做的网页<span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">王氏集团</a></li>
-                  <li><a href="#">东</a></li>
-                  <li><a href="#">账户查询（假jiǎ）</a></li>
-                  
-                </ul>
-              </li>
-            </ul>
-          </div>
+            </div>
         </div>
-      </nav>
     </nav>
-    <div class="container">
-      <div class="jumbotron">
+</nav>
+<div class="container">
+    <div class="jumbotron">
         <h1>myworldzycpc</h1>
         <p>myworldzhangyichen@163.com</p>
-      </div>
-      <h2 class="text-center">
-        <p>首页</p>
-        <small>
-          更大层级的页面整合
-        </small>
-      </h2>
-      <div class="row">
-        <div class="col-sm-4">
-          <h3>页面整合</h3>
-			<p>
-				<a href="https://myworldzycpc.github.io/yourpage/" class="btn btn-primary">打开页面整合</a>
-			</p>
-          <p><a href="https://myworldzycpc.github.io/yourpage/make" class="btn btn-default">制作你的页面</a></p>
-			<p><a href="https://myworldzycpc.github.io/yourpage/chtml" class="btn btn-default">多信息文本转html</a></p>
-        <p><a href="https://myworldzycpc.github.io/yourpage/bhtml" class="btn btn-default">在浏览器中编译html</a></p>
-		  </div>
-        <div class="col-sm-4">
-          <h3>文件链接</h3>
-          <p>各种琐碎文件</p>
-          <p><a href="https://myworldzycpc.github.io/yourpage/chtml" class="btn btn-default">多信息文本转html</a></p>
-        </div>
-        <div class="col-sm-4">
-          <h3>Minecraft JSON 聊天文本生成器</h3>
-          
-        </div>
-      </div>
     </div>
-  </body>
+    <h2 class="text-center">
+        首页<br>
+        <small>更大层级的页面整合</small>
+    </h2>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">页面整合</h3>
+                    <a href="https://myworldzycpc.github.io/yourpage/" class="btn btn-primary btn-block">打开页面整合</a>
+                </div>
+                <div class="panel-body">
+                    <a href="https://myworldzycpc.github.io/yourpage/make" class="btn btn-default btn-block">制作你的页面</a>
+                    <a href="https://myworldzycpc.github.io/yourpage/chtml"
+                       class="btn btn-default btn-block">多信息文本转html</a>
+                    <a href="https://myworldzycpc.github.io/yourpage/bhtml" class="btn btn-default btn-block">在浏览器中编译html</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        文件链接<br>
+                        <small>各种琐碎文件</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <a href="https://myworldzycpc.github.io/files/uigrid.js"
+                       class="btn btn-default btn-block">uigrid.js</a>
+                    <a href="https://myworldzycpc.github.io/files/minecraft.ttf" class="btn btn-default btn-block">minecraft.ttf</a>
+                    <a href="https://myworldzycpc.github.io/files/fzxs12.ttf" class="btn btn-default btn-block">fzxs12.ttf</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">Minecraft JSON 聊天文本生成器</h3>
+
+                </div>
+                <div class="panel-body">
+                    <p>尚在开发中，敬请期待</p>
+                    <p>注：因为学业问题，myworldzycpc已经停止开发了😥</p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="text-center">
+                作品专区<br>
+                <small>记录点滴生活</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <a href="https://myworldzycpc.github.io/zhushi/" class="btn btn-default btn-block">会当泽至会泽感 with 注释</a>
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="text-center">
+                作业专区<br>
+                <small>不明白作业的可以来这里看哦~<br>（注：因为学业日益繁重，myworldzycpc已经没空更新这个了😭）</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <a href="https://myworldzycpc.github.io/files/hmw/0531.html" class="btn btn-default btn-block">5月31日作业</a>
+            <a href="https://myworldzycpc.github.io/files/hmw/0602.html" class="btn btn-default btn-block">6月2日作业</a>
+            <a href="https://myworldzycpc.github.io/files/hmw/0604.html" class="btn btn-default btn-block">6月4日作业</a>
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="text-center">
+                恶搞专区<br>
+                <small>适时放松一下心情也是挺好的，但是请先保存重要数据！</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <a href="https://myworldzycpc.github.io/files/problems.html" class="btn btn-default btn-block">错误连环</a>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="text-center">
+                纪念专区<br>
+                <small>总是那个声音，在你的耳畔回响...</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <a href="https://myworldzycpc.github.io/files/plj123567/" class="btn btn-default btn-block">袁照雯和张意晨（密码：yzwhzyc123456）</a>
+            <a href="https://myworldzycpc.github.io/the_end_poem/" class="btn btn-default btn-block">终末之诗</a>
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="text-center">
+                听歌专区<br>
+                <small>一首老歌唱了又唱，一些人会永远放在心上<br>（注：音频加载比较慢，有时候点击屏幕听不到声音，有时候会出现歌词不同步。要获得最佳体验，最好跟我要源文件！）</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <a href="https://myworldzycpc.github.io/破苍穹/" class="btn btn-default btn-block">踏山河</a>
+            <a href="https://myworldzycpc.github.io/HelenKeller/" class="btn btn-default btn-block">宇宙之终结</a>
+
+        </div>
+
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="text-center">
+                合作专区<br>
+                <small>与<a href="https://theredmaker.github.io">TheRedMaker_</a>合作完成的项目</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <a href="https://theredmaker.github.io/Biogenerator/" class="btn btn-default btn-block">Minecraft生物生成器</a>
+            <a href="https://theredmaker.github.io/MinecraftDropItemGenerator" class="btn btn-default btn-block">Minecraft掉落物生成器（半成品）</a>
+            <a href="https://theredmaker.github.io/The_Universe/" class="btn btn-default btn-block">The Universe</a>
+            <a href="https://theredmaker.github.io/hlnbt/" class="btn btn-default btn-block">Minecraft NBT 高亮（技术工具）</a>
+
+        </div>
+    </div>
+
+<!--    <div class="panel panel-default">-->
+<!--        <div class="panel-heading">-->
+
+<!--        </div>-->
+<!--        <div class="panel-body">-->
+
+<!--        </div>-->
+<!--    </div>-->
+
+
+</div>
+</body>
 </html>
