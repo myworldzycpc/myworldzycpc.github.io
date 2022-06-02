@@ -1,0 +1,67 @@
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            let times = 0;
+
+            function change() {
+                times++;
+                $(".changeable").each(function (i, $i) {
+                    const $this = $i
+                    $this.animate({"opacity": "0"}, 200, function () {
+                        console.log(1)
+                        const things = $this.attr("data-things").split("|")
+                        const word = things[times % things.length]
+
+                        $this.html(word)
+                        $this.animate({"opacity": "1"}, 200)
+                    })
+                })
+            }
+
+            window.setInterval(change, 1000)
+        });
+    </script>
+    <title>公开日记 Diaries</title>
+</head>
+
+<body>
+<div class="container">
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            2022年5月27日
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item">
+                老师把我和王会泽调开，理由是<br>
+                王会泽太可爱了<br>
+                怕影响我学习
+            </li>
+            <li class="list-group-item">
+                回家的路上<br>
+                太阳散发出的光子<span class="changeable" data-things="无情地|重重地">2</span>打在了我的身上<br>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--<div class="container">-->
+<!--    <div class="panel panel-default">-->
+<!--        <div class="panel-heading">-->
+<!--            2022年5月27日-->
+<!--        </div>-->
+<!--        <div class="panel-body">-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+</body>
+
+</html>

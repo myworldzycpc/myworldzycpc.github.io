@@ -1,0 +1,94 @@
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+
+            function randInt(minNum, maxNum) {
+                switch (arguments.length) {
+                    case 1:
+                        return Math.floor(Math.random() * minNum + 1);
+                    case 2:
+                        return Math.floor(Math.random() * (maxNum - minNum + 1) + minNum);
+                    default:
+                        return 0;
+                }
+            }
+
+            const spans = []
+            $("span").fadeTo(0, 0);
+            $("#content").fadeIn(1000, function () {
+                $("span").each(function () {
+                    const $this = $(this);
+                    spans.push($this)
+                })
+                show(0);
+            });
+
+            function show(index) {
+                // console.log(spans);
+                $("#background").css({"background-color": `rgb(${randInt(0, 128)}, ${randInt(0, 128)}, ${randInt(0, 128)})`})
+                spans[index].fadeTo(500, 1, function () {
+                    if (index < spans.length - 1) {
+                        window.setTimeout(function () {
+                            show(index + 1);
+                        }, spans[index].text().length * 100);
+                    } else {
+                        window.setTimeout(function () {
+                            $("#background").css({"background-color": "black"})
+                            $("#text").fadeOut(500, function () {
+                                window.history.go(-1);
+                            });
+                        }, spans[index].text().length * 100);
+                    }
+                })
+            }
+        });
+    </script>
+    <title>李晓华说</title>
+    <style>
+        #content {
+            display: none;
+            /*position: fixed;*/
+            /*height: 100%;*/
+            /*width: 100%;*/
+        }
+
+        #background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            transition: 0.5s;
+        }
+
+        #text {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            max-width: 50%;
+            font-size: 0.7cm;
+            transform: translate(-50%, -50%);
+            color: white;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="content">
+    <div id="background"></div>
+    <div id="text">
+        <span>李晓华说：</span><span>@所有人</span><br>
+        <span>端午将至</span><span>，祝9.6大家庭的每一位成员</span><span>，“粽”有喜乐</span><span>，“粽”有安康</span><span>，“粽”有平安</span><span>，“粽”有好运。</span><br>
+        <span>祝九六学子</span><span>，“粽”是那么棒，</span><br>
+        <span>以后每天“粽”是闪闪发光</span>
+    </div>
+</div>
+</body>
+
+</html>
