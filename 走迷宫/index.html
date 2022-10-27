@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+
+        $(function () {
+
+            /**
+             * 显示消息
+             *
+             * @param {string}title
+             * @param {string}content
+             */
+            function modalAlert(title, content) {
+                $("#myModalLabel").html(title);
+                $("#myModalBody").html(content);
+                $("#myModal").modal("show");
+            }
+
+            function twoDMaker(row, col, value = 0) {
+                const twoD = [];
+                for (let i = 0; i < row; i++) {
+                    let subarray = [];
+                    for (let j = 0; j < col; j++) {
+                        subarray.push(value);
+                    }
+                    twoD.push(subarray);
+                }
+                return twoD;
+            }
+
+            function toggleCell($this, e) {
+                if (e.which === 1) {
+                    /**
+                     *
+                     * @type {*|Window.jQuery|HTMLElement}
+                     */
+                    const thisX = parseInt($this.attr("data-x"));
+                    const thisY = parseInt($this.attr("data-y"));
+                    if (!touching[thisX][thisY]) {
+                        touching[thisX][thisY] = true;
+                        if (map[thisX][thisY] === 0) {
+                            map[thisX][thisY] = 1;
+                        } else if (map[thisX][thisY] === 1) {
+                            if (hasStart) {
+                                if (hasEnd) {
+                                    map[thisX][thisY] = 0;
+                                } else {
+                                    map[thisX][thisY] = 3;
+                                }
+                            } else {
+                                map[thisX][thisY] = 2;
+                            }
+                        } else if (map[thisX][thisY] === 2) {
+                            window.hasStart = false;
+                            if (hasEnd) {
+                                map[thisX][thisY] = 0;
+                            } else {
+                                map[thisX][thisY] = 3;
+                            }
+                        } else if (map[thisX][thisY] === 3) {
+                            window.hasEnd = false;
+                            map[thisX][thisY] = 0;
+                        }
+                        if (map[thisX][thisY] === 2) {
+                            window.hasStart = true;
+                            window.startPos = [thisX, thisY];
+                        } else if (map[thisX][thisY] === 3) {
+                            window.hasEnd = true;
+                            window.endPos = [thisX, thisY];
+                        }
+                        $this.fadeOut(200, function () {
+                            $this.removeClass("cellPath");
+                            $this.removeClass("cellWall");
+                            $this.removeClass("cellStart");
+                            $this.removeClass("cellEnd");
+                            if (map[thisX][thisY] === 0) {
+                                $this.html("");
+                                $this.addClass("cellPath")
+                            } else if (map[thisX][thisY] === 1) {
+                                $this.html("");
+                                $this.addClass("cellWall")
+                            } else if (map[thisX][thisY] === 2) {
+                                $this.html("起");
+                                $this.addClass("cellStart")
+                            } else if (map[thisX][thisY] === 3) {
+                                $this.html("终");
+                                $this.addClass("cellEnd")
+                            } else {
+                                modalAlert("错误", "试图切换到未知的单元格类型");
+                            }
+                            $this.fadeIn(100);
+                        })
+                    }
+                }
+            }
+
+            $("#pageContentMain").fadeIn(200);
+
+            function actionGenMap() {
+
+                const widthString = $("#widthInput").val(); // 获取id为widthInput的值 (获取到字符串)
+                const heightString = $("#heightInput").val();
+                window.mapWidth = parseInt(widthString); // 转成数字
+                window.mapHeight = parseInt(heightString);
+                const widthValid = mapWidth.toString() === widthString && mapWidth > 0; // 宽度是否有效
+                const heightValid = mapHeight.toString() === heightString && mapHeight > 0; // 宽度是否有效
+                if (!widthValid && !heightValid) {
+                    modalAlert("提示", "宽度和高度不正确");
+                } else if (!widthValid) {
+                    modalAlert("提示", "宽度不正确");
+                } else if (!heightValid) {
+                    modalAlert("提示", "高度不正确");
+                } else {
+                    if (mapHeight > 100 && mapWidth > 100) {
+                        modalAlert("提示", `<p>宽度和高度太大了!</p><p><span style="color: red">最大100</span></p>`);
+                    } else if (mapWidth > 100) {
+                        modalAlert("提示", `<p>宽度太大了!</p><p><span style="color: red">最大100</span></p>`);
+                    } else if (mapHeight > 100) {
+                        modalAlert("提示", `<p>高度太大了!</p><p><span style="color: red">最大100</span></p>`);
+                    } else {
+                        $("#backToEdit").hide();
+                        window.map = twoDMaker(mapWidth + 1, mapHeight + 1);
+                        window.touching = twoDMaker(mapWidth + 1, mapHeight + 1, false);
+                        window.hasStart = false;
+                        window.hasEnd = false;
+                        window.hasMap = true;
+                        const $table = $("<table />");
+                        $table.attr("id", "map");
+                        for (let i = 1; i <= mapHeight; i++) {
+                            const $tr = $("<tr />");
+                            for (let j = 1; j <= mapWidth; j++) {
+                                const $td = $("<td />")
+                                const $div = $("<div />");
+                                $div.addClass("cell clickable cellPath");
+                                $div.attr("data-x", j);
+                                $div.attr("data-y", i);
+                                $td.append($div)
+                                $tr.append($td);
+                            }
+                            $table.append($tr);
+                        }
+                        $("#map").replaceWith($table);
+                        $("body").mouseup(function () {
+                            window.touching = twoDMaker(mapWidth + 1, mapHeight + 1, false);
+                        })
+                        $(".cell")
+                            .mousedown(function (e) {
+                                const $this = $(this);
+                                toggleCell($this, e);
+                            })
+                            .mousemove(function (e) {
+                                const $this = $(this);
+                                toggleCell($this, e);
+                            });
+                        $("#solve").fadeIn(200);
+                    }
+                }
+            }
+
+            $("#genMap").click(actionGenMap);
+            $("#solve").click(function () {
+                if (!hasStart && !hasEnd) {
+                    modalAlert("提示", "未设置起点和终点");
+                } else if (!hasStart) {
+                    modalAlert("提示", "未设置起点");
+                } else if (!hasEnd) {
+                    modalAlert("提示", "未设置终点");
+                } else {
+                    $(".cell").unbind("mousedown").unbind("mousemove").removeClass("clickable");
+                    $("#genMap").unbind("click").attr("disabled", "");
+                    $("#solve").fadeOut(100, function () {
+                        function couldMove(x, y) {
+                            if (x > 0 && y > 0 && x <= mapWidth && y <= mapHeight) {
+                                if (leaves.includes([x, y]) || distances[x][y] !== -1) {
+                                    return false;
+                                } else {
+                                    if (map[x][y] === 3) {
+                                        window.reached = true;
+                                        return true;
+                                    } else if (map[x][y] === 1) {
+                                        return false;
+                                    } else if (map[x][y] === 0) {
+                                        return distances[x][y] === -1;
+                                    } else if (map[x][y] === 2) {
+                                        return false;
+                                    }
+                                }
+                            } else {
+                                return false;
+                            }
+                        }
+
+                        function tryMove(x, y) {
+                            // console.log(debugCounter++);
+                            const could = couldMove(x, y);
+                            if (could) {
+                                window.leaves.push([x, y]);
+                                /**
+                                 *
+                                 * @type {*|Window.jQuery|HTMLElement}
+                                 */
+                                const $this = $(`[data-x=${x}][data-y=${y}]`);
+                                distances[x][y] = distance;
+                                $this.fadeOut(100, function () {
+                                    if (distances[x][y] !== -1 && map[x][y] !== 3) {
+                                        $this.addClass("cellSearching")
+                                        $this.text(distances[x][y]);
+                                    }
+                                    $this.fadeIn(200);
+                                })
+                            }
+                            return could;
+                        }
+
+                        window.distances = twoDMaker(mapWidth + 1, mapHeight + 1, -1);
+                        window.leaves = [startPos];
+                        window.reached = false
+                        window.distance = 0;
+                        window.debugCounter = 1;
+
+                        function checkReached() {
+                            if (!reached) {
+                                distance++;
+                                const oldLeaves = leaves.concat();
+                                window.leaves = [];
+                                let couldNext = false;
+                                for (const leave of oldLeaves) {
+                                    const leaveX = leave[0];
+                                    const leaveY = leave[1];
+                                    couldNext = tryMove(leaveX + 1, leaveY) || couldNext;
+                                    couldNext = tryMove(leaveX, leaveY + 1) || couldNext;
+                                    couldNext = tryMove(leaveX - 1, leaveY) || couldNext;
+                                    couldNext = tryMove(leaveX, leaveY - 1) || couldNext;
+                                }
+                                if (!couldNext) {
+                                    modalAlert("提示", "迷宫无解");
+                                    $("#backToEdit").fadeIn(300);
+                                    $("#genMap").click(actionGenMap).removeAttr("disabled");
+                                    return;
+                                }
+                                setTimeout(checkReached, 100);
+                            } else {
+                                retrodict(...endPos);
+                                // modalAlert("调试", "广度优先遍历完成");
+                            }
+                        }
+
+                        checkReached();
+
+                        function couldRetrodict(x, y) {
+                            if (x > 0 && y > 0 && x <= mapWidth && y <= mapHeight) {
+                                return distances[x][y] === distance;
+                            } else {
+                                return false;
+                            }
+                        }
+
+                        function tryRetrodict(x, y) {
+                            const could = couldRetrodict(x, y);
+                            if (could) {
+                                window.wayX = x;
+                                window.wayY = y;
+                                /**
+                                 *
+                                 * @type {*|Window.jQuery|HTMLElement}
+                                 */
+                                const $this = $(`[data-x=${x}][data-y=${y}]`);
+                                $this.fadeOut(100, function () {
+                                    if (distances[x][y] !== -1 && map[x][y] !== 3) {
+                                        $this.addClass("cellShortest");
+                                    }
+                                    $this.fadeIn(200);
+                                })
+                            }
+                            return could;
+                        }
+
+                        function retrodict(x, y) {
+                            distance--;
+                            if (distance >= 0) {
+                                let foundWay = false;
+                                foundWay ||= tryRetrodict(x + 1, y);
+                                foundWay ||= tryRetrodict(x, y + 1);
+                                foundWay ||= tryRetrodict(x - 1, y);
+                                foundWay ||= tryRetrodict(x, y - 1);
+                                setTimeout(function () {
+                                    retrodict(wayX, wayY)
+                                }, 100);
+                            } else {
+                                modalAlert("提示", "迷宫求解完成");
+                                $("#backToEdit").fadeIn(300);
+                                $("#genMap").click(actionGenMap).removeAttr("disabled");
+                            }
+                        }
+                    });
+                }
+            })
+            $("#backToEdit").click(function () {
+                $("#backToEdit").fadeOut(100, function () {
+                    $("#solve").fadeIn(200);
+                });
+                let c = 1;
+
+                for (let i = 1; i <= mapHeight; i++) {
+                    for (let j = 1; j <= mapWidth; j++) {
+                        /**
+                         *
+                         * @type {*|Window.jQuery|HTMLElement}
+                         */
+                        const $this = $(`[data-x=${j}][data-y=${i}]`);
+                        const thisX = j;
+                        const thisY = i;
+                        setTimeout(function () {
+                            $this.fadeOut(100, function () {
+                                $this.removeClass("cellPath");
+                                $this.removeClass("cellWall");
+                                $this.removeClass("cellStart");
+                                $this.removeClass("cellEnd");
+                                $this.removeClass("cellSearching");
+                                $this.removeClass("cellShortest");
+                                if (map[thisX][thisY] === 0) {
+                                    $this.html("");
+                                    $this.addClass("cellPath")
+                                } else if (map[thisX][thisY] === 1) {
+                                    $this.html("");
+                                    $this.addClass("cellWall")
+                                } else if (map[thisX][thisY] === 2) {
+                                    $this.html("起");
+                                    $this.addClass("cellStart")
+                                } else if (map[thisX][thisY] === 3) {
+                                    $this.html("终");
+                                    $this.addClass("cellEnd")
+                                } else {
+                                    modalAlert("错误", "试图切换到未知的单元格类型");
+                                }
+                                $this.addClass("clickable")
+                                $this.fadeIn(200);
+                            })
+                        }, c++);
+                    }
+                }
+                $(".cell")
+                    .mousedown(function (e) {
+                        const $this = $(this);
+                        toggleCell($this, e);
+                    })
+                    .mousemove(function (e) {
+                        const $this = $(this);
+                        toggleCell($this, e);
+                    });
+
+            });
+
+            window.randomGen = function () {
+                window.c = 1;
+                window.i = 1;
+                window.j = 1;
+
+                function run() {
+                    j++;
+                    if (j > mapWidth) {
+                        window.j = 1;
+                        i++;
+                    }
+                    if (i > mapHeight) {
+                        return;
+                    }
+                    /**
+                     *
+                     * @type {*|Window.jQuery|HTMLElement}
+                     */
+                    const $this = $(`[data-x=${j}][data-y=${i}]`);
+                    const thisX = j;
+                    const thisY = i;
+                    map[thisX][thisY] = Math.round(Math.random());
+                    $this.fadeOut(100, function () {
+                        $this.removeClass("cellPath");
+                        $this.removeClass("cellWall");
+                        $this.removeClass("cellStart");
+                        $this.removeClass("cellEnd");
+                        $this.removeClass("cellSearching");
+                        $this.removeClass("cellShortest");
+                        if (map[thisX][thisY] === 0) {
+                            $this.html("");
+                            $this.addClass("cellPath")
+                        } else if (map[thisX][thisY] === 1) {
+                            $this.html("");
+                            $this.addClass("cellWall")
+                        } else if (map[thisX][thisY] === 2) {
+                            $this.html("起");
+                            $this.addClass("cellStart")
+                        } else if (map[thisX][thisY] === 3) {
+                            $this.html("终");
+                            $this.addClass("cellEnd")
+                        } else {
+                            modalAlert("错误", "试图切换到未知的单元格类型");
+                        }
+                        $this.addClass("clickable")
+                        $this.fadeIn(200);
+                    })
+                    setTimeout(run, 0);
+                }
+
+                run();
+            }
+        })
+    </script>
+    <style>
+        #map {
+        }
+
+        .cell {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            margin: 2px;
+            user-select: none;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            font-size: 150%;
+        }
+
+        .clickable {
+            cursor: pointer;
+        }
+
+        .cellPath {
+            background-color: #A0A0A0;
+        }
+
+        .cellWall {
+            background-color: darkred;
+            box-shadow: 1px 1px 2px black;
+        }
+
+        .cellStart {
+            background-color: dodgerblue;
+            box-shadow: -1px -1px 2px yellow;
+        }
+
+        .cellEnd {
+            background-color: deeppink;
+            box-shadow: -1px -1px 2px yellow;
+        }
+
+        .cellSearching {
+            background-color: #AAAA00;
+        }
+
+        .cellShortest {
+            background-color: #007209;
+        }
+    </style>
+    <title>走迷宫</title>
+</head>
+<body>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+            </div>
+            <div class="modal-body" id="myModalBody">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pageContentMain">
+    <div class="container">
+        <br>
+        <div class="jumbotron">
+            <h1>走迷宫</h1>
+            <p>能够自动求解出你所描绘的迷宫的最短路径。</p>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                地图设置
+            </div>
+            <div class="panel-body">
+                <div class="input-group">
+                    <label for="widthInput" class="input-group-addon">宽度</label>
+                    <input id="widthInput" type="text" class="form-control" placeholder="输入宽度（大于0的整数）">
+                </div>
+                <br>
+                <div class="input-group">
+                    <label for="heightInput" class="input-group-addon">高度</label>
+                    <input id="heightInput" type="text" class="form-control" placeholder="输入高度（大于0的整数）">
+                </div>
+            </div>
+        </div>
+        <a id="genMap" class="btn btn-primary btn-block">生成地图</a>
+        <br>
+        <div id="generated">
+            <table id="map"></table>
+        </div>
+        <br>
+        <a id="solve" class="btn btn-success btn-block" style="display: none">最短路径求解</a>
+        <a id="backToEdit" class="btn btn-success btn-block" style="display: none">回到编辑状态</a>
+        <br>
+    </div>
+</div>
+</body>
+</html>
