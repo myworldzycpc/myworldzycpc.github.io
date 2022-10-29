@@ -368,27 +368,63 @@
                 }
             }
 
-            window.genWay = function (x, y) {
-                if (map[x][y] !== 3) {
-                    if (map[x][y] !== 2) {
-                        map[x][y] = 1;
+            function clamp(n, minNum, maxNum) {
+                if (n > maxNum) {
+                    return maxNum;
+                } else if (n < minNum) {
+                    return minNum;
+                } else {
+                    return n;
+                }
+            }
+
+            function trend(fromNum, toNum) {
+                if (toNum >= fromNum) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+
+            window.options = {
+                offset: 10,
+                interval: false
+            }
+
+            window.genWay = function () {
+                if (startPos[0] === endPos[0]) {
+                    const x = startPos[0];
+                    for (let y = startPos[1] + trend(startPos[1], endPos[1]); y !== endPos[1]; y += trend(startPos[1], endPos[1])) {
+                        if (map[x][y] === 0) {
+                            map[x][y] = 1;
+                        }
                     }
-                    const choices = [];
-                    // if (x !== 1) {
-                    //     choices.push([-1, 0]);
-                    // }
-                    if (x !== mapWidth) {
-                        choices.push([1, 0]);
+                } else {
+                    let yd = startPos[1];
+                    let lastYd = yd;
+                    for (let x = startPos[0]; x !== endPos[0]; x += trend(startPos[0], endPos[0])) {
+                        yd = randInt(clamp(yd - options.offset, 1, mapHeight), clamp(yd + options.offset, 1, mapHeight));
+                        for (let y = lastYd; y !== yd + trend(lastYd, yd); y += trend(lastYd, yd)) {
+                            if (map[x][y] === 0) {
+                                map[x][y] = 1;
+                            }
+                        }
+                        lastYd = yd;
+                        if (options.interval) {
+                            if (x + trend(startPos[0], endPos[0]) !== endPos[0]) {
+                                x += trend(startPos[0], endPos[0]);
+                                if (map[x][lastYd] === 0) {
+                                    map[x][lastYd] = 1;
+                                }
+                            }
+                        }
                     }
-                    if (y !== 1) {
-                        choices.push([0, -1]);
+                    const x = endPos[0];
+                    for (let y = lastYd; y !== endPos[1]; y += trend(lastYd, endPos[1])) {
+                        if (map[x][y] === 0) {
+                            map[x][y] = 1;
+                        }
                     }
-                    if (y !== mapHeight) {
-                        choices.push([0, 1]);
-                    }
-                    const choice = randInt(0, choices.length - 1);
-                    genWay(x + choices[choice][0], y + choices[choice][1]);
-                    // TODO
                 }
             }
 
@@ -439,13 +475,16 @@
                     }
                 }
 
-                function run() {
+                function run(callback) {
                     j++;
                     if (j > mapWidth) {
                         window.j = 1;
                         i++;
                     }
                     if (i > mapHeight) {
+                        if (callback) {
+                            callback();
+                        }
                         return;
                     }
                     /**
@@ -499,6 +538,16 @@
                 }
             }
 
+            window.clearWall = function () {
+                for (let x = 1; x <= mapWidth; x++) {
+                    for (let y = 1; y <= mapHeight; y++) {
+                        if (map[x][y] === 1) {
+                            map[x][y] = 0;
+                        }
+                    }
+                }
+            }
+
             $("#randomWalk").click(function () {
                 if (!hasStart && !hasEnd) {
                     modalAlert("提示", "未设置起点和终点");
@@ -507,7 +556,8 @@
                 } else if (!hasEnd) {
                     modalAlert("提示", "未设置终点");
                 } else {
-                    genWay(...startPos);
+                    clearWall();
+                    genWay();
                     randomGen();
                     // reverseMap();
                     updateMap();
@@ -614,7 +664,7 @@
         <a id="backToEdit" class="btn btn-success btn-block" style="display: none">回到编辑状态</a>
         <div id="editMode" style="display: none">
             <a id="solve" class="btn btn-success btn-block">最短路径求解</a>
-            <a id="randomWalk" class="btn btn-primary btn-block">生成有解迷宫 - 随机漫步（可能导致死机）</a>
+            <a id="randomWalk" class="btn btn-primary btn-block">生成有解迷宫</a>
         </div>
         <br>
     </div>
