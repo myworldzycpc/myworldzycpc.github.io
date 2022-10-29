@@ -563,6 +563,39 @@
                     updateMap();
                 }
             });
+
+            $("#reverseHoleMap").click(function () {
+                reverseMap();
+                updateMap();
+            })
+
+            $("#genWay").click(function () {
+                if (!hasStart && !hasEnd) {
+                    modalAlert("提示", "未设置起点和终点");
+                } else if (!hasStart) {
+                    modalAlert("提示", "未设置起点");
+                } else if (!hasEnd) {
+                    modalAlert("提示", "未设置终点");
+                } else {
+                    clearWall();
+                    genWay();
+                    reverseMap();
+                    updateMap();
+                }
+            });
+
+            $("#genMapByWay").click(function () {
+                if (!hasStart && !hasEnd) {
+                    modalAlert("提示", "未设置起点和终点");
+                } else if (!hasStart) {
+                    modalAlert("提示", "未设置起点");
+                } else if (!hasEnd) {
+                    modalAlert("提示", "未设置终点");
+                } else {
+                    randomGen();
+                    updateMap();
+                }
+            });
         })
     </script>
     <style>
@@ -663,8 +696,14 @@
         <br>
         <a id="backToEdit" class="btn btn-success btn-block" style="display: none">回到编辑状态</a>
         <div id="editMode" style="display: none">
-            <a id="solve" class="btn btn-success btn-block">最短路径求解</a>
-            <a id="randomWalk" class="btn btn-primary btn-block">生成有解迷宫</a>
+            <p><a id="solve" class="btn btn-success btn-block">最短路径求解</a></p>
+            <p>
+                <a id="randomWalk" class="btn btn-primary">按照当前 options 生成有解迷宫</a>
+                <a id="reverseHoleMap" class="btn btn-primary">反转整个迷宫</a>
+                <a id="genWay" class="btn btn-primary">按照当前 options 随机生成路线</a>
+                <a id="genMapByWay" class="btn btn-primary">反转地图，并随机扣除墙（根据当前<b style="color: yellow">墙</b>所描绘的路线随机生成）</a>
+            </p>
+            <p>注：options 可直接在 console 中进行查看和修改。例如：<code>options.offset = 3;</code>。offset指每一步的偏移量，而interval则代表生成路线是否存在1个间隔。</p>
         </div>
         <br>
     </div>
