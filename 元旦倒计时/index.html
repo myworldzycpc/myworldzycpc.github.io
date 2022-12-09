@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>元旦倒计时</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+
+        .main {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            animation: scaleIn 1.5s;
+        }
+
+        body {
+            background-color: #804040;
+        }
+
+        body.dark {
+            background-color: #402020;
+        }
+
+        .number {
+            font-size: 100px;
+            font-weight: bolder;
+        }
+
+        .numberShadow {
+            color: #00000000;
+            mix-blend-mode: multiply;
+            display: none;
+        }
+
+        .shadowText {
+            text-shadow: 5px 5px 5px white, 0 0 0 black, 5px 5px 5px white;
+        }
+
+        .shadowText.outText {
+            text-shadow: -5px -5px 5px white, 0 0 0 black, -5px -5px 5px white;
+            transform: translate(-5px, -5px);
+        }
+
+        .numberCover {
+            height: 0;
+        }
+
+        .coverText {
+            color: yellow;
+            filter: blur(1px);
+        }
+
+        .coverText.outText {
+            transform: translate(-5px, -5px);
+            text-shadow: 5px 5px 10px #00000080;
+        }
+
+        .moving {
+            position: relative;
+            top: 0;
+            width: 0;
+        }
+
+        .move {
+            position: relative;
+            display: inline-flex;
+        }
+
+        .moved {
+            top: 100px;
+            opacity: 0;
+        }
+
+        .moving.done {
+            top: -100px;
+            opacity: 0;
+        }
+
+        .moved.done {
+            top: 0;
+            opacity: 1;
+        }
+
+        @keyframes rollIn {
+            0% {
+                transform: translate(-200%) rotate(0deg);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(0%) rotate(360deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .pic {
+            margin-top: 20px;
+            image-rendering: pixelated;
+            animation: rollIn 1s;
+        }
+
+        .bigNumber {
+            display: none;
+            text-align: center;
+            color: white;
+            font-size: 200px;
+            text-shadow: orange 0 0 30px;
+        }
+
+        .bigNumber.blurOut {
+            filter: blur(10px);
+            transform: scale(1.5);
+            opacity: 0;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+    </style>
+
+    <script>
+        $(function () {
+
+            function animateTo($element, classToAdd, speed, callback) {
+                $element.css({"transition": `${speed}ms`}).addClass(classToAdd);
+                setTimeout(function () {
+                    $element.css({"transition": `0ms`})
+                }, speed);
+                setTimeout(callback, speed);
+            }
+
+            function animateFrom($element, classToRemove, speed, callback) {
+                $element.css({"transition": `${speed}ms`}).removeClass(classToRemove);
+                setTimeout(function () {
+                    $element.css({"transition": `0ms`})
+                }, speed);
+                setTimeout(callback, speed);
+            }
+
+            const NEW_YEARS_DAY = new Date(2023, 1, 1);
+
+            window.lastStr = "--------";
+
+            /**
+             *
+             * @param {Date}date
+             * @return {string}
+             */
+            function dateToString(date) {
+                let result = "";
+                result += (date.getDate() - 1).toString().padStart(2, '0');
+                result += (date.getHours() - 8).toString().padStart(2, '0');
+                result += date.getMinutes().toString().padStart(2, '0');
+                result += date.getSeconds().toString().padStart(2, '0');
+                return result;
+            }
+
+            /**
+             *
+             * @param {string}str
+             * @param first
+             */
+            function changeDate(str, first = false) {
+                if (str[0] !== lastStr[0]) changeOnly($(".day1"), str[0], first ? 1000 : 10000);
+                if (str[1] !== lastStr[1]) changeOnly($(".day2"), str[1], first ? 1000 : 10000);
+                if (str[2] !== lastStr[2]) changeOnly($(".hour1"), str[2], first ? 1000 : 10000);
+                if (str[3] !== lastStr[3]) changeOnly($(".hour2"), str[3], first ? 1000 : 10000);
+                if (str[4] !== lastStr[4]) changeOnly($(".minute1"), str[4], first ? 1000 : 10000);
+                if (str[5] !== lastStr[5]) changeOnly($(".minute2"), str[5], first ? 1000 : 10000);
+                if (str[6] !== lastStr[6]) changeOnly($(".second1"), str[6], first ? 1000 : 2000);
+                if (str[7] !== lastStr[7]) changeOnly($(".second2"), str[7], first ? 1000 : 200, first ? 0 : 2000);
+                window.lastStr = str;
+            }
+
+            function changeOnly($element, changeTo, speed, delay = 0) {
+                setTimeout(function () {
+                    $element.filter(".moved").text(changeTo);
+                    animateTo($element.filter(".moving"), "outText", speed, function () {
+                        setTimeout(function () {
+                            animateTo($element.filter(".move"), "done", speed, function () {
+                                setTimeout(function () {
+                                    animateFrom($element.filter(".outText"), "outText", speed, function () {
+                                        $element.filter(".moving").text(changeTo);
+                                        $element.filter(".moving").removeClass("outText");
+                                        $element.filter(".move").removeClass("done");
+                                        $element.filter(".moved").addClass("outText");
+                                    });
+                                }, 100);
+                            });
+                        }, 100);
+                    });
+                }, delay);
+            }
+
+            const programTime = new Date();
+
+            function getNowTime() {
+                const curTime = new Date();
+                return curTime;
+                // return new Date(NEW_YEARS_DAY - 70000 - -curTime - programTime);
+            }
+
+            window.isReach = false;
+
+            function checkReach() {
+                if (!isReach && getNowTime() > NEW_YEARS_DAY) {
+                    alert("时间到");
+                    $(".bigNumber").fadeOut(200, function () {
+                        changeDate("--------", true);
+                        $(".main").fadeIn(200);
+                    });
+                    window.isReach = true;
+                }
+            }
+
+            /**
+             *
+             * @param {Date}date
+             */
+            function isLastMinute(date) {
+                return date.getDate() === 1 && date.getHours() === 8 && date.getMinutes() === 0;
+            }
+
+            window.isBigNumber = false;
+
+            setTimeout(function () {
+                $(".numberShadow").fadeIn(500, function () {
+                    const nowDate = new getNowTime();
+                    const diffDate = new Date(NEW_YEARS_DAY - nowDate);
+                    changeDate(dateToString(diffDate), true);
+                    setTimeout(function () {
+                        setInterval(function () {
+                            checkReach();
+                            const nowDate = getNowTime();
+                            const diffDate = new Date(NEW_YEARS_DAY - nowDate);
+                            changeDate(dateToString(diffDate))
+                            if (!isBigNumber && isLastMinute(diffDate)) {
+                                window.isBigNumber = true;
+                                $(".main").fadeOut(200);
+                                animateTo($("body"), "dark", 500, function () {
+                                    $(".bigNumber").fadeIn(200);
+                                })
+                                setInterval(function () {
+                                    const nowDate = getNowTime();
+                                    const diffDate = new Date(NEW_YEARS_DAY - nowDate);
+                                    animateTo($(".bigNumber"), "blurOut", 200, function () {
+                                        animateFrom($(".bigNumber").text(diffDate.getSeconds()), "blurOut", 200);
+                                    })
+                                }, 1000);
+                            }
+                        }, 1000);
+                    }, 1500);
+                });
+            }, 2000);
+
+            $(".moved").text("0");
+        });
+    </script>
+
+</head>
+<body>
+
+<div class="text-center">
+    <img src="跨年倒计时.png" alt="跨年倒计时" class="pic">
+</div>
+
+<div class="main">
+    <div class="number numberCover">
+        <span class="coverText">还有</span>
+        <span class="day1 move moving movingCover coverText">-</span><span class="day1 move moved movedCover coverText outText">-</span><span class="day2 move moving movingCover coverText">-</span><span
+            class="day2 move moved movedCover coverText outText">-</span>
+        <span class="coverText">天</span>
+        <span class="hour1 move moving movingCover coverText">-</span><span class="hour1 move moved movedCover coverText outText">-</span><span class="hour2 move moving movingCover coverText">-</span><span
+            class="hour2 move moved movedCover coverText outText">-</span>
+        <span class="coverText">小时</span>
+        <span class="minute1 move moving movingCover coverText">-</span><span class="minute1 move moved movedCover coverText outText">-</span><span class="minute2 move moving movingCover coverText">-</span><span
+            class="minute2 move moved movedCover coverText outText">-</span>
+        <span class="coverText">分</span>
+        <span class="second1 move moving movingCover coverText">-</span><span class="second1 move moved movedCover coverText outText">-</span><span class="second2 move moving movingCover coverText">-</span><span
+            class="second2 move moved movedCover coverText outText">-</span>
+        <span class="coverText">秒</span>
+    </div>
+    <div class="number numberShadow">
+        <span class="shadowText">还有</span>
+        <span class="day1 move moving movingShadow shadowText">-</span><span class="day1 move moved movedShadow shadowText outText">-</span><span class="day2 move moving movingShadow shadowText">-</span><span
+            class="day2 move moved movedShadow shadowText outText">-</span>
+        <span class="shadowText">天</span>
+        <span class="hour1 move moving movingShadow shadowText">-</span><span class="hour1 move moved movedShadow shadowText outText">-</span><span class="hour2 move moving movingShadow shadowText">-</span><span
+            class="hour2 move moved movedShadow shadowText outText">-</span>
+        <span class="shadowText">小时</span>
+        <span class="minute1 move moving movingShadow shadowText">-</span><span class="minute1 move moved movedShadow shadowText outText">-</span><span class="minute2 move moving movingShadow shadowText">-</span><span
+            class="minute2 move moved movedShadow shadowText outText">-</span>
+        <span class="shadowText">分</span>
+        <span class="second1 move moving movingShadow shadowText">-</span><span class="second1 move moved movedShadow shadowText outText">-</span><span class="second2 move moving movingShadow shadowText">-</span><span
+            class="second2 move moved movedShadow shadowText outText">-</span>
+        <span class="shadowText">秒</span>
+    </div>
+</div>
+
+<div class="bigNumber">59</div>
+
+</body>
+</html>
