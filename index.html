@@ -4,14 +4,48 @@
     <title>myworldzycpc</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link
-            rel="stylesheet"
-            href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="shortcut icon" href="https://myworldzycpc.github.io/static/myworldzycpc.png">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+    <!--    <script src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>-->
+    <script>
+        function getCookie(cname) {
+            const name = cname + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                const c = ca[i].trim();
+                if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+
+        $(function () {
+
+            function showAllHide() {
+                $("[data-privacy=hide]").show();
+            }
+
+
+            const $showAllContents = $("#showAllContents")
+                .click(function () {
+                    if (confirm(`确定要解锁全部内容？
+解锁全部内容后，你将可以看到网页上的隐藏内容，体验更多功能，以及曾经删减过的内容。
+你需要确保你对我本人足够熟悉，同时，查看隐藏内容意味着您必须保证不传播或曲解隐藏内容中的一切内容，包括但不限于文字传播、口头传播、截屏、录屏、拍照、直播、链接、网页以及通过其他媒体渠道散播于众或转告他人。\n任何人不得承认隐藏内容（除解锁全部内容的按钮以外）在此网页上存在。\n如果您同意并保密（这并不难做），请点击“确定”，如果对自己此方面的能力存在质疑，请点击“取消”。`)) {
+                        if (confirm(`是否记住您的决定？（您可以清除cookie以不再记住）`)) {
+                            document.cookie = "unlocked=true; expires=Thu, 18 Dec 2150 12:00:00 GMT";
+                        }
+                        $showAllContents.hide();
+                        showAllHide();
+                    }
+                });
+            if (getCookie("unlocked") === "true") {
+                document.cookie = "unlocked=true; expires=Thu, 18 Dec 2150 12:00:00 GMT";
+                $showAllContents.hide();
+                showAllHide();
+            }
+        })
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -28,14 +62,17 @@
             <div class="collapse navbar-collapse navbar-right" id="navBar">
                 <ul class="nav navbar-nav">
                     <li><a href="">首页</a></li>
-                    <li><a href="https://space.bilibili.com/102578264" target="_blank">B站 <span class="glyphicon glyphicon-new-window small"></span></a></li>
+                    <li><a href="https://space.bilibili.com/102578264" target="_blank">B站 <span
+                            class="glyphicon glyphicon-new-window small"></span></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             OJ<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="http://112.253.31.18:8213/" target="_blank">XJYOJ <span class="glyphicon glyphicon-new-window small"></span></a></li>
-                            <li><a href="https://oj.zqy.ac.cn/" target="_blank">XJYHydro <span class="glyphicon glyphicon-new-window small"></span></a></li>
+                            <li><a href="http://112.253.31.18:8213/" target="_blank">XJYOJ <span
+                                    class="glyphicon glyphicon-new-window small"></span></a></li>
+                            <li><a href="https://oj.zqy.ac.cn/" target="_blank">XJYHydro <span
+                                    class="glyphicon glyphicon-new-window small"></span></a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -62,6 +99,7 @@
                         </ul>
                     </li>
                 </ul>
+                <a class="btn btn-primary navbar-btn" id="showAllContents">点击解锁全部内容</a>
             </div>
         </div>
     </nav>
@@ -85,6 +123,7 @@
         <small>更大层级的页面整合</small>
     </h2>
     <hr>
+    <div class="alert alert-info">2023年5月20日我的网站删掉的内容可以在右上角解锁恢复啦！</div>
     <div class="alert alert-warning">2022年9月30日我的网站大删减你知道吗</div>
     <div class="alert alert-warning">2022年7月31日我的网站大删减你知道吗</div>
     <div class="panel panel-default">
@@ -95,27 +134,29 @@
             </h3>
         </div>
         <div class="panel-body">
-            <a href="http://101.43.140.244:4567/" target="_blank">
-                <div class="alert alert-info">点击打开网盘 <span class="glyphicon glyphicon-new-window"></span></div>
-            </a>
-            <p>该网盘为免费不限速网盘</p>
-            <p>免费提供1TB的公用空间以及1GB的用户私有空间</p>
-            <p>网盘运行于局域网，并通过中转服务器进行端口转发</p>
-            <p>该网盘支持你注册自己的账户并拥有1GB的用户私有空间，你也可以使用以下公用账户以使用高达1TB的空间并与他人共享资源：</p>
-            <table class="table">
-                <tr>
-                    <th>邮箱</th>
-                    <td>public@example.com</td>
-                </tr>
-                <tr>
-                    <th>密码</th>
-                    <td>public</td>
-                </tr>
-            </table>
-            <p>该网盘支持上传文件或目录，支持在线编辑文本文件和在线查看图片，支持在线解压缩。</p>
-            <p>除了支持网页端外，该网盘还支持WebDAV连接并从文件资源管理器中打开，通过本地程序直接打开和编辑。也支持映射为本地驱动器，可以在网盘上安装并运行程序（下载好后，在线即连即用，例如可以使用云存储游玩MC）。具体查看“连接”栏中的信息。</p>
-            <p class="text-danger">由于该网盘尚处于测试阶段，请不要将重要文件保存在此网盘，以防网盘遭到入侵导致信息泄露或文件丢失。</p>
-            <small class="text-muted">Powered by Cloudreve</small>
+            <p class="text-center text-danger">服务器数据丢失，网盘暂时停运。</p>
+            <!--            <a href="http://101.43.140.244:4567/" target="_blank">-->
+            <!--                <div class="alert alert-info">点击打开网盘 <span class="glyphicon glyphicon-new-window"></span></div>-->
+            <!--            </a>-->
+            <!--            <p>该网盘为免费不限速网盘</p>-->
+            <!--            <p>免费提供1TB的公用空间以及1GB的用户私有空间</p>-->
+            <!--            <p>网盘运行于局域网，并通过中转服务器进行端口转发</p>-->
+            <!--            <p>该网盘支持你注册自己的账户并拥有1GB的用户私有空间，你也可以使用以下公用账户以使用高达1TB的空间并与他人共享资源：</p>-->
+            <!--            <table class="table">-->
+            <!--                <tr>-->
+            <!--                    <th>邮箱</th>-->
+            <!--                    <td>public@example.com</td>-->
+            <!--                </tr>-->
+            <!--                <tr>-->
+            <!--                    <th>密码</th>-->
+            <!--                    <td>public</td>-->
+            <!--                </tr>-->
+            <!--            </table>-->
+            <!--            <p>该网盘支持上传文件或目录，支持在线编辑文本文件和在线查看图片，支持在线解压缩。</p>-->
+            <!--            <p>-->
+            <!--                除了支持网页端外，该网盘还支持WebDAV连接并从文件资源管理器中打开，通过本地程序直接打开和编辑。也支持映射为本地驱动器，可以在网盘上安装并运行程序（下载好后，在线即连即用，例如可以使用云存储游玩MC）。具体查看“连接”栏中的信息。</p>-->
+            <!--            <p class="text-danger">由于该网盘尚处于测试阶段，请不要将重要文件保存在此网盘，以防网盘遭到入侵导致信息泄露或文件丢失。</p>-->
+            <!--            <small class="text-muted">Powered by Cloudreve</small>-->
         </div>
         <div class="panel-footer">
             2022年12月23日
@@ -134,20 +175,28 @@
             </h3>
         </div>
         <div class="panel-body">
-            <a href="https://www.bilibili.com/video/BV1BS4y1t7PS" class="btn btn-block btn-primary">前言 TheRedMaker_和myworldzycpc的模组羁旅</a>
+            <a href="https://www.bilibili.com/video/BV1BS4y1t7PS" class="btn btn-block btn-primary">前言
+                TheRedMaker_和myworldzycpc的模组羁旅</a>
             <a href="https://www.bilibili.com/video/BV1jg41117t8" class="btn btn-block btn-primary">第一集 Java 快速上手</a>
-            <a href="https://www.bilibili.com/video/BV19t4y1G76p?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177" class="btn btn-block btn-primary">第二集 开发环境的搭建</a>
-            <a href="https://www.bilibili.com/video/BV1xe4y1D7NV?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177" class="btn btn-block btn-primary">第三集 Minecraft 基本游戏元素介绍</a>
-            <a href="https://www.bilibili.com/video/BV11U4y1v7of?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177" class="btn btn-block btn-primary">第四集 简单模组开发示例 玩家进入游戏发送欢迎词</a>
-            <a href="https://www.bilibili.com/video/BV1EY4y1w7tL?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177" class="btn btn-block btn-primary">第五集 版本控制与建站</a>
-            <a href="https://www.bilibili.com/video/BV1aY4y1w7bC?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177" class="btn btn-block btn-primary">第六集 事件 - 事件总览</a>
+            <a href="https://www.bilibili.com/video/BV19t4y1G76p?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+               class="btn btn-block btn-primary">第二集 开发环境的搭建</a>
+            <a href="https://www.bilibili.com/video/BV1xe4y1D7NV?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+               class="btn btn-block btn-primary">第三集 Minecraft 基本游戏元素介绍</a>
+            <a href="https://www.bilibili.com/video/BV11U4y1v7of?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+               class="btn btn-block btn-primary">第四集 简单模组开发示例 玩家进入游戏发送欢迎词</a>
+            <a href="https://www.bilibili.com/video/BV1EY4y1w7tL?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+               class="btn btn-block btn-primary">第五集 版本控制与建站</a>
+            <a href="https://www.bilibili.com/video/BV1aY4y1w7bC?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+               class="btn btn-block btn-primary">第六集 事件 - 事件总览</a>
             <a href="static/事件一览表.png" class="btn btn-block btn-default">事件一览表 - 根</a>
             <a href="static/图片2.png" class="btn btn-block btn-default">事件一览表 - 物品和生物</a>
             <a href="static/图片3.png" class="btn btn-block btn-default">事件一览表 - 玩家</a>
             <a href="static/图片4.png" class="btn btn-block btn-default">事件一览表 - 服务器和村庄</a>
             <a href="static/图片5.png" class="btn btn-block btn-default">事件一览表 - 世界</a>
-            <a href="https://www.bilibili.com/video/BV1pW4y1Y7zU?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177" class="btn btn-block btn-primary">第七集 事件 - 世界事件</a>
-            <a href="https://www.bilibili.com/video/BV1xG4y1a7xi?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177" class="btn btn-block btn-primary">第八集 事件 - 实体事件 - 根</a>
+            <a href="https://www.bilibili.com/video/BV1pW4y1Y7zU?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+               class="btn btn-block btn-primary">第七集 事件 - 世界事件</a>
+            <a href="https://www.bilibili.com/video/BV1xG4y1a7xi?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+               class="btn btn-block btn-primary">第八集 事件 - 实体事件 - 根</a>
         </div>
         <div class="panel-footer">链接到B站哦~</div>
     </div>
@@ -159,24 +208,29 @@
             </h3>
         </div>
         <div class="panel-body">
-            <iframe src="//player.bilibili.com/player.html?aid=856132219&bvid=BV1DV4y1J7nG&cid=779398036&page=1"
-                    class="img-thumbnail" style="aspect-ratio: 16/9;width: 100%; height: auto" allowfullscreen>
-            </iframe>
-            <iframe src="https://player.bilibili.com/player.html?aid=428509376&bvid=BV1rG411p7Nk&cid=777786072&page=1"
-                    class="img-thumbnail" style="aspect-ratio: 16/9;width: 100%; height: auto" allowfullscreen>
-            </iframe>
-            <iframe src="//player.bilibili.com/player.html?aid=893813102&bvid=BV1NP4y1P7XX&cid=503482194&page=1"
-                    class="img-thumbnail" style="aspect-ratio: 16/9;width: 100%; height: auto" allowfullscreen>
-            </iframe>
+            <!--            <iframe src="//player.bilibili.com/player.html?aid=856132219&bvid=BV1DV4y1J7nG&cid=779398036&page=1"-->
+            <!--                    class="img-thumbnail" style="aspect-ratio: 16/9;width: 100%; height: auto" allowfullscreen>-->
+            <!--            </iframe>-->
+            <!--            <iframe src="https://player.bilibili.com/player.html?aid=428509376&bvid=BV1rG411p7Nk&cid=777786072&page=1"-->
+            <!--                    class="img-thumbnail" style="aspect-ratio: 16/9;width: 100%; height: auto" allowfullscreen>-->
+            <!--            </iframe>-->
+            <!--            <iframe src="//player.bilibili.com/player.html?aid=893813102&bvid=BV1NP4y1P7XX&cid=503482194&page=1"-->
+            <!--                    class="img-thumbnail" style="aspect-ratio: 16/9;width: 100%; height: auto" allowfullscreen>-->
+            <!--            </iframe>-->
+            <p class="text-center text-danger">由于B站抽风最近iframe外链视频会自动播放，故移除外链。</p>
         </div>
-        <div class="panel-footer">去B站看我的更多视频吧</div>
+        <div class="panel-footer">
+            <a href="https://space.bilibili.com/102578264" class="btn btn-primary">
+                去B站看我的更多视频吧
+            </a>
+        </div>
     </div>
-    <!--    <a href="https://myworldzycpc.github.io/diaries/">-->
-    <!--        <div class="alert alert-info">DIARIES（公开日记）！点击查看</div>-->
-    <!--    </a>-->
-    <!--    <a href="https://myworldzycpc.github.io/streams/lixiaohuasay">-->
-    <!--        <div class="alert alert-info">点击查看李晓华送给大家的“端午贺词” ></div>-->
-    <!--    </a>-->
+    <a href="https://myworldzycpc.github.io/diaries/" style="display: none" data-privacy="hide">
+        <div class="alert alert-info">DIARIES（公开日记）！点击查看</div>
+    </a>
+    <a href="https://myworldzycpc.github.io/streams/lixiaohuasay" style="display: none" data-privacy="hide">
+        <div class="alert alert-info">点击查看李晓华送给大家的“端午贺词” ></div>
+    </a>
     <div class="row">
         <div class="col-sm-4">
             <div class="panel panel-default">
@@ -227,18 +281,18 @@
         </div>
     </div>
 
-    <!--    <div class="panel panel-default">-->
-    <!--        <div class="panel-heading">-->
-    <!--            <h3 class="text-center">-->
-    <!--                作品专区<br>-->
-    <!--                <small>记录点滴生活</small>-->
-    <!--            </h3>-->
-    <!--        </div>-->
-    <!--        <div class="panel-body">-->
-    <!--            <a href="https://myworldzycpc.github.io/zhushi/" class="btn btn-default btn-block">会当泽至会泽感 with 注释</a>-->
+    <div class="panel panel-default" style="display: none" data-privacy="hide">
+        <div class="panel-heading">
+            <h3 class="text-center">
+                作品专区<br>
+                <small>记录点滴生活</small>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <a href="https://myworldzycpc.github.io/zhushi/" class="btn btn-default btn-block">会当泽至会泽感 with 注释</a>
 
-    <!--        </div>-->
-    <!--    </div>-->
+        </div>
+    </div>
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -248,10 +302,12 @@
             </h3>
         </div>
         <div class="panel-body">
-            <!--            <a href="https://myworldzycpc.github.io/files/hmw/0531.html" class="btn btn-default btn-block">5月31日作业</a>-->
-            <!--            <a href="https://myworldzycpc.github.io/files/hmw/0602.html" class="btn btn-default btn-block">6月2日作业</a>-->
-            <!--            <a href="https://myworldzycpc.github.io/files/hmw/0604.html" class="btn btn-default btn-block">6月4日作业</a>-->
-
+            <a href="https://myworldzycpc.github.io/files/hmw/0531.html" class="btn btn-default btn-block"
+               style="display: none" data-privacy="hide">5月31日作业</a>
+            <a href="https://myworldzycpc.github.io/files/hmw/0602.html" class="btn btn-default btn-block"
+               style="display: none" data-privacy="hide">6月2日作业</a>
+            <a href="https://myworldzycpc.github.io/files/hmw/0604.html" class="btn btn-default btn-block"
+               style="display: none" data-privacy="hide">6月4日作业</a>
         </div>
     </div>
 
@@ -275,7 +331,8 @@
             </h3>
         </div>
         <div class="panel-body">
-            <!--            <a href="https://myworldzycpc.github.io/files/plj123567/" class="btn btn-default btn-block">袁照雯和张意晨（密码：yzwhzyc123456）</a>-->
+            <a href="https://myworldzycpc.github.io/files/plj123567/" class="btn btn-default btn-block"
+               style="display: none" data-privacy="hide">袁照雯和张意晨（密码：yzwhzyc123456）</a>
             <a href="https://myworldzycpc.github.io/the_end_poem/" class="btn btn-default btn-block">终末之诗</a>
         </div>
     </div>
