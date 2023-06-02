@@ -30,6 +30,43 @@
 
             change()
             window.setInterval(change, 1000)
+
+            function getCookie(cname) {
+                const name = cname + "=";
+                const ca = document.cookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    const c = ca[i].trim();
+                    if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+                }
+                return "";
+            }
+
+
+            const VERSION = "20230602";
+
+            function showAllHide() {
+                $("[data-privacy=hide]").show();
+            }
+
+
+            const $showAllContents = $("#showAllContents")
+                .click(function () {
+                    if (confirm(`确定要解锁全部内容？
+解锁全部内容后，你将可以看到网页上的隐藏内容，体验更多功能，以及曾经删减过的内容。
+你需要确保你对我本人足够熟悉，同时，查看隐藏内容意味着您必须保证不传播或曲解隐藏内容中的一切内容，包括但不限于文字传播、口头传播、截屏、录屏、拍照、直播、链接、网页以及通过其他媒体渠道散播于众或转告他人。\n任何人不得承认隐藏内容（除解锁全部内容的按钮以外）在此网页上存在。\n如果您同意并保密（这并不难做），请点击“确定”，如果对自己此方面的能力存在质疑，请点击“取消”。`)) {
+                        if (confirm(`是否记住您的决定？（您可以清除cookie以不再记住）`)) {
+                            document.cookie = "unlocked=" + VERSION + "; expires=Thu, 18 Dec 2150 12:00:00 GMT";
+                        }
+                        $showAllContents.hide();
+                        showAllHide();
+                    }
+                });
+            if (getCookie("unlocked") === VERSION) {
+                document.cookie = "unlocked=" + VERSION + "; expires=Thu, 18 Dec 2150 12:00:00 GMT";
+                $showAllContents.hide();
+                showAllHide();
+            }
+
         });
     </script>
     <title>公开日记 Diaries</title>
@@ -39,6 +76,18 @@
             /*text-shadow: rgba(0, 0, 0, 0.5) 1px 1px 2px;*/
             line-height: 200%;
             font-size: 150%;
+        }
+
+        [data-privacy=hide]::before {
+            content: "（隐藏内容）";
+            color: red;
+            opacity: 0.5;
+            /*background: repeating-conic-gradient(#bbb 0, #bbb 25%, #eee 0, #eee 50%);*/
+            /*background-size: 30px 30px;*/
+        }
+
+        [data-privacy=hide] {
+            filter: blur(1px);
         }
     </style>
 </head>
@@ -53,93 +102,98 @@
     <p>下面的框是按照时间顺序从晚到早排列的，而每个框里面的内容是按照从早到晚排列的</p>
     <hr>
     <div class="alert alert-info">补全中，目前截止到2022年6月2日（因为后续的diaries都写到OJ上了，而近期数据丢失，导致我需要重新写）</div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            2022年6月2日
-        </div>
-        <ul class="list-group">
-            <li class="list-group-item">
-                今天我写了一首新诗：
-                <div class="poem">
-                    会泽在旁不知惜，调离心情冷凄凄。<br>
-                    为处不远用眼望，老师批评把头低。<br>
-                    <span class="changeable"
-                          data-things="四比二五身高差，二五倍四遥相离。|身高只差双倍八，位置相邻二百七。|身高只差双倍八，位置相邻二百七。|四比二五身高差，二五倍四遥相离。"></span><br>
-                    <span class="changeable" data-things="坚信相聚会有时|希冀重来仍有期"></span>，改日重新在一起！
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            2022年5月30日
-        </div>
-        <ul class="list-group">
-            <li class="list-group-item">
-                可歌可泣 可搁可弃
-            </li>
-        </ul>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            2022年5月27日
-        </div>
-        <ul class="list-group">
-            <li class="list-group-item">
-                老师把我和王会泽调开，理由是<br>
-                王会泽太可爱了<br>
-                怕影响我学习
-            </li>
-            <li class="list-group-item">
-                回家的路上<br>
-                太阳散发出的光子<span class="changeable" data-things="无情地|重重地"></span>打在了我的身上<br>
-                ǎi小的树木 并不能为我遮荫<br>
-                我还要长得更ǎi一点
-            </li>
-        </ul>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            很久以前的事情，都不记得是发生在什么时候了
-        </div>
-        <ul class="list-group">
-<!--            <li class="list-group-item">-->
-<!--                物理老师说：学化学学chao了<br>-->
-<!--                然后我突然想起我在本子上写的 Fe<sub>2</sub>O<sub>3</sub> 来了-->
-<!--            </li>-->
-            <li class="list-group-item">
-                鲁萍告诉我，我同桌把笔都啃成那样了<br>
-                我想，简直就是站在食物链顶端的男人
-            </li>
-            <li class="list-group-item">
-                数学老师给的草纸，说是要每次上课都要拿出来的，你还有吗？
-            </li>
-            <li class="list-group-item">
-                王会泽被喷的烟雾缭绕
-            </li>
-            <li class="list-group-item">
-                站着背古诗的时候，我坐下了，从我那个角度看，王会泽和王俊豪一样高
-            </li>
-<!--            <li class="list-group-item">-->
-<!--                ti d y是政治课代表吧，她好像更像李春Na-->
-<!--            </li>-->
-<!--            <li class="list-group-item">-->
-<!--                物理老师说，物理上很少出现相加的公式，而我却记得有一个<br>-->
-<!--                I = I<sub>1</sub> + I<sub>2</sub>-->
-<!--            </li>-->
-<!--            <li class="list-group-item">-->
-<!--                物理老师经常说：U<sub>0</sub><br>-->
-<!--                然后我就听着感觉像“幽灵”-->
-<!--            </li>-->
-            <li class="list-group-item">
-                <img src="static/img.png" alt="土意">：<br>
-                得意失意，<br>
-                切莫在意。<br>
-                顺境逆境，<br>
-                学无止境。
-            </li>
 
-        </ul>
+    <a class="btn btn-primary navbar-btn" id="showAllContents">点击解锁全部内容</a>
+
+    <div style="display: none" data-privacy="hide">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                2022年6月2日
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    今天我写了一首新诗：
+                    <div class="poem">
+                        会泽在旁不知惜，调离心情冷凄凄。<br>
+                        为处不远用眼望，老师批评把头低。<br>
+                        <span class="changeable"
+                              data-things="四比二五身高差，二五倍四遥相离。|身高只差双倍八，位置相邻二百七。|身高只差双倍八，位置相邻二百七。|四比二五身高差，二五倍四遥相离。"></span><br>
+                        <span class="changeable" data-things="坚信相聚会有时|希冀重来仍有期"></span>，改日重新在一起！
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                2022年5月30日
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    可歌可泣 可搁可弃
+                </li>
+            </ul>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                2022年5月27日
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    老师把我和王会泽调开，理由是<br>
+                    王会泽太可爱了<br>
+                    怕影响我学习
+                </li>
+                <li class="list-group-item">
+                    回家的路上<br>
+                    太阳散发出的光子<span class="changeable" data-things="无情地|重重地"></span>打在了我的身上<br>
+                    ǎi小的树木 并不能为我遮荫<br>
+                    我还要长得更ǎi一点
+                </li>
+            </ul>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                很久以前的事情，都不记得是发生在什么时候了
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    物理老师说：学化学学chao了<br>
+                    然后我突然想起我在本子上写的 Fe<sub>2</sub>O<sub>3</sub> 来了
+                </li>
+                <li class="list-group-item">
+                    鲁萍告诉我，我同桌把笔都啃成那样了<br>
+                    我想，简直就是站在食物链顶端的男人
+                </li>
+                <li class="list-group-item">
+                    数学老师给的草纸，说是要每次上课都要拿出来的，你还有吗？
+                </li>
+                <li class="list-group-item">
+                    王会泽被喷的烟雾缭绕
+                </li>
+                <li class="list-group-item">
+                    站着背古诗的时候，我坐下了，从我那个角度看，王会泽和王俊豪一样高
+                </li>
+                <li class="list-group-item">
+                    ti d y是政治课代表吧，她好像更像李春Na
+                </li>
+                <li class="list-group-item">
+                    物理老师说，物理上很少出现相加的公式，而我却记得有一个<br>
+                    I = I<sub>1</sub> + I<sub>2</sub>
+                </li>
+                <li class="list-group-item">
+                    物理老师经常说：U<sub>0</sub><br>
+                    然后我就听着感觉像“幽灵”
+                </li>
+                <li class="list-group-item">
+                    <img src="static/img.png" alt="土意">：<br>
+                    得意失意，<br>
+                    切莫在意。<br>
+                    顺境逆境，<br>
+                    学无止境。
+                </li>
+
+            </ul>
+        </div>
     </div>
 </div>
 

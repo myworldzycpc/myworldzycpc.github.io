@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>制谱</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            const $theVideo = $("#theVideo")[0];
+            const $theTapVideo = $("#theTapVideo")[0];
+            const $theProgressBar = $("#theProcessBar");
+
+            const spectral = [];
+
+            let started = false;
+
+            function mainLoop() {
+                const videoTime = $theVideo.duration;
+                const currentTime = $theVideo.currentTime;
+                // console.log(videoTime);
+                // $theProgressBar.css({"width": `${currentTime / videoTime * 100}%`});
+                started = true;
+                const theInterval = setInterval(function () {
+                    const videoTime = $theVideo.duration;
+                    const currentTime = $theVideo.currentTime;
+                    // console.log(videoTime);
+                    $theProgressBar.css({"width": `${currentTime / videoTime * 100}%`});
+                    if (videoTime === currentTime) {
+                        clearInterval(theInterval);
+                        setTimeout(function () {
+                            $theProgressBar.removeClass("noTrans");
+                        });
+                    }
+                }, 10);
+            }
+
+            $("#btnStart").click(function () {
+                let c = 3;
+                $theProgressBar.addClass("progress-bar-danger");
+                $theProgressBar.addClass("noTrans");
+                $theProgressBar.css({"width": `100%`});
+                setTimeout(function () {
+                    $theProgressBar.removeClass("noTrans");
+                });
+
+                function next() {
+                    // console.log(c / 3 * 100);
+                    $theProgressBar.css({"width": `${c / 3 * 100}%`});
+                    if (c === 0) {
+                        $theVideo.play();
+                        $theProgressBar.removeClass("progress-bar-danger");
+                        $theProgressBar.addClass("progress-bar-success");
+                        $theProgressBar.addClass("noTrans");
+                        mainLoop();
+                    } else {
+                        c--;
+                        setTimeout(next, 1000);
+                    }
+                }
+
+                next();
+            });
+
+            const $body = $("body");
+            $body.keydown(function (e) {
+                if (started) {
+                    const videoTime = $theVideo.duration;
+                    const currentTime = $theVideo.currentTime;
+                    $theTapVideo.currentTime = 0;
+                    $theTapVideo.play();
+                    if (e.key === "w") {
+                        spectral.push({t: currentTime, k: 'w'});
+                        const $span = $("<span>w</span>");
+                        $span.css({
+                            "color": "yellow",
+                            "text-shadow": "0px 0px 1px black",
+                            "position": "absolute",
+                            "left": `${currentTime / videoTime * 100}%`,
+                            "transform": "translateX(-50%)"
+                        });
+                        $theProgressBar.append($span);
+                    } else if (e.key === "s") {
+                        spectral.push({t: currentTime, k: 's'});
+                        const $span = $("<span>s</span>");
+                        $span.css({
+                            "color": "red",
+                            "text-shadow": "0px 0px 1px black",
+                            "position": "absolute",
+                            "left": `${currentTime / videoTime * 100}%`,
+                            "transform": "translateX(-50%)"
+                        });
+                        $theProgressBar.append($span);
+                    } else if (e.key === "a") {
+                        spectral.push({t: currentTime, k: 'a'});
+                        const $span = $("<span>a</span>");
+                        $span.css({
+                            "color": "blue",
+                            "text-shadow": "0px 0px 1px black",
+                            "position": "absolute",
+                            "left": `${currentTime / videoTime * 100}%`,
+                            "transform": "translateX(-50%)"
+                        });
+                        $theProgressBar.append($span);
+                    } else if (e.key === "d") {
+                        spectral.push({t: currentTime, k: 'd'});
+                        const $span = $("<span>d</span>");
+                        $span.css({
+                            "color": "purple",
+                            "text-shadow": "0px 0px 1px black",
+                            "position": "absolute",
+                            "left": `${currentTime / videoTime * 100}%`,
+                            "transform": "translateX(-50%)"
+                        });
+                        $theProgressBar.append($span);
+                    } else if (e.key === " ") {
+                        console.log(JSON.stringify(spectral));
+                        $theVideo.pause();
+                        alert("已输出到控制台");
+                    }
+                }
+            });
+
+
+            // 移动端适配
+            $body[0].addEventListener('touchstart', function (e) {
+                if (started) {
+                    //  获取手指初始坐标
+                    const startX = e.targetTouches[0].pageX;
+                    const startY = e.targetTouches[0].pageY;
+                    const width = window.innerWidth;
+                    const height = window.innerHeight;
+                    const relativeX = startX - width / 2;
+                    const relativeY = startY - height / 2;
+                    if (relativeX > relativeY) {
+                        if (-relativeX > relativeY) {
+                            // tapOn('w');
+                        } else {
+                            // tapOn('d');
+                        }
+                    } else {
+                        if (-relativeX > relativeY) {
+                            // tapOn('a');
+                        } else {
+                            // tapOn('s');
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
+    <style>
+        .noTrans {
+            transition: 0s !important;
+        }
+
+        #mainBox {
+            position: fixed;
+            /*border: 1px solid black;*/
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #circleBox {
+            border-radius: 50%;
+            width: 300px;
+            height: 300px;
+            border: 1px solid red;
+            /*transform: scale(0);*/
+        }
+
+        #middleDot {
+            background-color: black;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #theProcess {
+            position: absolute;
+            height: 20px;
+            left: 5%;
+            right: 5%;
+        }
+
+        .author {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            color: gray;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="height: 100px"></div>
+    <video src="static/tap.m4a" id="theTapVideo" hidden></video>
+    <p>
+        <!--这里这里！音频文件在这里！-->
+        <video src="musics/otherside.ogg" id="theVideo" preload="metadata" controls></video>
+    </p>
+    <div class="progress" id="theProcess">
+        <div class="progress-bar" id="theProcessBar"></div>
+    </div>
+    <div style="height: 30px"></div>
+    <p><a class="btn btn-primary" id="btnStart">开始</a></p>
+    <!--    <div id="mainBox">-->
+    <!--        <div id="circleBox">-->
+    <!--            <div id="middleDot">-->
+
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <p>说明：凭感觉按A、S、D、W即可，按空格即可出谱，并自动输出到控制台（输出到网页可能会导致数据量过大而死机）。如果你使用的是Laptop，建议暂时关闭触摸板。</p>
+    <div class="author">Made by <a href="https://myworldzycpc.github.io">myworldzycpc</a>, <a href="https://theredmaker.github.io">TheRedMaker</a></div>
+</div>
+
+</body>
+</html>

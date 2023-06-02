@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PLAYING</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+
+            // window.SPECTRAL = "spectrals/Windy Hill.json";  // <CUSTOM> 谱面路径（音频路径请直接修改theVideo的src属性）（注：仅影响直接打开“开始游戏.html”的效果）
+
+            const $theVideo = $("#theVideo")[0];
+            const $theTapVideo = $("#theTapVideo")[0];
+
+            // window.readTime = 500;  // <CUSTOM> 谱面流速（到达判定线所需的时间）
+            const judgements = {  // <CUSTOM> 判定标准（相差毫秒数）
+                PERFECT: 80,
+                GOOD: 160,
+                BAD: 240
+            };
+
+            const counter = {
+                PERFECT: 0,
+                GOOD: 0,
+                BAD: 0,
+                MISS: 0,
+                COMBO: 0,
+                MAX_COMBO: 0,
+                TOTAL_ALL: 0
+            };
+
+            //url转blob
+            function urlToBlob(file_url, callback) {
+                let xhr = new XMLHttpRequest();
+                xhr.open("get", file_url, true);
+                xhr.responseType = "blob";
+                xhr.onload = function () {
+                    if (this.status === 200) {
+                        // console.log(this.response);
+                        const reader = new FileReader();
+                        reader.onload = function () {
+                            callback(reader.result);
+                        };
+                        reader.readAsText(this.response);
+                    }
+                };
+                xhr.send();
+            }
+
+            window.refreshSpectral = function () {
+                // console.log(window.SPECTRAL);
+                urlToBlob(window.SPECTRAL, function (result) {
+                    window.spectral = JSON.parse(result).sort(function (a, b) {
+                        return a.t - b.t;
+                    });
+                    // console.log(window.spectral);
+                    counter.TOTAL_ALL = window.spectral.length;
+                });
+            };
+
+            function randInt(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min + 1)) + min; //含最大值，含最小值
+            }
+
+            function showNote(direction, time, glowing) {
+                const choose = randInt(0, 1);
+                let $theImg;
+                if (window.useAuthorAvatar) {
+                    if (choose === 0) {
+                        $theImg = $(`<img src="static/myworldzycpc.png" alt="myworldzycpc">`);
+                    } else {
+                        $theImg = $(`<img src="static/TheRedMaker.png" alt="TheRedMaker">`);
+                    }
+                } else {
+                    if (choose === 0) {
+                        $theImg = $(`<img src="static/alex.png" alt="alex">`);
+                    } else {
+                        $theImg = $(`<img src="static/steve.png" alt="steve">`);
+                    }
+                }
+                $theImg.addClass("note");
+                if (glowing) {
+                    $theImg.addClass("glowing");
+                }
+                $("#circleBox").append($theImg);
+                if (time) {
+                    window.stacks[direction].push({time: time, $element: $theImg});
+                }
+                setTimeout(function () {
+                    if (direction === 'w') {
+                        $theImg.animate({"top": "0"}, readTime / $theVideo.playbackRate, "easeInQuad", function () {
+                            $theImg.animate({"top": "-50px", "opacity": "0"}, readTime / 2, "easeOutQuad", function () {
+                                $theImg.hide();
+                            });
+                        });
+                    } else if (direction === 's') {
+                        $theImg.animate({"top": "300px"}, readTime / $theVideo.playbackRate, "easeInQuad", function () {
+                            $theImg.animate({"top": "350px", "opacity": "0"}, readTime / 2, "easeOutQuad", function () {
+                                $theImg.hide();
+                            });
+                        });
+                    } else if (direction === 'a') {
+                        $theImg.animate({"left": "0"}, readTime / $theVideo.playbackRate, "easeInQuad", function () {
+                            $theImg.animate({"left": "-50px", "opacity": "0"}, readTime / 2, "easeOutQuad", function () {
+                                $theImg.hide();
+                            });
+                        });
+                    } else if (direction === 'd') {
+                        $theImg.animate({"left": "300px"}, readTime / $theVideo.playbackRate, "easeInQuad", function () {
+                            $theImg.animate({"left": "350px", "opacity": "0"}, readTime / 2, "easeOutQuad", function () {
+                                $theImg.hide();
+                            });
+                        });
+                    }
+                });
+            }
+
+            function calcAcc() {
+                const noteCount = counter.PERFECT + counter.GOOD + counter.BAD + counter.MISS;
+                const accurateCount = counter.PERFECT + counter.GOOD * 0.65;
+                return (accurateCount / noteCount * 100).toFixed(2);
+            }
+
+            function calcScore() {
+                const comboScore = counter.MAX_COMBO / counter.TOTAL_ALL * 100000;
+                const accurateCount = counter.PERFECT + counter.GOOD * 0.65;
+                const judgementScore = accurateCount / counter.TOTAL_ALL * 900000;
+                return String(Math.round(comboScore + judgementScore)).padStart(7, '0');
+            }
+
+            function calcGrade() {
+                if (counter.PERFECT === counter.TOTAL_ALL) {
+                    return "AP (All Perfect)";
+                } else if (counter.PERFECT + counter.GOOD === counter.TOTAL_ALL) {
+                    return "FC (Full Combo)";
+                } else {
+                    const score = calcScore();
+                    if (score >= 960000) {
+                        return "V";
+                    } else if (score >= 920000) {
+                        return "S";
+                    } else if (score >= 880000) {
+                        return "A";
+                    } else if (score >= 820000) {
+                        return "B";
+                    } else if (score >= 700000) {
+                        return "C";
+                    } else {
+                        return "F";
+                    }
+                }
+            }
+
+            function start() {
+                window.started = true;
+                window.stacks = {w: [], s: [], a: [], d: []};
+                $theVideo.play();
+                setInterval(function () {
+                    $("#perfectCount").text(counter.PERFECT);
+                    $("#goodCount").text(counter.GOOD);
+                    $("#badCount").text(counter.BAD);
+                    $("#missCount").text(counter.MISS);
+                    $("#comboCount").text(counter.COMBO);
+                    $("#comboMaxCount").text(counter.MAX_COMBO);
+                    $("#level").html(`${calcScore()}<br>${calcAcc()}%`);
+                }, 10);
+                const theInterval = setInterval(function () {
+                    const videoTime = $theVideo.duration;
+                    const currentTime = $theVideo.currentTime;
+                    if (window.spectral.length === 0) {
+                        clearInterval(theInterval);
+                        setTimeout(function () {
+                            $theVideo.pause();
+                            alert(`游戏结束\n${window.name}\n评级：${calcGrade()}\n得分：${calcScore()}\n准度acc：${calcAcc()}%\nPERFECT: ${counter.PERFECT}\nGOOD: ${counter.GOOD}\nBAD: ${counter.BAD}\nMISS: ${counter.MISS}\nMAX COMBO: ${counter.MAX_COMBO}`);
+                            window.close();
+                        }, readTime * 1.5);
+                        return;
+                    }
+                    const toShow = [];
+                    while (true) {
+                        if (window.spectral.length > 0 && window.spectral[0].t - currentTime <= readTime / 1000) {
+                            toShow.push(window.spectral[0]);
+                            window.spectral.shift();
+                        } else {
+                            break;
+                        }
+                    }
+                    if (toShow.length === 1) {
+                        showNote(toShow[0].k, toShow[0].t);
+                    } else {
+                        for (const note of toShow) {
+                            showNote(note.k, note.t, true);
+                        }
+                    }
+
+                    for (const direction of "wasd") {
+                        const checkingStack = window.stacks[direction];
+                        while (checkingStack.length > 0 && currentTime - checkingStack[0].time >= judgements.BAD / 1000) {
+                            checkingStack.shift();
+                            counter.MISS++;
+                            counter.COMBO = 0;
+                        }
+                    }
+                }, window.noteThreshold);
+
+            }
+
+            function tapExactly(note) {
+                const videoTime = $theVideo.duration;
+                const currentTime = $theVideo.currentTime;
+                const $theImg = note.$element;
+                const timeDiff = Math.abs(note.time - currentTime);
+                $theImg.stop();
+                if (timeDiff <= judgements.PERFECT / 1000) {
+                    const $div = $(`<div class="effect perfect"></div>`);
+                    $div.css({
+                        "left": $theImg.css("left"),
+                        "top": $theImg.css("top"),
+                    });
+                    $("#circleBox").append($div);
+                    setTimeout(function () {
+                        $div.addClass("effected");
+                    });
+                    $theImg.hide();
+                    $theTapVideo.currentTime = 0;
+                    $theTapVideo.play();
+                    counter.PERFECT++;
+                    counter.COMBO++;
+                    counter.MAX_COMBO = Math.max(counter.MAX_COMBO, counter.COMBO);
+                } else if (timeDiff <= judgements.GOOD / 1000) {
+                    const $div = $(`<div class="effect good"></div>`);
+                    $div.css({
+                        "left": $theImg.css("left"),
+                        "top": $theImg.css("top"),
+                    });
+                    $("#circleBox").append($div);
+                    setTimeout(function () {
+                        $div.addClass("effected");
+                    });
+                    $theImg.hide();
+                    $theTapVideo.currentTime = 0;
+                    $theTapVideo.play();
+                    counter.GOOD++;
+                    counter.COMBO++;
+                    counter.MAX_COMBO = Math.max(counter.MAX_COMBO, counter.COMBO);
+                } else {
+                    $theImg.fadeTo(0, 30);
+                    $theImg.fadeOut(200);
+                    counter.BAD++;
+                    counter.COMBO = 0;
+                }
+            }
+
+            function tapOn(direction) {
+                const videoTime = $theVideo.duration;
+                const currentTime = $theVideo.currentTime;
+                const checkingStack = window.stacks[direction];
+                let theBestChoice = {};
+                while (checkingStack.length > 0 && currentTime - checkingStack[0].time >= (judgements.BAD - 50) / 1000) {
+                    checkingStack.shift();
+                    counter.MISS++;
+                    counter.COMBO = 0;
+                }
+                if (checkingStack.length === 0) {
+                    return;
+                }
+                theBestChoice = checkingStack[0];
+                if (Math.abs(currentTime - theBestChoice.time) <= judgements.GOOD / 1000) {
+                    checkingStack.shift();
+                    tapExactly(theBestChoice);
+                    return;
+                }
+                for (let i = 0; i < checkingStack.length; i++) {
+                    const note = checkingStack[i];
+                    if (Math.abs(currentTime - note.time) <= judgements.GOOD / 1000) {
+                        checkingStack.splice(i, 1);
+                        tapExactly(note);
+                        return;
+                    }
+                }
+                if (Math.abs(currentTime - theBestChoice.time) <= judgements.BAD / 1000) {
+                    checkingStack.shift();
+                    tapExactly(theBestChoice);
+                }
+            }
+
+            const $body = $("body");
+
+            $body.keydown(function (e) {
+                if (window.started) {
+                    const videoTime = $theVideo.duration;
+                    const currentTime = $theVideo.currentTime;
+                    if ("wasd".includes(e.key)) {
+                        tapOn(e.key);
+                    }
+                }
+            });
+
+            // 移动端适配
+            $body[0].addEventListener('touchstart', function (e) {
+                if (window.started) {
+                    //  获取手指初始坐标
+                    const startX = e.targetTouches[0].pageX;
+                    const startY = e.targetTouches[0].pageY;
+                    const width = window.innerWidth;
+                    const height = window.innerHeight;
+                    const relativeX = startX - width / 2;
+                    const relativeY = startY - height / 2;
+                    if (relativeX > relativeY) {
+                        if (-relativeX > relativeY) {
+                            tapOn('w');
+                        } else {
+                            tapOn('d');
+                        }
+                    } else {
+                        if (-relativeX > relativeY) {
+                            tapOn('a');
+                        } else {
+                            tapOn('s');
+                        }
+                    }
+                }
+            });
+
+            $("#buttonStart").click(function () {
+                if (!window.SPECTRAL) {
+                    alert("关卡信息初始化失败，请返回关卡选择页面重新进入");
+                    window.close();
+                    return;
+                }
+                $("#name").text(window.name);
+                window.refreshSpectral();
+                $("#circleBox").addClass("scaleAppear");
+                $(this).fadeOut(100, function () {
+                    $("#bodyBackground").addClass("blur");
+                    setTimeout(start, 1000);
+                });
+            });
+
+            // Made By TheRedMaker
+            // w
+            let w = setInterval(function () {
+                if (opener.autoTapState) {
+                    let currMusicTime = $theVideo.currentTime;
+                    let currStack = window.stacks["w"];
+                    if (currStack.length > 0) {
+                        for (let note of currStack) {
+                            if (Math.abs(note.time - currMusicTime) <= 0.08) {
+                                tapOn("w");
+                            }
+                        }
+                    }
+                }
+            });
+            // a
+            let a = setInterval(function () {
+                if (opener.autoTapState) {
+                    let currMusicTime = $theVideo.currentTime;
+                    let currStack = window.stacks["a"];
+                    if (currStack.length > 0) {
+                        for (let note of currStack) {
+                            if (Math.abs(note.time - currMusicTime) <= 0.08) {
+                                tapOn("a");
+                            }
+                        }
+                    }
+                }
+            });
+            // s
+            let s = setInterval(function () {
+                if (opener.autoTapState) {
+                    let currMusicTime = $theVideo.currentTime;
+                    let currStack = window.stacks["s"];
+                    if (currStack.length > 0) {
+                        for (let note of currStack) {
+                            if (Math.abs(note.time - currMusicTime) <= 0.08) {
+                                tapOn("s");
+                            }
+                        }
+                    }
+                }
+            });
+            // d
+            let d = setInterval(function () {
+                if (opener.autoTapState) {
+                    let currMusicTime = $theVideo.currentTime;
+                    let currStack = window.stacks["d"];
+                    if (currStack.length > 0) {
+                        for (let note of currStack) {
+                            if (Math.abs(note.time - currMusicTime) <= 0.08) {
+                                tapOn("d");
+                            }
+                        }
+                    }
+                }
+            });
+            // Made By TheRedMaker
+        });
+    </script>
+    <style>
+
+        /*html, body {*/
+        /*    height: 100%;*/
+        /*    width: 100%;*/
+        /*}*/
+
+        .bg {
+            position: fixed;
+            background-image: url("static/新合影.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100%;
+            width: 100%;
+            transform-origin: center;
+        }
+
+        .blur {
+            transition: 1s ease-out;
+            filter: brightness(0.5) blur(10px);
+            transform: scale(1.2);
+        }
+
+        #mainBox {
+            position: fixed;
+            /*border: 1px solid black;*/
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #circleBox {
+            border-radius: 50%;
+            width: 300px;
+            height: 300px;
+            border: 1px solid red;
+            transform: scale(0);
+        }
+
+        .scaleAppear {
+            transition: 1s ease-out;
+            transform: scale(1) !important;
+        }
+
+        #middleDot {
+            background-color: black;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        * {
+            image-rendering: pixelated;
+        }
+
+        .note {
+            transform-origin: center;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(2); /* <CUSTOM> 此处修改按键大小，值是原长宽的几倍，默认为2倍 */
+        }
+
+        #buttonStart {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(2);
+        }
+
+        #theVideo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: 60px;
+            width: 300px;
+            transform: translate(-50%, -50%) translateY(-190px);
+        }
+
+        .glowing {
+            border: 3px solid yellow;
+            box-shadow: 0 0 5px yellow;
+        }
+
+        .effect {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+        }
+
+        .effected {
+            transition: 0.2s;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+        }
+
+        .perfect {
+            background-color: gold;
+        }
+
+        .good {
+            background-color: dodgerblue;
+        }
+
+        #scoreBoard {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) translateY(200px);
+            width: 300px;
+            text-align: center;
+        }
+
+        #meta {
+            position: fixed;
+            width: 300px;
+        }
+
+        #name {
+            display: inline-flex;
+            position: fixed;
+            left: 0;
+        }
+
+        #level {
+            display: inline-flex;
+            position: fixed;
+            right: 0;
+            text-align: right;
+        }
+
+        .author {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            color: gray;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="bg" id="bodyBackground" style="display: none"></div>
+
+<video src="" id="theVideo" preload="metadata" controls></video>
+<video src="static/tap.m4a" id="theTapVideo" hidden></video>
+
+<div class="author">Made by <a href="https://myworldzycpc.github.io">myworldzycpc</a>, <a href="https://theredmaker.github.io">TheRedMaker</a></div>
+
+<div id="mainBox">
+    <div id="meta">
+        <div id="name">name</div>
+        <div id="level">0000000<br>acc%</div>
+    </div>
+    <div id="circleBox">
+        <div id="middleDot">
+
+        </div>
+    </div>
+</div>
+
+<a id="buttonStart" class="btn btn-primary">开始</a>
+
+<div id="scoreBoard">
+    <p id="counters">
+        <span>PERFECT: </span><span id="perfectCount">-</span>
+        <span>GOOD: </span><span id="goodCount">-</span>
+        <span>BAD: </span><span id="badCount">-</span>
+        <span>MISS: </span><span id="missCount">-</span>
+    </p>
+    <p>
+        <span>COMBO: </span><span id="comboCount">-</span>
+        <span>MAX COMBO: </span><span id="comboMaxCount">-</span>
+    </p>
+</div>
+
+</body>
+</html>

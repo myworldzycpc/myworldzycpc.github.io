@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>关卡选择</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            const $songs = $("#songs");
+
+            const DOC = [
+                {name: "起风了", music: "起风了.m4a", spectrals: {EZ: "起风了EZ.json", HD: "起风了HD.json", IN: "起风了IN.json"}},
+                {name: "Alpha", music: "Alpha.ogg", spectral: "Alpha.json"},
+                {name: "Windy Hill", music: "Windy Hill.m4a", spectral: "Windy Hill.json"},
+                {name: "千本桜", music: "千本桜.m4a", spectral: "千本樱.json"},
+                {name: "Zombies on Your Lawn", music: "Zombies on Your Lawn.m4a", spectrals: {EZ: "Zombies on Your Lawn EZ.json", HD: "Zombies on Your Lawn HD.json", IN: "Zombies on Your Lawn IN.json"}},
+                {name: "Winter ↑ cube ↓", music: "Winter ↑ cube ↓.mp3", spectrals: {EZ: "Winter ↑ cube ↓ EZ.json", HD: "Winter ↑ cube ↓ HD.json", IN: "Winter ↑ cube ↓ IN.json"}},
+                {name: "MC地图-地心历险BGM", music: "MC地图-地心历险BGM.ogg", spectrals: {TRM: "MC地图-地心历险BGM.json", MYW: "MC地图-地心历险BGM IN.json"}},
+                {name: "玫瑰少年", music: "玫瑰少年.m4a", spectral: "玫瑰少年.json"},
+                {name: "Otherside - C418", music: "otherside.ogg", spectral: "otherside.json"},
+            ];
+
+            function start(music, spectral, name, difficulty) {
+                const w = window.open("开始游戏.html");
+                w.onload = function () {
+                    if (difficulty) {
+                        w.name = `${name} (${difficulty})`;
+                    } else {
+                        w.name = name;
+                    }
+                    w.SPECTRAL = `spectrals/${spectral}`;
+                    w.document.getElementById("theVideo").src = `musics/${music}`;
+                    if ($("#bgImg")[0].checked) {
+                        $(w.document.getElementById("bodyBackground")).show();
+                        $(w.document.getElementById("scoreBoard")).css({"color": "white"});
+                    }
+                    w.document.getElementById("theVideo").volume = $("#musicVolume")[0].volume;
+                    w.document.getElementById("theTapVideo").volume = $("#tapSoundVolume")[0].volume;
+                    w.useAuthorAvatar = $("#userAuthorAvatar")[0].checked;
+                    w.readTime = $("#readTime").val();
+                    w.noteThreshold = $("#noteThreshold").val();
+                };
+            }
+
+            const theInterval = window.setInterval(function () {
+                if ((DOC.length) === 0) {
+                    clearInterval(theInterval);
+                    $("#others").fadeIn(200);
+                    return;
+                }
+                const song = DOC.shift();
+                const $button = $(`<a class="btn btn-primary btn-block slideRight"></a>`);
+                $button.html(song.name);
+                $songs.append($button);
+                if (song.spectrals) {
+                    $button.append(`&emsp;<span style="color:rgba(255,255,255,0.5);">(${Object.keys(song.spectrals).length}难度)</span>`);
+                }
+                $button.click(function () {
+                    if (song.spectrals) {
+                        const $modal = $(`<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">选择难度</h4>
+            </div>
+            <div class="modal-body">
+                <div class="btn-group" id="btnGroup">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+`);
+                        $modal.modal("show");
+                        const $btnGroup = $modal.find("#btnGroup");
+                        for (const spectral in song.spectrals) {
+                            let btnType = "btn-default";
+                            if (spectral === "EZ") {
+                                btnType = "btn-success";
+                            } else if (spectral === "HD") {
+                                btnType = "btn-warning";
+                            } else if (spectral === "IN") {
+                                btnType = "btn-danger";
+                            }
+                            const $button = $(`<button type="button" class="btn ${btnType}">${spectral}</button>`);
+                            $btnGroup.append($button);
+                            $button.click(function () {
+                                start(song.music, song.spectrals[spectral], song.name, spectral);
+                            });
+                        }
+                    } else {
+                        start(song.music, song.spectral, song.name);
+                    }
+                });
+            }, 100);
+
+            $("#gameInfo").click(function () {
+                const $modal = $(`<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">游戏说明</h4>
+            </div>
+            <div class="modal-body">
+                <p>当音符落到环形判定线上时打击此音符。</p>
+                <p>请使用A、S、D、W进行游玩，玩法较简单，但并不一定所有人都能熟练地游玩，一般来说，只要找准了节奏，手速跟得上，再难的关卡也能迎刃而解。准度越高，得分越高，现在就开始吧</p>
+                <h2>自制谱面说明</h2>
+                <p>首先，准备好你的背景音乐，放到musics文件夹下面</p>
+                <p>接下来，打开关卡制作器.html并将#theVideo的src属性改为你的背景音乐：</p>
+                <p><img src="static/自制谱1.png" alt="自制谱1.png" class="img-thumbnail img-responsive"></p>
+                <p>然后运行关卡制作器.html，参照页面说明制完谱后你将得到一份json。</p>
+                <p>将此json放到spectrals文件夹下，建议的命名格式是曲名+难度.json，这样最不容易重复。</p>
+                <p>完成之后，请参照下面的步骤将谱面导入到游戏中</p>
+                <h2>第三方谱面导入说明</h2>
+                <p>第三方谱面一般有一个对应的音频文件和一个谱面文件，请将音频文件放到musics文件夹中，再将谱面json文件放到spectrals文件夹中，然后打开关卡选择.html，找到DOC（在文件第15行左右），然后在DOC中加入一条记录，类似于下面的示例：</p>
+                <pre>{name: "起风了", music: "起风了.m4a", spectrals: {EZ: "起风了EZ.json", HD: "起风了HD.json", IN: "起风了IN.json"}}  // 这首曲有多个不同的难度，分别对应多个谱面
+{name: "Alpha", music: "Alpha.ogg", spectral: "Alpha.json"},  // 这首曲只有一个谱面</pre>
+                <p>添加好后刷新页面，即可游玩新的谱面。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+`);
+                $modal.modal("show");
+            });
+
+            $("#gameRule").click(function () {
+                const $modal = $(`<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">游戏规则与修改方式</h4>
+            </div>
+            <div class="modal-body">
+                <p>本游戏含有一系列的游戏规则，例如：谱面流速、按键大小、判定标准、背景图片、音频播放速度等</p>
+                <p>对于此开源游戏来讲，几乎一切都可以修改</p>
+                <p>相应的修改方式在“开始游戏.html”的源代码中一般都写好了注释（带有 <code>&lt;CUSTOM&gt;</code> ）。没有注释的内容，若没有足够大的把握请不要随意修改，以防运行出错。</p>
+                <p>若要改变音频播放速度，只需要在点击开始按钮之前在音频空间右方省略号中修改即可。</p>
+                <p><img src="static/播放速度.png" alt="播放速度.png" class="img-thumbnail img-responsive"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+`);
+                $modal.modal("show");
+            });
+
+            // Made By TheRedMaker
+            let atcb = $("[name=AutoTap]");
+            window.autoTapState = false;
+            atcb.change(function () {
+                window.autoTapState = atcb.prop("checked");
+            });
+            // Made By TheRedMaker
+
+        });
+    </script>
+    <style>
+
+        @keyframes slideRight {
+            0% {
+                position: relative;
+                left: 50%;
+                opacity: 0;
+            }
+            100% {
+                position: relative;
+                left: 0;
+                opacity: 1;
+            }
+        }
+
+        .slideRight {
+            animation: slideRight 0.5s;
+        }
+
+        .author {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            color: gray;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <br>
+    <h1 class="text-center">关卡选择</h1>
+    <hr>
+    <div id="songs"></div>
+    <hr>
+    <div id="others" style="display: none">
+        <p><a class="btn btn-default" id="gameInfo">游戏说明（含自制谱面说明与第三方谱面导入说明）</a></p>
+        <p><a class="btn btn-default" id="gameRule">游戏规则与修改方式</a></p>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                游戏设置
+            </div>
+            <div class="panel-body">
+                <p><label><input class="checkbox-inline" type="checkbox" id="bgImg">&emsp;打开背景图</label></p>
+                <hr>
+                <p><label><input class="checkbox-inline" type="checkbox" id="userAuthorAvatar">&emsp;使用作者头像</label></p>
+                <hr>
+                <p>
+                    音乐音量（游戏中可调节）：<br>
+                    <audio src="static/音频测试.mp3" id="musicVolume" controls></audio>
+                </p>
+                <hr>
+                <p>
+                    打击音效音量：<br>
+                    <audio src="static/tap.m4a" id="tapSoundVolume" controls></audio>
+                </p>
+                <hr>
+                <p>
+                    <label for="readTime">读谱时间 (ms)：</label>
+                    <input id="readTime" class="form-control" value="1000">
+                </p>
+                <p>
+                    <label for="noteThreshold">音符阈值 (ms)：</label>
+                    <input id="noteThreshold" class="form-control" value="0">
+                    <span class="text-muted small">若要完全禁用多押阈值检测并最小化延时，请将此值设为0</span>
+                </p>
+            </div>
+        </div>
+        <!--todo-->
+        <!--        <p><label>谱面流速：</label></p>-->
+        <div class="author">Made by <a href="https://myworldzycpc.github.io">myworldzycpc</a>, <a href="https://theredmaker.github.io">TheRedMaker</a></div>
+        <!-- Made By TheRedMaker -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a href="https://theredmaker.github.io">TheRedMaker</a> 的附加
+            </div>
+            <div class="panel-body">
+                <label>
+                    <input class="AutoTapWCS" type="checkbox" name="AutoTap">
+                    自动点击
+                </label>
+            </div>
+        </div>
+        <!-- Made By TheRedMaker -->
+    </div>
+</div>
+
+</body>
+</html>
