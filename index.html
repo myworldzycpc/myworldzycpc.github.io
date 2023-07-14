@@ -22,7 +22,7 @@
 
         $(function () {
 
-            const VERSION = "20230602";
+            const VERSION = "20230714";
 
             function showAllHide() {
                 $("[data-privacy=hide]").show();
@@ -30,6 +30,8 @@
 
 
             const $showAllContents = $("#showAllContents")
+                .removeAttr("disabled")
+                .text("点击解锁全部内容")
                 .click(function () {
                     if (confirm(`确定要解锁全部内容？
 解锁全部内容后，你将可以看到网页上的隐藏内容，体验更多功能，以及曾经删减过的内容。
@@ -84,9 +86,10 @@
                             OJ<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="http://112.253.31.18:8213/" target="_blank">XJYOJ <span
+                            <li><a href="http://112.253.31.18:8213/" target="_blank" style="display: none"
+                                   data-privacy="hide">XJYOJ <span
                                     class="glyphicon glyphicon-new-window small"></span></a></li>
-                            <li><a href="https://oj.zqy.ac.cn/" target="_blank">XJYHydro <span
+                            <li><a href="https://oj.zqy.ac.cn/" target="_blank">AcosOJ <span
                                     class="glyphicon glyphicon-new-window small"></span></a></li>
                         </ul>
                     </li>
@@ -114,7 +117,7 @@
                         </ul>
                     </li>
                 </ul>
-                <a class="btn btn-primary navbar-btn" id="showAllContents">点击解锁全部内容</a>
+                <a class="btn btn-primary navbar-btn" id="showAllContents" disabled>使用Chrome内核浏览器(例如Edge)以解锁全部内容</a>
             </div>
         </div>
     </nav>
@@ -138,346 +141,415 @@
         <small>更大层级的页面整合</small>
     </h2>
     <hr>
-    <div class="alert alert-info">2023年5月20日我的网站删掉的内容可以在右上角解锁恢复啦！</div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">
-                OJ — XJYHydro<br>
-                <small>OIer的天堂</small>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <p>
-                解放你的创造力，迸发编程的无限可能！XJYHydro是由包括我在内的学生们创办的创新平台，连接你与编程的起源，激发你的天赋。无论你是初学者还是高级开发者，我们提供丰富的题库、挑战赛和交流社区，让你在编程的世界中展现真正的技术实力。与我们一起创造，与起源同行！
-            </p>
-            <a href="https://oj.zqy.ac.cn/" target="_blank">
-                <div class="alert alert-info">点击打开XJYHydro <span class="glyphicon glyphicon-new-window"></span></div>
-            </a>
-            <p class="text-center"><img src="static/XJYHydro.png" alt="XJYHydro" class="img-responsive img-thumbnail">
-            </p>
-            <a href="https://www.bilibili.com/video/BV1nh4y1s7P1/?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
-               target="_blank">
-                <div class="alert alert-info">点击查看宣传片 <span class="glyphicon glyphicon-new-window"></span></div>
-            </a>
-            <hr>
-            <p>Powered by <a href="//zqy.ac.cn/">Acos_X</a>, <a href="//myworldzycpc.github.io">myworldzycpc</a></p>
-        </div>
-        <div class="panel-footer">
-            2023年5月20日
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">
-                杂谈专区<br>
-                <small>发表个人见解，分享生活点滴</small>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <a href="#" class="btn btn-primary btn-block disabled" disabled>有意思的事情整理（开发中）</a>
-            <a href="#" class="btn btn-primary btn-block disabled" disabled>长得ai的好处^_^（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled> (一定顶着文本吗（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled>怎样做出选中看不见的字（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled>alert崩溃（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled>我对迷你世界的看法（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled>这一切，仿佛就发生在昨天（开发中）</a>
-            <!--            <a href="#" class="btn btn-default btn-block disabled" disabled><font color="orange">王昊亮</font>是我理想的朋友（开发中）</a>-->
-            <a href="#" class="btn btn-default btn-block disabled" disabled>数学考试时我把小于等于写成了<=（开发中）</a>
-            <!--            <a href="#" class="btn btn-default btn-block disabled" disabled>作为新纪元新生对诚信箱的理解（开发中）</a>-->
-            <!--            <a href="#" class="btn btn-default btn-block disabled" disabled>作为新纪元新生对校园超市的看法（开发中）</a>-->
-            <!--            <a href="#" class="btn btn-default btn-block disabled" disabled>作为新纪元新生对逄格峰的现状的认识...（开发中）</a>-->
-            <a href="#" class="btn btn-default btn-block disabled" disabled>如何隔空喝水（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled><i>某些老师/同学对于触屏一体机存在的某些误区</i>（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled><i>当今社会，学会系鞋带真的还有必要吗</i>（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled>一体机的正确打开方式（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled>如何做出决策（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled>
-                来用
-                <span style="font-family: consolas,JetBrains Mono,courier; ">JavaScript</span>
-                吧, 不用担心精度问题!!（开发中）
-            </a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled>引以为戒（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled>关于眼镜的颜色（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled>鬼故事 (MC、phigros)（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled>蚍蜉撼树（开发中）</a>
-            <a href="#" class="btn btn-default btn-block disabled" disabled>《硬件算法》（开发中）</a>
-
-        </div>
-    </div>
-    <div class="alert alert-warning">2022年9月30日我的网站大删减你知道吗</div>
-    <div class="alert alert-warning">2022年7月31日我的网站大删减你知道吗</div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">
-                网盘<br>
-                <small>你可以在这里存点东西<b class="text-danger">（不要指望有多么安全）</b></small>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <!--            <a href="http://101.43.140.244:4567/" target="_blank">-->
-            <!--                <div class="alert alert-info">点击打开网盘 <span class="glyphicon glyphicon-new-window"></span>-->
-            <!--                </div>-->
-            <!--            </a>-->
-            <div class="alert alert-danger">服务器数据丢失，网盘暂时停运。
-            </div>
-            <p>该网盘为免费不限速网盘</p>
-            <p>免费提供1TB的公用空间以及1GB的用户私有空间</p>
-            <p>网盘运行于局域网，并通过中转服务器进行端口转发</p>
-            <p>该网盘支持你注册自己的账户并拥有1GB的用户私有空间，你也可以使用以下公用账户以使用高达1TB的空间并与他人共享资源：</p>
-            <table class="table">
-                <tr>
-                    <th>邮箱</th>
-                    <td>public@example.com</td>
-                </tr>
-                <tr>
-                    <th>密码</th>
-                    <td>public</td>
-                </tr>
-            </table>
-            <p>该网盘支持上传文件或目录，支持在线编辑文本文件和在线查看图片，支持在线解压缩。</p>
-            <p>
-                除了支持网页端外，该网盘还支持WebDAV连接并从文件资源管理器中打开，通过本地程序直接打开和编辑。也支持映射为本地驱动器，可以在网盘上安装并运行程序（下载好后，在线即连即用，例如可以使用云存储游玩MC）。具体查看“连接”栏中的信息。</p>
-            <p class="text-danger">由于该网盘尚处于测试阶段，请不要将重要文件保存在此网盘，以防网盘遭到入侵导致信息泄露或文件丢失。</p>
-            <small class="text-muted">Powered by Cloudreve</small>
-        </div>
-        <div class="panel-footer">
-            2022年12月23日
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">
-                Minecraft 1.18.1 Forge模组制作教程<br>
-                <small>
-                    <button class="btn btn-primary btn-xs">蓝色按钮</button>
-                    是视频，
-                    <button class="btn btn-default btn-xs">白色按钮</button>
-                    是资料。
-                </small>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <a href="https://www.bilibili.com/video/BV1BS4y1t7PS" class="btn btn-block btn-primary">前言
-                TheRedMaker_和myworldzycpc的模组羁旅</a>
-            <a href="https://www.bilibili.com/video/BV1jg41117t8" class="btn btn-block btn-primary">第一集 Java 快速上手</a>
-            <a href="https://www.bilibili.com/video/BV19t4y1G76p?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
-               class="btn btn-block btn-primary">第二集 开发环境的搭建</a>
-            <a href="https://www.bilibili.com/video/BV1xe4y1D7NV?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
-               class="btn btn-block btn-primary">第三集 Minecraft 基本游戏元素介绍</a>
-            <a href="https://www.bilibili.com/video/BV11U4y1v7of?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
-               class="btn btn-block btn-primary">第四集 简单模组开发示例 玩家进入游戏发送欢迎词</a>
-            <a href="https://www.bilibili.com/video/BV1EY4y1w7tL?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
-               class="btn btn-block btn-primary">第五集 版本控制与建站</a>
-            <a href="https://www.bilibili.com/video/BV1aY4y1w7bC?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
-               class="btn btn-block btn-primary">第六集 事件 - 事件总览</a>
-            <a href="static/事件一览表.png" class="btn btn-block btn-default">事件一览表 - 根</a>
-            <a href="static/图片2.png" class="btn btn-block btn-default">事件一览表 - 物品和生物</a>
-            <a href="static/图片3.png" class="btn btn-block btn-default">事件一览表 - 玩家</a>
-            <a href="static/图片4.png" class="btn btn-block btn-default">事件一览表 - 服务器和村庄</a>
-            <a href="static/图片5.png" class="btn btn-block btn-default">事件一览表 - 世界</a>
-            <a href="https://www.bilibili.com/video/BV1pW4y1Y7zU?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
-               class="btn btn-block btn-primary">第七集 事件 - 世界事件</a>
-            <a href="https://www.bilibili.com/video/BV1xG4y1a7xi?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
-               class="btn btn-block btn-primary">第八集 事件 - 实体事件 - 根</a>
-            <a href="https://www.bilibili.com/video/BV1Yv4y1C7pY/?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
-               class="btn btn-block btn-primary">第九集 事件 - 实体事件 - 物品item与EntityEvent.Size</a>
-            <a href="https://www.bilibili.com/video/BV1pA411d7kH/?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
-               class="btn btn-block btn-primary">第十集 事件 - 实体事件 - 生物living（上）</a>
-        </div>
-        <div class="panel-footer">链接到B站哦~</div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">
-                视频专区<br>
-                <small>我的视频</small>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <!--            <iframe src="//player.bilibili.com/player.html?aid=856132219&bvid=BV1DV4y1J7nG&cid=779398036&page=1"-->
-            <!--                    class="img-thumbnail" style="aspect-ratio: 16/9;width: 100%; height: auto" allowfullscreen>-->
-            <!--            </iframe>-->
-            <!--            <iframe src="https://player.bilibili.com/player.html?aid=428509376&bvid=BV1rG411p7Nk&cid=777786072&page=1"-->
-            <!--                    class="img-thumbnail" style="aspect-ratio: 16/9;width: 100%; height: auto" allowfullscreen>-->
-            <!--            </iframe>-->
-            <!--            <iframe src="//player.bilibili.com/player.html?aid=893813102&bvid=BV1NP4y1P7XX&cid=503482194&page=1"-->
-            <!--                    class="img-thumbnail" style="aspect-ratio: 16/9;width: 100%; height: auto" allowfullscreen>-->
-            <!--            </iframe>-->
-            <p class="text-center text-danger">由于B站抽风最近iframe外链视频会自动播放，故移除外链。</p>
-        </div>
-        <div class="panel-footer">
-            <a href="https://space.bilibili.com/102578264" class="btn btn-primary">
-                去B站看我的更多视频吧
-            </a>
-        </div>
-    </div>
-    <a href="https://myworldzycpc.github.io/diaries/">
-        <div class="alert alert-info">DIARIES（公开日记）！点击查看</div>
-    </a>
-    <a href="https://myworldzycpc.github.io/streams/lixiaohuasay" style="display: none" data-privacy="hide">
-        <div class="alert alert-info">点击查看李晓华送给大家的“端午贺词” ></div>
-    </a>
     <div class="row">
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="text-center">页面整合</h3>
-                    <a href="https://myworldzycpc.github.io/yourpage/" class="btn btn-primary btn-block">打开页面整合</a>
-                </div>
-                <div class="panel-body">
-                    <a href="https://myworldzycpc.github.io/yourpage/make" class="btn btn-default btn-block">制作你的页面</a>
-                    <a href="https://myworldzycpc.github.io/yourpage/chtml"
-                       class="btn btn-default btn-block">多信息文本转html</a>
-                    <a href="https://myworldzycpc.github.io/yourpage/bhtml" class="btn btn-default btn-block">在浏览器中编译html</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="panel panel-default">
+        <div class="col-sm-3" style="position: sticky; top: 10vh; height: 85vh; overflow: scroll">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="text-center">
-                        文件链接<br>
-                        <small>各种琐碎文件</small>
+                        目录<br>
+                        <small>开发中，即将加入跳转功能</small>
+                    </h3>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">Minecraft 1.18.x Forge 事件 Wiki</li>
+                    <li class="list-group-item">遗产专区</li>
+                    <li class="list-group-item">OJ - AcosOJ</li>
+                    <li class="list-group-item">杂谈专区</li>
+                    <li class="list-group-item">网盘</li>
+                    <li class="list-group-item">Minecraft 1.18.1 Forge模组制作教程</li>
+                    <li class="list-group-item">视频专区</li>
+                    <li class="list-group-item">DIARIES（公开日记）！点击查看</li>
+                    <li class="list-group-item">页面整合</li>
+                    <li class="list-group-item">文件链接</li>
+                    <li class="list-group-item">Minecraft JSON 聊天文本生成器</li>
+                    <li class="list-group-item">作品专区</li>
+                    <li class="list-group-item">作业专区</li>
+                    <li class="list-group-item">恶搞专区</li>
+                    <li class="list-group-item">纪念专区</li>
+                    <li class="list-group-item">听歌专区</li>
+                    <li class="list-group-item">合作专区</li>
+                    <li class="list-group-item">TheRedMaker_专区</li>
+                    <li class="list-group-item">...</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-9" style="background-color: white">
+            <div class="alert alert-info">2023年5月20日我的网站删掉的内容可以在右上角解锁恢复啦！</div>
+            <div class="panel panel-default" style="opacity: 0.7">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        Minecraft 1.18.x Forge 事件 Wiki<br>
+                        <small>正在做了...</small>
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <a href="https://myworldzycpc.github.io/files/uigrid.js"
-                       class="btn btn-default btn-block">uigrid.js</a>
-                    <a href="https://myworldzycpc.github.io/files/minecraft.ttf" class="btn btn-default btn-block">minecraft.ttf</a>
-                    <a href="https://myworldzycpc.github.io/files/fzxs12.ttf" class="btn btn-default btn-block">fzxs12.ttf</a>
-                    <a href="static/forge-1.18.1-39.1.2-mdk.zip" class="btn btn-default btn-block">forge-1.18.1-39.1.2-mdk.zip</a>
-                    <a href="static/快捷栏音符盒数据包.zip" class="btn btn-default btn-block">快捷栏音符盒数据包.zip</a>
+                    <div class="alert alert-info">会是个很炫酷的东西哦</div>
                 </div>
             </div>
-
-        </div>
-        <div class="col-sm-4">
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="opacity: 0.7">
                 <div class="panel-heading">
-                    <h3 class="text-center">Minecraft JSON 聊天文本生成器</h3>
-
+                    <h3 class="text-center">
+                        遗产专区<br>
+                        <small>开发中...</small>
+                    </h3>
                 </div>
                 <div class="panel-body">
-                    <p>尚在开发中，敬请期待</p>
-                    <p>注：因为学业问题，myworldzycpc已经停止开发了😥</p>
+
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        OJ — AcosOJ<br>
+                        <small>OIer的天堂</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        解放你的创造力，迸发编程的无限可能！AcosOJ是由包括我在内的学生们创办的创新平台，连接你与编程的起源，激发你的天赋。无论你是初学者还是高级开发者，我们提供丰富的题库、挑战赛和交流社区，让你在编程的世界中展现真正的技术实力。与我们一起创造，与起源同行！
+                    </p>
+                    <a href="https://oj.zqy.ac.cn/" target="_blank">
+                        <div class="alert alert-info">点击打开AcosOJ <span class="glyphicon glyphicon-new-window"></span>
+                        </div>
+                    </a>
+                    <p class="text-center"><img src="static/XJYHydro.png" alt="AcosOJ"
+                                                class="img-responsive img-thumbnail">
+                    </p>
+                    <a href="https://www.bilibili.com/video/BV1yM4y1E7jr/?spm_id_from=333.999.0.0"
+                       target="_blank">
+                        <div class="alert alert-info">点击查看宣传片 <span class="glyphicon glyphicon-new-window"></span></div>
+                    </a>
+                    <hr>
+                    <p>Powered by <a href="//zqy.ac.cn/">Acos_X</a>, <a href="//myworldzycpc.github.io">myworldzycpc</a>
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    2023年5月20日
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        杂谈专区<br>
+                        <small>发表个人见解，分享生活点滴</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <a href="#" class="btn btn-primary btn-block disabled" disabled>有意思的事情整理（开发中）</a>
+                    <a href="#" class="btn btn-primary btn-block disabled" disabled>长得ai的好处^_^（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled> (一定顶着文本吗（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>怎样做出选中看不见的字（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>alert崩溃（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>我对迷你世界的看法（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>这一切，仿佛就发生在昨天（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled><font color="orange">王昊亮</font>是我理想的朋友(你们怎么都喜欢弄这个)（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>数学考试时我把小于等于写成了<=（开发中）</a>
+                    <!--            <a href="#" class="btn btn-default btn-block disabled" disabled>作为新纪元新生对诚信箱的理解（开发中）</a>-->
+                    <!--            <a href="#" class="btn btn-default btn-block disabled" disabled>作为新纪元新生对校园超市的看法（开发中）</a>-->
+                    <!--            <a href="#" class="btn btn-default btn-block disabled" disabled>作为新纪元新生对逄格峰的现状的认识...（开发中）</a>-->
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>如何隔空喝水（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled"
+                       disabled><i>某些老师/同学对于触屏一体机存在的某些误区</i>（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled><i>当今社会，学会系鞋带真的还有必要吗</i>（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>一体机的正确打开方式（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>如何做出决策（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>
+                        来用
+                        <span style="font-family: consolas,JetBrains Mono,courier; ">JavaScript</span>
+                        吧, 不用担心精度问题!!（开发中）
+                    </a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>引以为戒（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>关于眼镜的颜色（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>鬼故事 (MC、phigros)（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>蚍蜉撼树（开发中）</a>
+                    <a href="#" class="btn btn-default btn-block disabled" disabled>《硬件算法》（开发中）</a>
+
+                </div>
+            </div>
+            <div class="alert alert-warning">2022年9月30日我的网站大删减你知道吗</div>
+            <div class="alert alert-warning">2022年7月31日我的网站大删减你知道吗</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        网盘<br>
+                        <small>你可以在这里存点东西<b class="text-danger">（不要指望有多么安全）</b></small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <!--            <a href="http://101.43.140.244:4567/" target="_blank">-->
+                    <!--                <div class="alert alert-info">点击打开网盘 <span class="glyphicon glyphicon-new-window"></span>-->
+                    <!--                </div>-->
+                    <!--            </a>-->
+                    <div class="alert alert-danger">服务器数据丢失，网盘暂时停运。
+                    </div>
+                    <p>该网盘为免费不限速网盘</p>
+                    <p>免费提供1TB的公用空间以及1GB的用户私有空间</p>
+                    <p>网盘运行于局域网，并通过中转服务器进行端口转发</p>
+                    <p>该网盘支持你注册自己的账户并拥有1GB的用户私有空间，你也可以使用以下公用账户以使用高达1TB的空间并与他人共享资源：</p>
+                    <table class="table">
+                        <tr>
+                            <th>邮箱</th>
+                            <td>public@example.com</td>
+                        </tr>
+                        <tr>
+                            <th>密码</th>
+                            <td>public</td>
+                        </tr>
+                    </table>
+                    <p>该网盘支持上传文件或目录，支持在线编辑文本文件和在线查看图片，支持在线解压缩。</p>
+                    <p>
+                        除了支持网页端外，该网盘还支持WebDAV连接并从文件资源管理器中打开，通过本地程序直接打开和编辑。也支持映射为本地驱动器，可以在网盘上安装并运行程序（下载好后，在线即连即用，例如可以使用云存储游玩MC）。具体查看“连接”栏中的信息。</p>
+                    <p class="text-danger">由于该网盘尚处于测试阶段，请不要将重要文件保存在此网盘，以防网盘遭到入侵导致信息泄露或文件丢失。</p>
+                    <small class="text-muted">Powered by Cloudreve</small>
+                </div>
+                <div class="panel-footer">
+                    2022年12月23日
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        Minecraft 1.18.1 Forge模组制作教程<br>
+                        <small>
+                            <button class="btn btn-primary btn-xs">蓝色按钮</button>
+                            是视频，
+                            <button class="btn btn-default btn-xs">白色按钮</button>
+                            是资料。
+                        </small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <a href="https://www.bilibili.com/video/BV1BS4y1t7PS" class="btn btn-block btn-primary">前言
+                        TheRedMaker_和myworldzycpc的模组羁旅</a>
+                    <a href="https://www.bilibili.com/video/BV1jg41117t8" class="btn btn-block btn-primary">第一集 Java
+                        快速上手</a>
+                    <a href="https://www.bilibili.com/video/BV19t4y1G76p?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+                       class="btn btn-block btn-primary">第二集 开发环境的搭建</a>
+                    <a href="https://www.bilibili.com/video/BV1xe4y1D7NV?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+                       class="btn btn-block btn-primary">第三集 Minecraft 基本游戏元素介绍</a>
+                    <a href="https://www.bilibili.com/video/BV11U4y1v7of?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+                       class="btn btn-block btn-primary">第四集 简单模组开发示例 玩家进入游戏发送欢迎词</a>
+                    <a href="https://www.bilibili.com/video/BV1EY4y1w7tL?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+                       class="btn btn-block btn-primary">第五集 版本控制与建站</a>
+                    <a href="https://www.bilibili.com/video/BV1aY4y1w7bC?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+                       class="btn btn-block btn-primary">第六集 事件 - 事件总览</a>
+                    <a href="static/事件一览表.png" class="btn btn-block btn-default">事件一览表 - 根</a>
+                    <a href="static/图片2.png" class="btn btn-block btn-default">事件一览表 - 物品和生物</a>
+                    <a href="static/图片3.png" class="btn btn-block btn-default">事件一览表 - 玩家</a>
+                    <a href="static/图片4.png" class="btn btn-block btn-default">事件一览表 - 服务器和村庄</a>
+                    <a href="static/图片5.png" class="btn btn-block btn-default">事件一览表 - 世界</a>
+                    <a href="https://www.bilibili.com/video/BV1pW4y1Y7zU?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+                       class="btn btn-block btn-primary">第七集 事件 - 世界事件</a>
+                    <a href="https://www.bilibili.com/video/BV1xG4y1a7xi?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+                       class="btn btn-block btn-primary">第八集 事件 - 实体事件 - 根</a>
+                    <a href="https://www.bilibili.com/video/BV1Yv4y1C7pY/?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+                       class="btn btn-block btn-primary">第九集 事件 - 实体事件 - 物品item与EntityEvent.Size</a>
+                    <a href="https://www.bilibili.com/video/BV1pA411d7kH/?share_source=copy_web&vd_source=7b3e8102c3744b76a745175f94306177"
+                       class="btn btn-block btn-primary">第十集 事件 - 实体事件 - 生物living（上）</a>
+                </div>
+                <div class="panel-footer">链接到B站哦~</div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        视频专区<br>
+                        <small>我的视频</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <!--            <iframe src="//player.bilibili.com/player.html?aid=856132219&bvid=BV1DV4y1J7nG&cid=779398036&page=1"-->
+                    <!--                    class="img-thumbnail" style="aspect-ratio: 16/9;width: 100%; height: auto" allowfullscreen>-->
+                    <!--            </iframe>-->
+                    <!--            <iframe src="https://player.bilibili.com/player.html?aid=428509376&bvid=BV1rG411p7Nk&cid=777786072&page=1"-->
+                    <!--                    class="img-thumbnail" style="aspect-ratio: 16/9;width: 100%; height: auto" allowfullscreen>-->
+                    <!--            </iframe>-->
+                    <!--            <iframe src="//player.bilibili.com/player.html?aid=893813102&bvid=BV1NP4y1P7XX&cid=503482194&page=1"-->
+                    <!--                    class="img-thumbnail" style="aspect-ratio: 16/9;width: 100%; height: auto" allowfullscreen>-->
+                    <!--            </iframe>-->
+                    <p class="text-center text-danger">由于B站抽风最近iframe外链视频会自动播放，故移除外链。</p>
+                </div>
+                <div class="panel-footer">
+                    <a href="https://space.bilibili.com/102578264" class="btn btn-primary">
+                        去B站看我的更多视频吧
+                    </a>
+                </div>
+            </div>
+            <a href="https://myworldzycpc.github.io/diaries/">
+                <div class="alert alert-info">DIARIES（公开日记）！点击查看</div>
+            </a>
+            <a href="https://myworldzycpc.github.io/streams/lixiaohuasay" style="display: none" data-privacy="hide">
+                <div class="alert alert-info">点击查看李晓华送给大家的“端午贺词” ></div>
+            </a>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="text-center">页面整合</h3>
+                            <a href="https://myworldzycpc.github.io/yourpage/"
+                               class="btn btn-primary btn-block">打开页面整合</a>
+                        </div>
+                        <div class="panel-body">
+                            <a href="https://myworldzycpc.github.io/yourpage/make"
+                               class="btn btn-default btn-block">制作你的页面</a>
+                            <a href="https://myworldzycpc.github.io/yourpage/chtml"
+                               class="btn btn-default btn-block">多信息文本转html</a>
+                            <a href="https://myworldzycpc.github.io/yourpage/bhtml" class="btn btn-default btn-block">在浏览器中编译html</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="text-center">
+                                文件链接<br>
+                                <small>各种琐碎文件</small>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <a href="https://myworldzycpc.github.io/files/uigrid.js"
+                               class="btn btn-default btn-block">uigrid.js</a>
+                            <a href="https://myworldzycpc.github.io/files/minecraft.ttf"
+                               class="btn btn-default btn-block">minecraft.ttf</a>
+                            <a href="https://myworldzycpc.github.io/files/fzxs12.ttf" class="btn btn-default btn-block">fzxs12.ttf</a>
+                            <a href="static/forge-1.18.1-39.1.2-mdk.zip" class="btn btn-default btn-block">forge-1.18.1-39.1.2-mdk.zip</a>
+                            <a href="static/快捷栏音符盒数据包.zip" class="btn btn-default btn-block">快捷栏音符盒数据包.zip</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="text-center">Minecraft JSON 聊天文本生成器</h3>
+
+                        </div>
+                        <div class="panel-body">
+                            <p>尚在开发中，敬请期待</p>
+                            <p>注：因为学业问题，myworldzycpc已经停止开发了😥</p>
+
+                        </div>
+                    </div>
 
                 </div>
             </div>
 
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        作品专区<br>
+                        <small>记录点滴生活</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <a href="https://myworldzycpc.github.io/zhushi/" class="btn btn-default btn-block"
+                       style="display: none"
+                       data-privacy="hide">会当泽至会泽感 with 注释</a>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        作业专区<br>
+                        <small>不明白作业的可以来这里看哦~<br>（注：因为学业日益繁重，myworldzycpc已经没空更新这个了😭）</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <a href="https://myworldzycpc.github.io/files/hmw/0531.html" class="btn btn-default btn-block"
+                       style="display: none" data-privacy="hide">5月31日作业</a>
+                    <a href="https://myworldzycpc.github.io/files/hmw/0602.html" class="btn btn-default btn-block"
+                       style="display: none" data-privacy="hide">6月2日作业</a>
+                    <a href="https://myworldzycpc.github.io/files/hmw/0604.html" class="btn btn-default btn-block"
+                       style="display: none" data-privacy="hide">6月4日作业</a>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        恶搞专区<br>
+                        <small>适时放松一下心情也是挺好的，但是请先保存重要数据！</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <a href="https://myworldzycpc.github.io/files/problems.html"
+                       class="btn btn-default btn-block">错误连环</a>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        纪念专区<br>
+                        <small>总是那个声音，在你的耳畔回响...</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <a href="https://myworldzycpc.github.io/files/plj123567/" class="btn btn-default btn-block"
+                       style="display: none" data-privacy="hide">yzwhzyc（密码：yzwhzyc123456）</a>
+                    <a href="https://myworldzycpc.github.io/the_end_poem/" class="btn btn-default btn-block">终末之诗</a>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        听歌专区<br>
+                        <small>一首老歌唱了又唱，一些人会永远放在心上<br>（注：音频加载比较慢，有时候点击屏幕听不到声音，有时候会出现歌词不同步。要获得最佳体验，最好跟我要源文件！）</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <a href="https://myworldzycpc.github.io/破苍穹/" class="btn btn-default btn-block">踏山河</a>
+                    <a href="https://myworldzycpc.github.io/HelenKeller/" class="btn btn-default btn-block">宇宙之终结</a>
+                    <a href="https://myworldzycpc.github.io/static/three_obs.mp4"
+                       class="btn btn-default btn-block">同时欣赏三个作品（视频）</a>
+                </div>
+
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        合作专区<br>
+                        <small>与<a href="https://theredmaker.github.io">TheRedMaker_</a>合作完成的项目</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <a href="https://theredmaker.github.io/Biogenerator/"
+                       class="btn btn-default btn-block">Minecraft生物生成器</a>
+                    <a href="https://theredmaker.github.io/hlnbt/" class="btn btn-default btn-block">Minecraft NBT
+                        高亮（技术工具）</a>
+                    <a href="https://myworldzycpc.github.io/音游/关卡选择.html" class="btn btn-default btn-block">Steve 和 Alex
+                        （音游）（完整版不从这里下载）</a>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        TheRedMaker_专区<br>
+                        <small>说来话长</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <a href="https://theredmaker.github.io/MinecraftDropItemGenerator"
+                       class="btn btn-default btn-block">Minecraft掉落物生成器（半成品）</a>
+                    <a href="https://theredmaker.github.io/The_Universe/" class="btn btn-default btn-block">The
+                        Universe</a>
+                </div>
+            </div>
+
+            <!--    <div class="panel panel-default">-->
+            <!--        <div class="panel-heading">-->
+
+            <!--        </div>-->
+            <!--        <div class="panel-body">-->
+
+            <!--        </div>-->
+            <!--    </div>-->
         </div>
     </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">
-                作品专区<br>
-                <small>记录点滴生活</small>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <a href="https://myworldzycpc.github.io/zhushi/" class="btn btn-default btn-block" style="display: none"
-               data-privacy="hide">会当泽至会泽感 with 注释</a>
-
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">
-                作业专区<br>
-                <small>不明白作业的可以来这里看哦~<br>（注：因为学业日益繁重，myworldzycpc已经没空更新这个了😭）</small>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <a href="https://myworldzycpc.github.io/files/hmw/0531.html" class="btn btn-default btn-block"
-               style="display: none" data-privacy="hide">5月31日作业</a>
-            <a href="https://myworldzycpc.github.io/files/hmw/0602.html" class="btn btn-default btn-block"
-               style="display: none" data-privacy="hide">6月2日作业</a>
-            <a href="https://myworldzycpc.github.io/files/hmw/0604.html" class="btn btn-default btn-block"
-               style="display: none" data-privacy="hide">6月4日作业</a>
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">
-                恶搞专区<br>
-                <small>适时放松一下心情也是挺好的，但是请先保存重要数据！</small>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <a href="https://myworldzycpc.github.io/files/problems.html" class="btn btn-default btn-block">错误连环</a>
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">
-                纪念专区<br>
-                <small>总是那个声音，在你的耳畔回响...</small>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <a href="https://myworldzycpc.github.io/files/plj123567/" class="btn btn-default btn-block"
-               style="display: none" data-privacy="hide">yzwhzyc（密码：yzwhzyc123456）</a>
-            <a href="https://myworldzycpc.github.io/the_end_poem/" class="btn btn-default btn-block">终末之诗</a>
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">
-                听歌专区<br>
-                <small>一首老歌唱了又唱，一些人会永远放在心上<br>（注：音频加载比较慢，有时候点击屏幕听不到声音，有时候会出现歌词不同步。要获得最佳体验，最好跟我要源文件！）</small>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <a href="https://myworldzycpc.github.io/破苍穹/" class="btn btn-default btn-block">踏山河</a>
-            <a href="https://myworldzycpc.github.io/HelenKeller/" class="btn btn-default btn-block">宇宙之终结</a>
-            <a href="https://myworldzycpc.github.io/static/three_obs.mp4"
-               class="btn btn-default btn-block">同时欣赏三个作品（视频）</a>
-        </div>
-
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">
-                合作专区<br>
-                <small>与<a href="https://theredmaker.github.io">TheRedMaker_</a>合作完成的项目</small>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <a href="https://theredmaker.github.io/Biogenerator/" class="btn btn-default btn-block">Minecraft生物生成器</a>
-            <a href="https://theredmaker.github.io/hlnbt/" class="btn btn-default btn-block">Minecraft NBT 高亮（技术工具）</a>
-            <a href="https://myworldzycpc.github.io/音游/关卡选择.html" class="btn btn-default btn-block">Steve 和 Alex
-                （音游）（完整版不从这里下载）</a>
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">
-                TheRedMaker_专区<br>
-                <small>说来话长</small>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <a href="https://theredmaker.github.io/MinecraftDropItemGenerator" class="btn btn-default btn-block">Minecraft掉落物生成器（半成品）</a>
-            <a href="https://theredmaker.github.io/The_Universe/" class="btn btn-default btn-block">The Universe</a>
-        </div>
-    </div>
-
-    <!--    <div class="panel panel-default">-->
-    <!--        <div class="panel-heading">-->
-
-    <!--        </div>-->
-    <!--        <div class="panel-body">-->
-
-    <!--        </div>-->
-    <!--    </div>-->
-
-
 </div>
 </body>
 </html>
