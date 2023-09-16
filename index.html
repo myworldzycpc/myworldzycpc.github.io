@@ -31,7 +31,7 @@
 
             const $showAllContents = $("#showAllContents")
                 .removeAttr("disabled")
-                .text("点击解锁全部内容")
+                .text("解锁全部")
                 .click(function () {
                     if (confirm(`确定要解锁全部内容？
 解锁全部内容后，你将可以看到网页上的隐藏内容，体验更多功能，以及曾经删减过的内容。
@@ -144,7 +144,7 @@
     </h2>
     <hr>
     <div class="row">
-        <div class="col-sm-3" style="position: sticky; top: 10vh; height: 85vh; overflow: scroll">
+        <div class="col-sm-3" style="position: sticky; top: 60px; height: calc(100vh - 60px); overflow: scroll">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="text-center">
@@ -153,6 +153,7 @@
                     </h3>
                 </div>
                 <ul class="list-group">
+                    <li class="list-group-item">言论</li>
                     <li class="list-group-item">我的动态站点</li>
                     <li class="list-group-item">Minecraft 1.18.x Forge 事件 Wiki</li>
                     <li class="list-group-item">遗产专区</li>
@@ -177,6 +178,16 @@
             </div>
         </div>
         <div class="col-sm-9" style="background-color: white">
+            <div class="panel panel-default" style="opacity: 0.7">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        言论
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p>在做了在做了</p>
+                </div>
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="text-center">
