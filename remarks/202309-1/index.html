@@ -7,10 +7,72 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML" async></script>
+    <script type="text/x-mathjax-config;executed=true">
+        window.MathJax.Hub.Config({
+            showProcessingMessages: false, //关闭js加载过程信息
+            messageStyle: "none", //不显示信息
+            jax: ["input/TeX", "output/HTML-CSS"],
+            tex2jax: {
+                inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+                displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+                skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+            },
+            "HTML-CSS": {
+                availableFonts: ["STIX", "TeX"], //可选字体
+                showMathMenu: false //关闭右击菜单显示
+            }
+        });
+        //下面第三个参数可以不写，默认对整个html内的latex进行翻译
+        window.MathJax.Hub.Queue(["Typeset", MathJax.Hub,document.getElementsByClassName("ck-content")]);
+    </script>
     <title>言论 - 2023年9月第一次整理</title>
     <style>
+        .to-lzx {
+            background-color: #003cff !important;
+            color: #ffffff !important;
+        }
 
+        .to-lzx::after {
+            content: " (DataErr0r)";
+            opacity: 0.5;
+        }
+
+        .to-whl {
+            background-color: #ffbe00 !important;
+            color: #ffffff !important;
+        }
+
+        .to-whl::after {
+            content: " (糖炒基岩)";
+            opacity: 0.5;
+        }
+
+        .mirrorX {
+            display: inline-block;
+            transform: rotateY(180deg);
+        }
+
+        img {
+            cursor: zoom-in;
+        }
     </style>
+    <script>
+        $(function () {
+            $("[data-to]").each(function () {
+                const to = $(this).attr("data-to");
+                const $heading = $(`<div class="panel-heading">To: </div>`);
+                for (const toOne of to.split(",")) {
+                    $heading.append(`<span class="badge to-${toOne}">${toOne}</span> `);
+                }
+                $(this).removeClass("panel-default").addClass("panel-warning").prepend($heading);
+            });
+            $("img").addClass("img-thumbnail").addClass("img-responsive").click(function () {
+                window.open($(this).attr("src"));
+            });
+        });
+
+    </script>
 </head>
 <body>
 <div class="container">
@@ -19,14 +81,230 @@
         <h1>言论</h1>
         <p>2023年9月第一次整理</p>
     </div>
-    <div class="panel panel-default">
+    <div class="alert alert-warning">
+        <b>Warning: 时间不分先后！</b>
+    </div>
+    <div class="panel panel-default" data-to="lzx,whl">
         <div class="panel-body">
-            <p>我的网站上有一个现实世界的副本</p>
-        </div>
-        <div class="panel-footer">
-            To:
+            <p>原来阉割是这个意思？</p>
+            <p><img src="阉割.jpg"></p>
+            <blockquote>网易阉割掉了MC许多内容...<img src="网易阉割.png"></blockquote>
         </div>
     </div>
+    <div class="panel panel-default" data-to="lzx">
+        <div class="panel-body">
+            <p>你的卡疤在哪只胳膊上？</p>
+            <p><img src="卡疤.jpg"></p>
+        </div>
+    </div>
+    <div class="panel panel-default" data-to="lzx,whl">
+        <div class="panel-body">
+            <p>你和我都是少数的，脱离了主要人流（你是滨海实验小学→XJY/NEWS(New Epoch Weifang School)，我是滨海实验小学→滨海三中→XJY/NEWS，都是极少数），为什么呢...</p>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p>生物书上出现奇怪的东西了</p>
+            <p><img src="奇怪的东西.jpg" style="height: 200px"></p>
+        </div>
+    </div>
+    <div class="panel panel-default" data-to="zqy,jwt">
+        <div class="panel-body">
+            那次jwt和zqy来找我的时候，我在一个汉堡店请他们吃了个饭，我们都带着电脑，吃完饭后我们就掏出电脑来了，路人以为我们是来参加信息学奥赛的...
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            有些语言文字的书写并不在意左右的，比如φ是phi，而<span class="mirrorX">φ</span>也是phi
+        </div>
+    </div>
+    <div class="panel panel-default" data-to="whl">
+        <div class="panel-body">
+            <p>“你要再长一些，与伙伴保持一致，可不能闹分裂啊”</p>
+            <p>那要是情况刚好相反呢？</p>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            “这是箱子中的whl吧”
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            “企者不立，跨者不行”
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            “Tell Me Your Secrets”
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            某班执笔-6
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p>"我和你差不多，但正好相反"矛盾吗？有时并不矛盾，比如：</p>
+            <blockquote>
+                <ul>
+                    <li>LZX: "我左手底力>14，右手底力<12"</li>
+                    <li>"我和你差不多，但正好相反"</li>
+                </ul>
+            </blockquote>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            神奇手环：能显示时间，又能显示对方相对自己的方向、距离
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            倒盘子时有盘子从我头顶上端过去了
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            是重帘低垂抑或星云闪<span style="color: orange; text-shadow: 0 0 2px orange; font-size: 20px">亮</span>
+        </div>
+    </div>
+    <div class="panel panel-default" data-to="whl">
+        <div class="panel-body">
+            <p>其实我好害怕你qs，还有一年你们又要<b>JunXion</b>（双关语）了，而且持续两个星期…</p>
+            <p><img alt="JunXion Between Life And Death" src="JunXion.jpg" class="img-responsive img-thumbnail"></p>
+            <p>人生就像打电话，不是你先挂，就是我先挂</p>
+            <p>你还能活多久呢qwq，你能活得</p>
+            <p>生活中的危险还有很多，淹不死别人的水可能会淹得死你...你可千万不要qs</p>
+            <p>你qs了我会悲痛一<b>被子</b>（双关语）的</p>
+            <p>不要，不要qs...</p>
+            <p><i>（我是真心诚意的♥）</i></p>
+            <p><i>（你看起来太容易qs了qwq...）</i></p>
+            <p><i>（而且最近日本在排放核污水，我真的好担心啊）</i></p>
+            <p><i>（即使你qs了，你依旧是我夜空中最闪<span style="color: orange; text-shadow: 0 0 2px orange">亮</span>的那颗星⭐）</i></p>
+            <p>
+                $$
+                \small这是天上的太阳\qquad\qquad\qquad\\
+                \large
+                \begin{array}{ccc}
+                &\downarrow&\\
+                王&昊&亮\leftarrow\small这是月亮\\
+                &\uparrow&
+                \end{array}\\
+                \small这是天空\qquad\qquad\qquad
+                $$
+            </p>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            执子之手，与子偕老
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            短暂而又璀璨的生命，却不被他人所铭记
+        </div>
+    </div>
+    <div class="panel panel-default" data-to="whl">
+        <div class="panel-body">
+            也许确实，大多数人都不太想当排头吧，因为他们希望有人跟着，你说的很有道理。而我，却只是好奇你的感受
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            whl对我来说是不可替代的
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p>众所周知，有很多人在参加ccf举办的比赛的时候写暴戾语言被禁赛的，但有这样一个故事：一个人在参赛的时候用电脑自带的录音机录了一段暴戾语言，编码进了代码里提交了，运行代码的时候会播放这段音频，然后因为有20个测试点，所以评测的时候音频播放了20次...</p>
+            <p>还有一个是在代码里写while (true)调用beep函数播放Funny Town的，但由于1s的时限只播放了前四个音，程序就被kill掉了，但这四个音同样重复了20遍（据说虽然只有这四个音但评测员居然听出来了）</p>
+            <p><i>（以上内容纯属娱乐，请勿轻易尝试）</i></p>
+            <blockquote>论<code>fu(k,y0u,c(f))</code>算暴力语言吗？（fu是findU的缩写，y0u是u的第1个y坐标，c是check缩写）</blockquote>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <blockquote>颜回，是孔子弟子中学问最好的，但却是身体最差的</blockquote>
+            <p>虽然长得ai的身体不一定差，但却是让我想到：“学习最好的，但却是长得最ai的”</p>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h2>关于回车和换行符的区别：</h2>
+            <table>
+                <tr>
+                    <td><code>hello\rworld</code>:</td>
+                    <td><code>hello\nworld</code>:</td>
+                    <td><code>hello\r\nworld</code>:</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="height: 0; font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace">hello</div>
+                        <div style="font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace">world</div>
+                    </td>
+                    <td>
+                        <div style="font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace">hello</div>
+                        <div style="font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;world</div>
+                    </td>
+                    <td>
+                        <div style="font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace">hello</div>
+                        <div style="font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace">world</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>只回车不换行</td>
+                    <td>只换行不回车</td>
+                    <td>回车并换行</td>
+                </tr>
+            </table>
+            <p><b>注：千万别在[线传打字机]上尝试vim！</b></p>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            网课的时候，化学老师经常放原神结果，9月11日上课的时候，同学们说到原神化学老师居然不知道是什么
+        </div>
+    </div>
+    <div class="panel panel-default" data-to="whl">
+        <div class="panel-body">
+            其实我们班有个同学，她也16岁了，但声音还和个小孩子一样，也没长毛毛他叫秦泽宇，我之前似乎提到过他和你的一个共同点/
+        </div>
+    </div>
+    <div class="panel panel-default" data-to="whl">
+        <div class="panel-body">
+            听说在你们这一届之前，新纪元初中部也是两周放一次，你们可真是幸运
+        </div>
+    </div>
+    <div class="panel panel-default" data-to="whl">
+        <div class="panel-body">
+            你说“我玩会原”的时候，我想到了那个yuan也好久没听你这么说过了
+        </div>
+    </div>
+    <div class="panel panel-default" data-to="whl">
+        <div class="panel-body">
+            “break down barriers”，你一定会想到“屏障🚫”
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            现在我知道脑裂是什么意思了—我也打不来脑裂
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            Gradle Deamon = 呆萌的Gradle或者呆萌的大象/
+        </div>
+    </div>
+    <div class="panel panel-default" data-to="whl">
+        <div class="panel-body">
+            “青稞，娃们吃了肚里难受，愣闹哄哩”我终于明白了一点—也许你不是不会肚子疼，而是有些正常的饭吃了，必然会肚子疼，而你早已...
+        </div>
+    </div>
+
+
 </div>
 </body>
 </html>
