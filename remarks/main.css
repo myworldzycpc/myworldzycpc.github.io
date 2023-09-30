@@ -1,0 +1,32 @@
+.to-lzx {
+    background-color: #003cff !important;
+    color: #ffffff !important;
+}
+
+.to-lzx::after {
+    content: " (DataErr0r)";
+    opacity: 0.5;
+}
+
+.to-whl {
+    background-color: #ffbe00 !important;
+    color: #ffffff !important;
+}
+
+.to-whl::after {
+    content: " (糖炒基岩)";
+    opacity: 0.5;
+}
+
+.mirrorX {
+    display: inline-block;
+    transform: rotateY(180deg);
+}
+
+img {
+    cursor: zoom-in;
+}
+
+.poem {
+    font-family: 楷体;
+}

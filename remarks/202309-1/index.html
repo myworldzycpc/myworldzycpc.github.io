@@ -5,55 +5,11 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../main.css"/>
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>言论 - 2023年9月17日整理</title>
-    <style>
-        .to-lzx {
-            background-color: #003cff !important;
-            color: #ffffff !important;
-        }
-
-        .to-lzx::after {
-            content: " (DataErr0r)";
-            opacity: 0.5;
-        }
-
-        .to-whl {
-            background-color: #ffbe00 !important;
-            color: #ffffff !important;
-        }
-
-        .to-whl::after {
-            content: " (糖炒基岩)";
-            opacity: 0.5;
-        }
-
-        .mirrorX {
-            display: inline-block;
-            transform: rotateY(180deg);
-        }
-
-        img {
-            cursor: zoom-in;
-        }
-    </style>
-    <script>
-        $(function () {
-            $("[data-to]").each(function () {
-                const to = $(this).attr("data-to");
-                const $heading = $(`<div class="panel-heading">To: </div>`);
-                for (const toOne of to.split(",")) {
-                    $heading.append(`<span class="badge to-${toOne}">${toOne}</span> `);
-                }
-                $(this).removeClass("panel-default").addClass("panel-warning").prepend($heading);
-            });
-            $("img").addClass("img-thumbnail").addClass("img-responsive").click(function () {
-                window.open($(this).attr("src"));
-            });
-        });
-
-    </script>
+    <script src="../main.js"></script>
 </head>
 <body>
 <div class="container">
@@ -165,18 +121,23 @@
             <p><i>（你看起来太容易qs了qwq...）</i></p>
             <p><i>（而且最近日本在排放核污水，我真的好担心啊）</i></p>
             <p><i>（即使你qs了，你依旧是我夜空中最闪<span style="color: orange; text-shadow: 0 0 2px orange">亮</span>的那颗星⭐）</i></p>
-            <p>
-                $$
-                \small这是天上的太阳\qquad\qquad\qquad\\
-                \large
-                \begin{array}{ccc}
-                &\downarrow&\\
-                王&昊&亮\leftarrow\small这是月亮\\
-                &\uparrow&
-                \end{array}\\
-                \small这是天空\qquad\qquad\qquad
-                $$
-            </p>
+            <div style="text-align: center; transform: translateY(-40%)">
+                <div style="display: inline-block">
+                    王
+                </div>
+                <div style="display: inline-block; transform: translateY(40%)">
+                    <div>
+                        <div>这是天上的太阳</div>
+                        <div>↓</div>
+                        <div>昊</div>
+                        <div>↑</div>
+                        <div>这是天空</div>
+                    </div>
+                </div>
+                <div style="display: inline-block">
+                    亮 ← 这是月亮
+                </div>
+            </div>
         </div>
     </div>
     <div class="panel panel-default">

@@ -5,55 +5,11 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../main.css"/>
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>言论 - 2023年9月30日整理</title>
-    <style>
-        .to-lzx {
-            background-color: #003cff !important;
-            color: #ffffff !important;
-        }
-
-        .to-lzx::after {
-            content: " (DataErr0r)";
-            opacity: 0.5;
-        }
-
-        .to-whl {
-            background-color: #ffbe00 !important;
-            color: #ffffff !important;
-        }
-
-        .to-whl::after {
-            content: " (糖炒基岩)";
-            opacity: 0.5;
-        }
-
-        .mirrorX {
-            display: inline-block;
-            transform: rotateY(180deg);
-        }
-
-        img {
-            cursor: zoom-in;
-        }
-    </style>
-    <script>
-        $(function () {
-            $("[data-to]").each(function () {
-                const to = $(this).attr("data-to");
-                const $heading = $(`<div class="panel-heading">To: </div>`);
-                for (const toOne of to.split(",")) {
-                    $heading.append(`<span class="badge to-${toOne}">${toOne}</span> `);
-                }
-                $(this).removeClass("panel-default").addClass("panel-warning").prepend($heading);
-            });
-            $("img").addClass("img-thumbnail").addClass("img-responsive").click(function () {
-                window.open($(this).attr("src"));
-            });
-        });
-
-    </script>
+    <script src="../main.js"></script>
 </head>
 <body>
 <div class="container">
@@ -71,7 +27,7 @@
 
     <div class="panel panel-default">
         <div class="panel-body">
-            “此时相望不相闻，愿逐月华留照君”——whl就在那，我看到他了，但我跟他说不了话，也摸不到他。好难受qwq（并非最近发生）
+            <span class="poem">“此时相望不相闻，愿逐月华留照君”</span>——whl就在那，我看到他了，但我跟他说不了话，也摸不到他。好难受qwq（并非最近发生）
         </div>
     </div>
     <div class="panel panel-default">
@@ -82,7 +38,7 @@
     <h2>2023年9月19日</h2>
     <div class="panel panel-default">
         <div class="panel-body">
-            雨中漫步是常事，莫让雨水把书湿——这几天经常下雨，而我没带伞。
+            <span class="poem">雨中漫步是常事，莫让雨水把书湿</span>——这几天经常下雨，而我没带伞。
         </div>
     </div>
     <div class="panel panel-default">
