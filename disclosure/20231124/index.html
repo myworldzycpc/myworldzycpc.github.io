@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .section {
+            margin-bottom: 30px;
+            border-radius: 20px;
+            padding: 20px;
+            background-color: rgba(239, 233, 228, 0.26);
+            border: 3px dotted black;
+            color: white;
+            text-shadow: 2px 2px 2px #00000030;
+        }
+
+        .big-title {
+            text-align: center;
+            background-color: #147ed9;
+            color: #000000;
+            border: 3px solid black;
+        }
+
+        .big-title-text {
+            color: #7ed901;
+            font-size: 32px;
+        }
+
+        .little-title {
+            color: #d9be00;
+            -webkit-text-stroke: 1px black;
+            font-size: 24px;
+            text-shadow: 4px 4px 4px #00000080;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        .introduce {
+            background-color: #dcdcdc;
+            color: #7a7a7a;
+            border: 3px solid black;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: underline;
+            color: blue;
+            text-underline-offset: 2px;
+        }
+
+        .small {
+            color: #c2c2c2;
+            font-size: 10px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .img-block {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .poem {
+            font-family: 楷体;
+        }
+
+    </style>
+    <title>本周爆料 — 2023上⑤</title>
+</head>
+<body style="
+    background-image: url(草地背景.jpg);
+    width: 100%;
+    margin: 0;
+    background-size: cover;
+    background-position: center;
+    padding-bottom: 100px;
+    ">
+<div style="
+    /* display: inline-block; */
+    padding: 20px;
+    font-family: '汉仪雅酷黑';
+">
+    <div style="
+    border-radius: 20px;
+    padding: 20px;
+    color: black;
+    background-color: rgb(238,100,0);
+    border: 3px solid black;
+    /* text-shadow: 0 0 5px white; */
+    margin: 30px 0;
+    text-align: center;
+    font-size: 50px;
+">本周爆料 ⑤
+    </div>
+
+    <div class="section introduce">
+        <p>终于！期中考试考完了qwq，这是我们这一学期仅次于期末考试的一次大型考试，虽然一对答案就是<span class="poem">“大题错错如急雨，小题错错如私语”</span>，但这都是往事了，总之，期中考试结束了，标志着我们离放假又近了一步。这次放假是放两天，下次估计就只放一天了。但总之，今周末可以真正放两天了awa</p>
+    </div>
+
+    <div class="section big-title">
+        <div class="big-title-text">一、本周记录纸详情</div>
+    </div>
+    <div class="section">
+        <p>整理本周待办事项记录纸时，竟整整掏出了32页纸（不包括纸质邮件和碎片思考等占页数较多的长文），我自己都很不可思议，这也是我为什么要抽出一块来写这个的原因。</p>
+        <p>包含消息缓冲区9也，言论与时事6页，零碎事项5页，校事汇总、问题、查找资料各2页，物资准备、对话、网站建设、实时、代写、习惯养成各一页。</p>
+    </div>
+    <div class="section">
+        <div class="little-title">2、ScriptMC</div>
+        <p>许多人都觉得MC模组开发太麻烦了，需要构建，打包，才能丢到服务器里运行，而且运行时还不能改代码…</p>
+        <p>于是我设想了一种模组，他可以动态地加载Python或JavaScript脚本，脚本运行时可直接修改脚本进行调试，同时他提供了网络接口，便于外部程序协调多个MC服务器。</p>
+        <p>这样岂不是只有一个模组就一劳永逸了，可以随便装卸其他“模组”而不影响游戏运行了——其实与其说是“模组”，不如说是“插件”。因为这样的脚步似乎更符合MC服务端插件的定义。</p>
+    </div>
+    <div class="section big-title">
+        <div class="big-title-text">二、本周新坑</div>
+        <p>其实是本周新开计划，但由于每次都做不完，只能攒着日后再做，故叫做“坑”了。但我坚信，再伟大的计划，也总有做完的那一天——<span class="poem">“譬如平地，虽覆一篑，进，吾往也。”</span></p>
+    </div>
+    <div class="section">
+        <div class="little-title">1、uni-mc</div>
+        <p>受uni-app的启发，我设想了个uni-mc。</p>
+        <p>虽然mc本身就是跨平台的，但众所周知，模组加载器有很多，像是目前主流的Forge和Fabric。而像WorldEdit这种不仅提供了模组，还提供了服务端插件。</p>
+        <p>于是我有了个想法：既然开发跨加载器的内容需要为各个加载器进行不同的编码，那么我们能不能只写一次代码，然后通过转换程序去适应不同的环境呢？于是uni-mc的想法就此诞生。</p>
+    </div>
+    <div class="section">
+        <div class="little-title">2、暂不透露，嘿嘿</div>
+    </div>
+    <div class="section">
+        <p>其实还有其他一些坑比如视频、谱面、模组等，为了避免抄袭创意，暂不透露。</p>
+    </div>
+    <div class="section big-title">
+        <div class="big-title-text">三、旧坑...</div>
+    </div>
+    <div class="section">
+        <p>没错，就是更新网站、PWM、言论、问题、堆了好几个星期了呢</p>
+    </div>
+    <div class="section big-title big-title-text">四、重大发现</div>
+    <div class="section">
+        <div class="little-title text-center">— 1 —</div>
+        <p>什么？别告诉我你不知道半屏，希沃一体机五指上滑再下滑！我已经忍不住要告知于众了</p>
+        <img src="半屏手势.png" alt="半屏手势" class="img-block">
+    </div>
+    <div class="section">
+        <div class="little-title text-center">— 2 —</div>
+        <p>2023年11月16日上体育时遇到一个音游人，音游人并不稀奇，但他居然能听出我敲的歌来...（详见言论）</p>
+    </div>
+    <div style="
+        float: left;
+        border: 3px solid black;
+        /* margin: 30px 0px; */
+        border-radius: 10px;
+        background-color: #ffcc00;
+        padding: 10px;
+    ">
+        myworldzycpc
+    </div>
+    <div style="
+        float: right;
+        border: 3px solid #ff9100;
+        /* margin: 30px 0px; */
+        border-radius: 10px;
+        background-color: #fff2ca;
+        padding: 10px;
+    ">
+        2023年11月24日
+    </div>
+</div>
+
+</body>
+</html>
