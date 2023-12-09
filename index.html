@@ -68,6 +68,14 @@
             /*background: repeating-conic-gradient(#bbb 0, #bbb 25%, #eee 0, #eee 50%);*/
             /*background-size: 30px 30px;*/
         }
+
+        #visitCount {
+            border-top: 1px solid #e0e0e0;
+            background: #f0f0f0;
+            padding: 5px;
+            text-align: center;
+            color: #808080;
+        }
     </style>
 </head>
 <body>
@@ -101,17 +109,17 @@
                                     class="glyphicon glyphicon-new-window small"></span></a></li>
                         </ul>
                     </li>
-<!--                    <li class="dropdown">-->
-<!--                        <a href="https://myworldzycpc.github.io/yourpage/" class="dropdown-toggle"-->
-<!--                           data-toggle="dropdown">-->
-<!--                            页面整合<span class="caret"></span>-->
-<!--                        </a>-->
-<!--                        <ul class="dropdown-menu" role="menu">-->
-<!--                            <li><a href="https://myworldzycpc.github.io/yourpage/make">制作你的页面</a></li>-->
-<!--                            <li><a href="https://myworldzycpc.github.io/yourpage/chtml">多信息文本转html</a></li>-->
-<!--                            <li><a href="https://myworldzycpc.github.io/yourpage/bhtml">在浏览器中编译html</a></li>-->
-<!--                        </ul>-->
-<!--                    </li>-->
+                    <!--                    <li class="dropdown">-->
+                    <!--                        <a href="https://myworldzycpc.github.io/yourpage/" class="dropdown-toggle"-->
+                    <!--                           data-toggle="dropdown">-->
+                    <!--                            页面整合<span class="caret"></span>-->
+                    <!--                        </a>-->
+                    <!--                        <ul class="dropdown-menu" role="menu">-->
+                    <!--                            <li><a href="https://myworldzycpc.github.io/yourpage/make">制作你的页面</a></li>-->
+                    <!--                            <li><a href="https://myworldzycpc.github.io/yourpage/chtml">多信息文本转html</a></li>-->
+                    <!--                            <li><a href="https://myworldzycpc.github.io/yourpage/bhtml">在浏览器中编译html</a></li>-->
+                    <!--                        </ul>-->
+                    <!--                    </li>-->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             文件链接<span class="caret"></span>
@@ -263,8 +271,8 @@
                 <div class="panel-body">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-<!--                            <div class="float-left">每日一言：</div>-->
-<!--                            <div class="float-right"><a class="btn btn-primary">查看详情</a></div>-->
+                            <!--                            <div class="float-left">每日一言：</div>-->
+                            <!--                            <div class="float-right"><a class="btn btn-primary">查看详情</a></div>-->
                             每日一言
                         </div>
                         <div class="panel-body"></div>
@@ -666,5 +674,17 @@
         </div>
     </div>
 </div>
+<!--AcosX的访问次数统计-->
+<div id="visitCount"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('https://analysis.hoshinoai.live/')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('visitCount').textContent = data;
+            })
+            .catch(console.error);
+    });
+</script>
 </body>
 </html>
