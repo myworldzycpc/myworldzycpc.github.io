@@ -280,3 +280,6 @@ body.show {
     margin-right: 15px;
 }
 
+.bg {
+    width: 0;
+}
