@@ -1,0 +1,16 @@
+body {
+    display: none;
+}
+
+body.show {
+    display: unset;
+}
+
+a {
+    cursor: pointer;
+}
+
+#shownHidden {
+    color: red;
+    font-weight: bold;
+}

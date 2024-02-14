@@ -1,0 +1,282 @@
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+[data-to=lzx] {
+    background-color: #003cff !important;
+    color: #ffffff !important;
+}
+
+[data-to=lzx]::after {
+    content: " (DataErr0r)";
+    opacity: 0.5;
+}
+
+[data-to=whl] {
+    background-color: #ffbe00 !important;
+    color: #ffffff !important;
+}
+
+[data-to=whl]::after {
+    content: " (糖炒基岩)";
+    opacity: 0.5;
+}
+
+.mirrorX {
+    display: inline-block;
+    transform: rotateY(180deg);
+}
+
+img {
+    cursor: zoom-in;
+}
+
+.poem {
+    font-family: 楷体;
+}
+
+.to {
+    display: inline-flex;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: #e7e7e7;
+    color: #868686;
+}
+
+.to::before {
+    content: "To: ";
+}
+
+.to-item {
+    margin-left: 6px;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+.content:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.tags {
+    margin-bottom: 10px;
+}
+
+.big-badge, .feature, .to, .important, .timely, .hidden-content, .flag {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.feature {
+    background-color: #76cdfc;
+    color: #007dc4;
+}
+
+.feature::before {
+    content: "标签: ";
+}
+
+.feature-item {
+    margin-left: 6px;
+}
+
+.ai {
+    background-color: #ff8700;
+}
+
+.ai::before {
+    content: "ǎi";
+}
+
+
+.oi {
+    background-color: #006fff;
+}
+
+.oi::before {
+    content: "OI";
+}
+
+.badge {
+    font-size: unset;
+    line-height: unset;
+    padding: 3px 10px;
+    font-weight: unset;
+}
+
+.important {
+    background-color: #fffeb5;
+    color: #ff9000;
+}
+
+.important::before {
+    content: "⚠ 重大事件";
+}
+
+.timely {
+    background-color: #beffc2;
+    color: #00d20a;
+}
+
+.timely::before {
+    content: "📅 时事";
+}
+
+.hidden-content {
+    background-color: #ffd8d8;
+    color: #ff4040;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: bold;
+    animation: blink 2s infinite;
+}
+
+.hidden-content:active {
+    filter: brightness(0.9);
+}
+
+.hidden-content::before {
+    content: "隐藏内容 (点我)";
+}
+
+.hidden-content:hover::before {
+    content: "此条内容默认不会显示 (点击查看详情)";
+}
+
+.bg-id {
+    height: 0;
+    z-index: 999;
+    color: black;
+    opacity: 0.2;
+    font-size: 32px;
+    position: relative;
+    top: -5px;
+    left: -15px;
+    font-weight: bold;
+    line-height: 16px;
+    font-style: italic;
+    user-select: none;
+}
+
+/*.flag {*/
+/*    margin-top: 10px;*/
+/*}*/
+
+[data-flag=ocr] {
+    background-color: #a9dcff;
+    color: #009dff;
+}
+
+[data-flag=ocr]::before {
+    content: "OCR（图片转文字生成，可能会有较多错误）";
+}
+
+[data-flag=undone] {
+    background-color: #d7d7d7;
+    color: #757575;
+}
+
+[data-flag=undone]::before {
+    content: "未完成的内容（原文可能是完整的，但暂未整理到网页）";
+}
+
+[data-flag=ellipsis] {
+    background-color: #dda9ff;
+    color: #9900ff;
+}
+
+[data-flag=ellipsis]::before {
+    content: "原文省略（总之原文字呈现就是这么简写的）";
+}
+
+[data-flag=cite] {
+    background-color: #ffa9f4;
+    color: #ff00c3;
+}
+
+[data-flag=cite]::before {
+    content: "引用（原文引用了来自其他资产的文本，暂未整理到网页）";
+}
+
+[data-flag=rich] {
+    background-color: #ffe9d3;
+    color: #ffa600;
+}
+
+[data-flag=rich]::before {
+    content: "富文本（原文使用的富文本，暂未整理到网页）";
+}
+
+[data-flag=removed] {
+    background-color: #ffa9a9;
+    color: #ff0000;
+}
+
+[data-flag=removed]::before {
+    content: "原文删除（原文已删除）";
+}
+
+li:has(.hidden-content) {
+    display: none;
+}
+
+body.show-hidden li:has(.hidden-content) {
+    display: block;
+}
+
+body {
+    display: none;
+}
+
+body.show {
+    display: block;
+}
+
+.panel-heading {
+    cursor: pointer;
+}
+
+.panel:has(.collapse.in) .panel-heading:hover::after {
+    content: "（点击折叠）";
+    opacity: 0.5;
+}
+
+.panel:has(.collapse:not(.in)) .panel-heading:hover::after {
+    content: "（点击展开）";
+    opacity: 0.5;
+}
+
+.panel-heading:active {
+    filter: brightness(0.9);
+}
+
+.bar {
+    display: flex;
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    padding: 10px 0;
+    border-bottom: 1px solid #00000030;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.bar button:not(:last-child) {
+    margin-right: 15px;
+}
+

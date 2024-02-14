@@ -31,9 +31,9 @@
 
             const $showAllContents = $("#showAllContents")
                 .removeAttr("disabled")
-                .text("解锁全部")
+                .text("显示隐藏的内容")
                 .click(function () {
-                    if (confirm(`确定要解锁全部内容？
+                    if (confirm(`确定要显示全部内容？
 解锁全部内容后，你将可以看到网页上的隐藏内容，体验更多功能，以及曾经删减过的内容。
 你需要确保你对我本人足够熟悉，同时，查看隐藏内容意味着您必须保证不传播或曲解隐藏内容中的一切内容，包括但不限于文字传播、口头传播、截屏、录屏、拍照、直播、链接、网页以及通过其他媒体渠道散播于众或转告他人。\n任何人不得承认隐藏内容（除解锁全部内容的按钮以外）在此网页上存在。\n如果您同意并保密（这并不难做），请点击“确定”，如果对自己此方面的能力存在质疑，请点击“取消”。`)) {
                         if (confirm(`是否记住您的决定？（您可以清除cookie以不再记住）`)) {
@@ -148,6 +148,8 @@
             </div>
             <div class="col-lg-5 col-md-7 col-sm-8" style="position: sticky; top: 25%">
                 <h1>myworldzycpc</h1>
+                <!--badges.toozhao.com的访问次数统计-->
+                <p><img src="https://badges.toozhao.com/badges/01HNS6VDM94ZG7GSNPBSK7SK31/blue.svg" alt="访问人数"></p>
                 <p>myworldzhangyichen@163.com</p>
                 <p>↓ 向下滑动，开启新旅程 ↓</p>
             </div>
@@ -158,14 +160,14 @@
         <small>更大层级的页面整合</small>
     </h2>
     <hr>
-    <div class="panel panel-default" style="opacity: 0.7">
+    <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="text-center">
                 最新发布
             </h3>
         </div>
         <div class="panel-body">
-
+            <a class="btn btn-block btn-primary" href="remarks/index.html?origin=index" target="_blank">新的索引（包含2023~2024年度上学期③~⑨）</a>
         </div>
     </div>
     <div class="row">
@@ -203,6 +205,19 @@
             </div>
         </div>
         <div class="col-sm-9" style="background-color: white">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="text-center">
+                        点滴记录与零碎话语<br>
+                        <small>以我的视角，了解xjy发生的点滴</small>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <a class="btn btn-block btn-default disabled">2023年上学期①</a>
+                    <a class="btn btn-block btn-default disabled">2023年上学期②</a>
+                    <a class="btn btn-block btn-primary" href="remarks/index.html?origin=index" target="_blank">新的索引（包含2023~2024年度上学期③~⑨）</a>
+                </div>
+            </div>
             <div class="panel panel-default" style="opacity: 0.7">
                 <div class="panel-heading">
                     <h3 class="text-center">
@@ -674,16 +689,16 @@
         </div>
     </div>
 </div>
-<!--AcosX的访问次数统计-->
-<div id="visitCount"></div>
-<!--badges.toozhao.com的访问次数统计-->
-<div hidden><img src="https://badges.toozhao.com/badges/01HNS6VDM94ZG7GSNPBSK7SK31/blue.svg"/></div>
+<div id="visitCount">
+    <!--AcosX的访问次数统计-->
+    <span id="zqyVisitCount"></span>
+</div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         fetch('https://analysis.hoshinoai.live/')
             .then(response => response.text())
             .then(data => {
-                document.getElementById('visitCount').textContent = data;
+                document.getElementById('zqyVisitCount').textContent = data;
             })
             .catch(console.error);
     });
