@@ -281,5 +281,6 @@ body.show {
 }
 
 .bg {
+    display: inline-block;
     width: 0;
 }
