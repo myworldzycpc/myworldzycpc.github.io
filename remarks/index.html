@@ -13,119 +13,126 @@
 <body>
 <div class="container">
     <br/>
-    <div class="jumbotron">
-        <h1>点滴记录与零碎话语</h1>
-        <p>索引</p>
-        <p id="shownHidden" style="display: none">你已得到授权查看隐藏内容。</p>
+    <div id="askWho" style="display: none">
+        <h1 style="text-align: center">你是？</h1>
+        <a class="btn btn-block btn-primary btn-lg" style="white-space: revert" onclick="alert('请单独联系myworldzycpc以获得专属链接，否则你将只能查看公开内容')">上海新纪元教育集团旗下学校的学生（包括毕业生）或 TRM</a>
+        <a class="btn btn-block btn-default btn-lg" onclick="$('#askWho').fadeOut(200, function () {$('#content').fadeIn(200)})">其他人</a>
     </div>
-    <table class="table">
-        <tr>
-            <th>大周</th>
-            <th>具体时段</th>
-            <th>概要<b>（AI生成）</b></th>
-            <th>入站时间</th>
-            <th>查看</th>
-        </tr>
-        <tr>
-            <td>2023~2024学年度上学期③</td>
-            <td>2023年10月02日 到 2023年10月14日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td>2024年2月13日</td>
-            <td><a data-target="23b/3/">查看全部内容</a></td>
-        </tr>
-        <tr>
-            <td>2023~2024学年度上学期④</td>
-            <td>2023年10月22日 到 2023年10月22日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td>2024年2月13日</td>
-            <td><a data-target="23b/4/">查看全部内容</a></td>
-        </tr>
-        <tr>
-            <td>2023~2024学年度上学期⑤</td>
-            <td>2023年10月22日 到 2023年11月16日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td>2024年2月13日</td>
-            <td><a data-target="23b/5/">查看全部内容</a></td>
-        </tr>
-        <tr>
-            <td>2023~2024学年度上学期⑥</td>
-            <td>2023年11月26日 到 2023年12月08日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td>2024年2月13日</td>
-            <td><a data-target="23b/6/">查看全部内容</a></td>
-        </tr>
-        <tr>
-            <td>2023~2024学年度上学期⑦</td>
-            <td>2023年12月11日 到 2023年12月29日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td>2024年2月13日</td>
-            <td><a data-target="23b/7/">查看全部内容</a></td>
-        </tr>
-        <tr>
-            <td>2023~2024学年度上学期⑧</td>
-            <td>2024年01月02日 到 2024年01月13日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td>2024年2月13日</td>
-            <td><a data-target="23b/8/">查看全部内容</a></td>
-        </tr>
-        <tr>
-            <td>2023~2024学年度上学期⑨</td>
-            <td>2024年01月15日 到 2024年01月27日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td>2024年2月13日</td>
-            <td><a data-target="23b/9/">查看全部内容</a></td>
-        </tr>
+    <div id="content" style="display: none">
+        <div class="jumbotron">
+            <h1>点滴记录与零碎话语</h1>
+            <p>索引</p>
+            <p id="shownHidden" style="display: none">你已得到授权查看隐藏内容。</p>
+        </div>
+        <table class="table">
+            <tr>
+                <th>大周</th>
+                <th>具体时段</th>
+                <th>概要<b>（AI生成）</b></th>
+                <th>入站时间</th>
+                <th>查看</th>
+            </tr>
+            <tr>
+                <td>2023~2024学年度上学期③</td>
+                <td>2023年10月02日 到 2023年10月14日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td>2024年2月13日</td>
+                <td><a data-target="23b/3/">查看全部内容</a></td>
+            </tr>
+            <tr>
+                <td>2023~2024学年度上学期④</td>
+                <td>2023年10月22日 到 2023年10月22日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td>2024年2月13日</td>
+                <td><a data-target="23b/4/">查看全部内容</a></td>
+            </tr>
+            <tr>
+                <td>2023~2024学年度上学期⑤</td>
+                <td>2023年10月22日 到 2023年11月16日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td>2024年2月13日</td>
+                <td><a data-target="23b/5/">查看全部内容</a></td>
+            </tr>
+            <tr>
+                <td>2023~2024学年度上学期⑥</td>
+                <td>2023年11月26日 到 2023年12月08日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td>2024年2月13日</td>
+                <td><a data-target="23b/6/">查看全部内容</a></td>
+            </tr>
+            <tr>
+                <td>2023~2024学年度上学期⑦</td>
+                <td>2023年12月11日 到 2023年12月29日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td>2024年2月13日</td>
+                <td><a data-target="23b/7/">查看全部内容</a></td>
+            </tr>
+            <tr>
+                <td>2023~2024学年度上学期⑧</td>
+                <td>2024年01月02日 到 2024年01月13日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td>2024年2月13日</td>
+                <td><a data-target="23b/8/">查看全部内容</a></td>
+            </tr>
+            <tr>
+                <td>2023~2024学年度上学期⑨</td>
+                <td>2024年01月15日 到 2024年01月27日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td>2024年2月13日</td>
+                <td><a data-target="23b/9/">查看全部内容</a></td>
+            </tr>
 
-        <tr>
-            <td>2023~2024学年度下学期寒假</td>
-            <td>2024年02月17日 到 2024年02月23日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td></td>
-            <td><a data-target="24a/寒假/">查看全部内容</a></td>
-        </tr>
-        <tr>
-            <td>2023~2024学年度下学期①</td>
-            <td>2024年02月25日 到 2024年03月07日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td></td>
-            <td><a data-target="24a/1/">查看全部内容</a></td>
-        </tr>
-        <tr>
-            <td>2023~2024学年度下学期②</td>
-            <td>2024年03月13日 到 2024年03月21日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td></td>
-            <td><a data-target="24a/2/">查看全部内容</a></td>
-        </tr>
-        <tr>
-            <td>2023~2024学年度下学期③</td>
-            <td>2024年03月25日 到 2024年04月03日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td></td>
-            <td><a data-target="24a/3/">查看全部内容</a></td>
-        </tr>
-        <tr>
-            <td>2023~2024学年度下学期④</td>
-            <td>2024年04月07日 到 2024年04月18日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td>2024年4月21日</td>
-            <td><a data-target="24a/4/">查看全部内容</a></td>
-        </tr>
-        <tr>
-            <td>2023~2024学年度下学期⑤</td>
-            <td>2024年04月22日 到 2024年04月30日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td>2024年5月1日</td>
-            <td><a data-target="24a/5/">查看全部内容</a></td>
-        </tr>
-        <tr>
-            <td>2023~2024学年度下学期⑥</td>
-            <td>2024年05月06日 到 2024年05月18日</td>
-            <td><span class="text-muted">无内容</span></td>
-            <td>2024年5月18日</td>
-            <td><a data-target="24a/6/">查看全部内容</a></td>
-        </tr>
-    </table>
+            <tr>
+                <td>2023~2024学年度下学期寒假</td>
+                <td>2024年02月17日 到 2024年02月23日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td></td>
+                <td><a data-target="24a/寒假/">查看全部内容</a></td>
+            </tr>
+            <tr>
+                <td>2023~2024学年度下学期①</td>
+                <td>2024年02月25日 到 2024年03月07日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td></td>
+                <td><a data-target="24a/1/">查看全部内容</a></td>
+            </tr>
+            <tr>
+                <td>2023~2024学年度下学期②</td>
+                <td>2024年03月13日 到 2024年03月21日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td></td>
+                <td><a data-target="24a/2/">查看全部内容</a></td>
+            </tr>
+            <tr>
+                <td>2023~2024学年度下学期③</td>
+                <td>2024年03月25日 到 2024年04月03日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td></td>
+                <td><a data-target="24a/3/">查看全部内容</a></td>
+            </tr>
+            <tr>
+                <td>2023~2024学年度下学期④</td>
+                <td>2024年04月07日 到 2024年04月18日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td>2024年4月21日</td>
+                <td><a data-target="24a/4/">查看全部内容</a></td>
+            </tr>
+            <tr>
+                <td>2023~2024学年度下学期⑤</td>
+                <td>2024年04月22日 到 2024年04月30日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td>2024年5月1日</td>
+                <td><a data-target="24a/5/">查看全部内容</a></td>
+            </tr>
+            <tr>
+                <td>2023~2024学年度下学期⑥</td>
+                <td>2024年05月06日 到 2024年05月18日</td>
+                <td><span class="text-muted">无内容</span></td>
+                <td>2024年5月18日</td>
+                <td><a data-target="24a/6/">查看全部内容</a></td>
+            </tr>
+        </table>
+    </div>
 
     <!-- 模态框（Modal） -->
     <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">

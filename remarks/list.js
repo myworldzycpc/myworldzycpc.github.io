@@ -12,12 +12,14 @@ $(function () {
     const origin = getURLParam('origin');
     if (origin === 'qq') {
         $('body').addClass('show');
+        $("#content").fadeIn(200);
         if (getURLParam('showHidden') === 'true') {
             window.showHidden = true;
             $("#shownHidden").show();
         }
     } else if (origin === 'index') {
         $('body').addClass('show');
+        $("#askWho").fadeIn(200);
     } else {
         alert(`请勿刷新页面或复制网址，请使用原链接重新进入`);
         window.close();

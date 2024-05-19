@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>如何设置插件优先级？ - 十万个为什么 - myworldzycpc</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <br>
+    <div class="jumbotron">
+        <h1>
+            如何设置插件优先级？
+        </h1>
+    </div>
+    <div class="flex w-full flex-col gap-1 juice:empty:hidden juice:first:pt-[3px]">
+        <div class="markdown prose w-full break-words dark:prose-invert light"><p>在Minecraft服务器中设置插件优先级，主要涉及到<code>plugin.yml</code>文件中的<code>load</code>和<code>softdepend</code>/<code>depend</code>选项。以下是详细步骤：</p>
+            <ol>
+                <li><p><strong>打开<code>plugin.yml</code>文件</strong>：每个插件都有一个<code>plugin.yml</code>文件，这是插件的配置文件。</p></li>
+                <li><p><strong>设置<code>load</code>选项</strong>：这个选项用于定义插件加载的阶段。可选值有<code>STARTUP</code>和<code>POSTWORLD</code>。<code>STARTUP</code>会在服务器启动时立即加载，<code>POSTWORLD</code>会在世界加载之后加载。</p>
+                    <pre><div class="dark bg-gray-950 rounded-md border-[0.5px] border-token-border-medium"><div class="overflow-y-auto p-4 text-left undefined" dir="ltr"><code class="!whitespace-pre hljs language-yaml"><span class="hljs-attr">load:</span> <span class="hljs-string">STARTUP</span>
+</code></div></div></pre>
+                </li>
+                <li><p><strong>使用<code>depend</code>和<code>softdepend</code>选项</strong>：</p>
+                    <ul>
+                        <li><code>depend</code>：强制依赖，表示当前插件必须在列出的插件之后加载。如果依赖的插件不可用，当前插件也不会加载。</li>
+                        <li><code>softdepend</code>：软依赖，表示当前插件在列出的插件之后加载，但如果依赖的插件不可用，当前插件仍然会加载。</li>
+                    </ul>
+                    <pre><div class="dark bg-gray-950 rounded-md border-[0.5px] border-token-border-medium"><div class="overflow-y-auto p-4 text-left undefined" dir="ltr"><code class="!whitespace-pre hljs language-yaml"><span class="hljs-attr">depend:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">插件A</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">插件B</span>
+
+<span class="hljs-attr">softdepend:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">插件C</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">插件D</span>
+</code></div></div></pre>
+                </li>
+                <li><p><strong>示例<code>plugin.yml</code></strong>：</p>
+                    <pre><div class="dark bg-gray-950 rounded-md border-[0.5px] border-token-border-medium"><div class="overflow-y-auto p-4 text-left undefined" dir="ltr"><code class="!whitespace-pre hljs language-yaml"><span class="hljs-attr">name:</span> <span class="hljs-string">MyPlugin</span>
+<span class="hljs-attr">version:</span> <span class="hljs-number">1.0</span>
+<span class="hljs-attr">main:</span> <span class="hljs-string">com.example.MyPlugin</span>
+<span class="hljs-attr">load:</span> <span class="hljs-string">STARTUP</span>
+<span class="hljs-attr">depend:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">Essentials</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">WorldEdit</span>
+<span class="hljs-attr">softdepend:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">Vault</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">PlaceholderAPI</span>
+</code></div></div></pre>
+                </li>
+            </ol>
+            <p>通过这些设置，你可以控制插件的加载顺序，从而确保某些关键插件先加载，以保证你的插件能够正常运行。注意在修改完<code>plugin.yml</code>文件后，重新启动服务器以应用更改。</p></div>
+    </div>
+</div>
+</body>
+</html>
