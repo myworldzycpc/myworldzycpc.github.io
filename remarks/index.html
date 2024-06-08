@@ -15,16 +15,21 @@
     <br/>
     <div id="askWho" style="display: none">
         <h1 style="text-align: center">你是？</h1>
-        <a class="btn btn-block btn-primary btn-lg" style="white-space: revert" onclick="alert('请单独联系myworldzycpc以获得专属链接，否则你将只能查看公开内容')">上海新纪元教育集团旗下学校的学生（包括毕业生）或 TRM</a>
+        <a class="btn btn-block btn-primary btn-lg" style="white-space: revert" onclick="alert('请单独联系myworldzycpc以获得专属链接，否则你将只能查看公开内容')">上海新纪元教育集团旗下学校的学生（包括毕业生）或 TRM 或其他可能知道 myworldzycpc 个人信息的人</a>
         <a class="btn btn-block btn-default btn-lg" onclick="$('#askWho').fadeOut(200, function () {$('#content').fadeIn(200)})">其他人</a>
     </div>
     <div id="content" style="display: none">
         <div class="jumbotron">
             <h1>点滴记录与零碎话语</h1>
+            <!--badges.toozhao.com的访问次数统计-->
+            <p><img src="https://badges.toozhao.com/badges/01HZV2HVNR1RGTGWBNZ2P2816X/blue.svg" alt="访问人数"/></p>
             <p>索引</p>
             <p id="shownHidden" style="display: none">你已得到授权查看隐藏内容。</p>
         </div>
-        <table class="table">
+        <div class="btn btn-default btn-block" onclick="reverseTable()">反转表格顺序</div>
+        <p></p>
+        <table id="myTable" class="table">
+            <thead>
             <tr>
                 <th>大周</th>
                 <th>具体时段</th>
@@ -32,6 +37,8 @@
                 <th>入站时间</th>
                 <th>查看</th>
             </tr>
+            </thead>
+            <tbody>
             <tr>
                 <td>2023~2024学年度上学期③</td>
                 <td>2023年10月02日 到 2023年10月14日</td>
@@ -135,9 +142,10 @@
                 <td>2023~2024学年度下学期⑦</td>
                 <td>2024年05月19日 到 2024年06月05日</td>
                 <td><span class="text-muted">无内容</span></td>
-                <td></td>
+                <td>2024年6月8日</td>
                 <td><a data-target="24a/7/">查看全部内容</a></td>
             </tr>
+            </tbody>
         </table>
     </div>
 

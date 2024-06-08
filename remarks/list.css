@@ -14,3 +14,11 @@ a {
     color: red;
     font-weight: bold;
 }
+
+#visitCount {
+    border-top: 1px solid #e0e0e0;
+    background: #f0f0f0;
+    padding: 5px;
+    text-align: center;
+    color: #808080;
+}

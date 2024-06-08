@@ -15,21 +15,21 @@
                 times++;
                 $(".changeable").each(function () {
                     const $this = $(this);
-                    const things = $this.attr("data-things").split("|")
-                    const word = things[times % things.length]
+                    const things = $this.attr("data-things").split("|");
+                    const word = things[times % things.length];
 
                     if (word !== $this.html()) {
                         $this.animate({"opacity": "0"}, 200, function () {
 
-                            $this.html(word)
-                            $this.animate({"opacity": "1"}, 200)
-                        })
+                            $this.html(word);
+                            $this.animate({"opacity": "1"}, 200);
+                        });
                     }
-                })
+                });
             }
 
-            change()
-            window.setInterval(change, 1000)
+            change();
+            window.setInterval(change, 1000);
 
             function getCookie(cname) {
                 const name = cname + "=";
@@ -96,11 +96,12 @@
 <div class="container">
     <br>
     <div class="jumbotron">
-        <h1>myworldzycpc的公开日记</h1>
+        <h1>myworldzycpc的公开日记<small class="text-danger">（已弃用）</small></h1>
         <p>下面有的字会不停闪来闪去，那是拿不准的。</p>
     </div>
     <p>下面的框是按照时间顺序从晚到早排列的，而每个框里面的内容是按照从早到晚排列的</p>
     <hr>
+    <div class="alert alert-danger">新的<a href="../remarks/">点滴记录与零碎话语</a>已启用，此公开日记已废弃不再使用</div>
     <div class="alert alert-info">补全中，目前截止到2022年6月2日（因为后续的diaries都写到OJ上了，而近期数据丢失，导致我需要重新写）</div>
 
     <a class="btn btn-primary navbar-btn" id="showAllContents">点击解锁全部内容</a>

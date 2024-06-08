@@ -8,6 +8,24 @@ function getURLParam(name) {
     return url.searchParams.get(name);
 }
 
+
+function reverseTable() {
+    // 获取表格的 tbody 元素
+    const tbody = document.querySelector("#myTable tbody");
+
+    // 获取所有行并转换为数组
+    const rows = Array.from(tbody.rows);
+
+    // 倒序排列行
+    rows.reverse();
+
+    // 清空 tbody
+    tbody.innerHTML = '';
+
+    // 将倒序后的行重新添加回 tbody
+    rows.forEach(row => tbody.appendChild(row));
+}
+
 $(function () {
     const origin = getURLParam('origin');
     if (origin === 'qq') {
@@ -57,4 +75,7 @@ $(function () {
 
     // 使用replaceState更新浏览器历史记录，不会触发页面刷新
     window.history.replaceState({}, document.title, newUrl);
+
+    // 调用函数进行表格倒序
+    reverseTable();
 });
