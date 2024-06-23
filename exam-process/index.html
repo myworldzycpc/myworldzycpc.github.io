@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <title>下载高考结束</title>
+    <script>
+
+        let data = JSON.parse(localStorage.getItem('data'));
+
+        window.storage = data || {
+            curr: 0,
+            pause: false,
+        };
+
+        window.refs = {
+            total: 200 * 1024 * 1024 * 1024,
+        };
+
+        window.speedInfo = {
+            speed: 0,
+            passed: 0,
+            eta: 0
+        };
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function formatSeconds(seconds) {
+            const days = Math.floor(seconds / (24 * 3600));
+            seconds %= 24 * 3600;
+            const hours = Math.floor(seconds / 3600);
+            seconds %= 3600;
+            const minutes = Math.floor(seconds / 60);
+            seconds %= 60;
+
+            let result = [];
+            if (days > 0) result.push(days + " 天");
+            if (hours > 0) result.push(hours + " 小时");
+            if (minutes > 0) result.push(minutes + " 分钟");
+            if (seconds > 0 || result.length === 0) result.push(Math.floor(seconds) + " 秒");
+
+            return result.join(' ');
+        }
+
+        function getSecondsUntil(targetDate) {
+            const now = new Date();
+            const target = new Date(targetDate);
+            const differenceInMilliseconds = target - now;
+            return Math.floor(differenceInMilliseconds / 1000);
+        }
+
+        function calcSpeed() {
+            const x = speedInfo.passed / secondsUntilTarget * 100;
+            return singleTotal / (x + 0.01) * 10 / secondsUntilTarget;
+        }
+
+        function calcCurr() {
+            const x = speedInfo.passed / secondsUntilTarget * 100;
+            return beginCurr + singleTotal * Math.log(100 * x + 1) / Math.log(100 * 100 + 1);
+        }
+
+        function calcEta() {
+            return (refs.total - storage.curr) / speedInfo.speed;
+        }
+
+        const targetDate = '2025-06-10T12:30:00';
+        let secondsUntilTarget = getSecondsUntil(targetDate);
+        let singleTotal = refs.total - storage.curr;
+        let beginCurr = storage.curr;
+
+        function refreshRefs() {
+            secondsUntilTarget = getSecondsUntil(targetDate);
+            singleTotal = refs.total - storage.curr;
+            beginCurr = storage.curr;
+        }
+
+        $(function () {
+            function pausePlay() {
+                if (storage.pause) {
+                    storage.pause = false;
+                    $("#pause > img")[0].src = "pause.svg";
+                    refreshRefs();
+                } else {
+                    storage.pause = true;
+                    $("#pause > img")[0].src = "play.svg";
+                }
+            }
+
+            if (storage.pause) {
+                $("#pause > img")[0].src = "play.svg";
+            } else {
+                $("#pause > img")[0].src = "pause.svg";
+            }
+
+            $("#pause").click(pausePlay);
+
+            function cancel() {
+                storage.pause = true;
+                $("#pause > img")[0].src = "play.svg";
+                storage.curr = 0;
+                $("#processBar").css({"width": `0`})
+            }
+
+            $("#cancel").click(cancel);
+
+            setInterval(function () {
+                speedInfo.passed += 0.5;
+                if (storage.curr < refs.total) {
+                    if (!storage.pause) {
+                        speedInfo.speed = calcSpeed();
+                        storage.curr = calcCurr();
+                        speedInfo.eta = calcEta();
+                        $("#speedInfo").text(`${formatBytes(speedInfo.speed)}/s - ${formatBytes(storage.curr)}/${formatBytes(refs.total)}, 剩余 ${formatSeconds(speedInfo.eta)}`);
+                        $("#processBar")
+                            .css({"width": `${storage.curr / refs.total * 100}%`})
+                            .removeClass("paused");
+                    } else {
+                        $("#speedInfo").text(`点击按钮开始下载`);
+                        $("#processBar").addClass("paused");
+                    }
+                }
+                localStorage.setItem('data', JSON.stringify(window.storage));
+            }, 500);
+        });
+    </script>
+    <style>
+        .main-box {
+            display: flex;
+            align-items: center;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: min(500px, 80vw)
+        }
+
+        .file-icon {
+            padding: 10px;
+        }
+
+        .file-name {
+            color: rgb(73, 73, 73);
+            font-size: 15px;
+        }
+
+        .speed-info {
+            color: rgb(122, 122, 122);
+            font-size: 12px
+        }
+
+        .process-bar-box {
+            width: 100%;
+            background-color: rgb(237, 237, 237);
+            height: 5px;
+            margin: 5px 0;
+            border-radius: 3px;
+        }
+
+        .info-box {
+            flex: 1;
+        }
+
+        .process-bar {
+            width: 0;
+            background-color: rgb(0, 120, 212);
+            height: 100%;
+            border-radius: 3px;
+            transition: 0.2s ease-in;
+        }
+
+        .process-bar.paused {
+            background-color: rgb(133, 134, 134);
+        }
+
+        .actions {
+            display: flex;
+            justify-items: center
+        }
+
+        .action-btn {
+            margin-left: 5px;
+            height: 30px;
+            transition: 0.2s;
+        }
+
+        .action-btn img {
+            height: 100%;
+        }
+
+        .action-btn:hover {
+            background-color: rgb(229, 229, 229);
+        }
+
+        .action-btn:active {
+            background-color: rgb(234, 234, 234);
+        }
+    </style>
+</head>
+<body>
+<div class="main-box">
+    <div class="file-icon">
+        <img src="wcs.png" alt="wcs">
+    </div>
+    <div class="info-box">
+        <div class="file-name">高考结束.wcs</div>
+        <div class="process-bar-box">
+            <div class="process-bar" id="processBar"></div>
+        </div>
+        <div class="speed-info">
+            <div id="speedInfo"></div>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="action-btn" id="pause"><img src="pause.svg"></div>
+        <div class="action-btn" id="cancel"><img src="cancel.svg"></div>
+    </div>
+</div>
+</body>
+</html>
