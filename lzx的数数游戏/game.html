@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>数数</title>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="main.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .container {
+            width: 1336px;
+            height: 837px;
+            background-image: url("草图.png");
+            background-size: 100% 100%;
+        }
+
+        .float {
+            position: fixed;
+        }
+
+        .pic {
+            background-size: 100% 100%;
+        }
+
+
+        .card {
+            display: inline-block;
+            font-size: 42px;
+            border: 3px solid black;
+            margin-left: 13px;
+            margin-top: 8px;
+            padding: 4px 7px;
+            background-color: #FFFFFF;
+            transition: 0.2s;
+            user-select: none;
+        }
+
+        #cards {
+            left: 69px;
+            top: 658px;
+            width: 574px;
+            height: 167px;
+        }
+
+        #cards:not(.disabled) {
+
+            .card:hover {
+                filter: brightness(0.9);
+            }
+
+            .card:active {
+                filter: brightness(0.8);
+            }
+
+            .card.selected {
+                background-color: #147ed9;
+                color: #FFFFFF;
+            }
+
+        }
+
+        #cards.disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+
+            .card {
+                border: 3px solid #737373;
+                background-color: #FFFFFF;
+            }
+        }
+
+        #currentFigures {
+            left: 40px;
+            top: 50px;
+            width: 321px;
+            height: 276px;
+            font-size: 25px;
+        }
+
+        #order {
+            left: 40px;
+            top: 85px;
+            width: 321px;
+            height: 276px;
+            font-size: 25px;
+        }
+
+        #arrow {
+            left: 601px;
+            top: 193px;
+            width: 414px;
+            height: 175px;
+            background-image: url("arrow.png");
+        }
+
+        #win {
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 200px;
+            -webkit-text-stroke: 5px white;
+        }
+
+        #discard {
+            left: 109px;
+            top: 503px;
+            background-color: #007bff;
+            color: white;
+            padding: 12px 43px;
+            font-size: 74px;
+            transition: 0.2s;
+            user-select: none;
+        }
+
+        #discard.disabled {
+            background-color: #bdbdbd;
+            cursor: not-allowed;
+        }
+
+        #discard:not(.disabled) {
+            #discard:hover {
+                filter: brightness(0.9);
+            }
+
+            #discard:active {
+                filter: brightness(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="float container">
+    <div id="cards" class="float"></div>
+    <div id="discard" class="float disabled">出牌</div>
+    <div id="currentFigures" class="float">当前数字: <span data-ref="value">114514</span></div>
+    <div id="order" class="float">出牌顺序: <span data-ref="value">114514</span></div>
+    <div id="arrow" class="float pic"></div>
+    <div id="win" class="float" style="display: none">胜利</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数数</title>
+    <style>
+        body {
+            background-color: #414141;
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #game {
+            width: 1336px;
+            height: 837px;
+            border: 5px solid #000000;
+        }
+
+        #outBox {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+    </style>
+    <script>
+        const padding = 20;
+
+        function scaleToFit() {
+            const scale = Math.min((window.innerHeight - padding) / 837, (window.innerWidth - padding) / 1336);
+            document.getElementById("game").style.transform = `scale(${scale})`;
+        }
+
+        window.addEventListener('resize', scaleToFit);
+        window.addEventListener('load', scaleToFit);
+    </script>
+</head>
+<body>
+<div id="outBox">
+    <iframe src="game.html" id="game"></iframe>
+</div>
+</body>
+</html>
