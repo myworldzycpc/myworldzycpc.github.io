@@ -81,7 +81,7 @@ function updateUI() {
     } else {
         $("#cards").removeClass("disabled");
     }
-    updateDiscardButton()
+    updateDiscardButton();
 }
 
 function initUI() {
@@ -124,6 +124,8 @@ function genRandomSpecialCards() {
 }
 
 function startGame() {
+    $("#content").show();
+    $("#cover").hide();
     cards.你 = genCards();
     cards.p1 = genCards();
     cards.p2 = genCards();
@@ -283,7 +285,9 @@ console.log(result);
 window.cards = {};
 window.currentFigure = null;
 $(function () {
-    startGame();
+    $("#start").click(function () {
+        startGame();
+    });
 
     $("#cards").click(function (event) {
         if (currentPlayer !== "你") {
