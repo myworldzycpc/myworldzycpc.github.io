@@ -1,0 +1,88 @@
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://cdn.bootcdn.net/ajax/libs/crypto-js/4.0.0/crypto-js.js"></script>
+    <script src="cipherText.js"></script>
+    <title>Document</title>
+    <style>
+        abbr {
+            text-decoration: none;
+        }
+
+        blockquote {
+            font-size: 14px;
+        }
+    </style>
+    <script>
+
+        const cipherText = `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`;
+
+        // 加密函数
+        function aesECBEncrypt(plaintext, keyStr) {
+            // 将密钥通过 SHA-256 生成 256 位的密钥
+            const key = CryptoJS.SHA256(keyStr);
+
+            // 使用 AES 加密
+            const encrypted = CryptoJS.AES.encrypt(plaintext, key, {
+                mode: CryptoJS.mode.ECB,
+                padding: CryptoJS.pad.Pkcs7
+            });
+
+            // 返回 Base64 编码的加密字符串
+            return encrypted.toString();
+        }
+
+        // 解密函数
+        function aesECBDecrypt(ciphertext, keyStr) {
+            // 将密钥通过 SHA-256 生成 256 位的密钥
+            const key = CryptoJS.SHA256(keyStr);
+
+            // 解密 AES 加密的内容
+            const decrypted = CryptoJS.AES.decrypt(ciphertext, key, {
+                mode: CryptoJS.mode.ECB,
+                padding: CryptoJS.pad.Pkcs7
+            });
+
+            // 返回 UTF-8 编码的解密字符串
+            return decrypted.toString(CryptoJS.enc.Utf8);
+        }
+
+        $(function () {
+            $('#submitBtn').click(function () {
+                let plaintext = "";
+                try {
+                    plaintext = aesECBDecrypt(cipherText, $('#passwordInput').val());
+                } catch (e) {
+                    console.error(e);
+                }
+                if (plaintext) {
+                    $('#content').html(plaintext);
+                    $('#inputPassword').fadeOut(200, function () {
+                        $("#content").fadeIn(500);
+                    });
+                } else {
+                    alert('密码错误！');
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <br>
+    <div id="inputPassword" class="container">
+        <label for="passwordInput">请输入密码：</label>
+        <p><input type="text" id="passwordInput" placeholder="请输入密码" class="form-control"></p>
+        <p><button id="submitBtn" class="btn btn-primary">确定</button></p>
+    </div>
+    <div id="content" class="container" style="display: none;">
+
+    </div>
+</body>
+
+</html>
