@@ -500,17 +500,17 @@ let recipes = {
     "硫酸盐": {
         "type": "矿石粉碎机",
         "map": [["下界岩", null, null], [null, null, null], [null, null, null]],
-        "ingredients": [["下界岩"]]
+        "ingredients": [["下界岩", 16]]
     },
     "碳": {
         "type": "压缩机",
         "map": [["煤炭", null, null], [null, null, null], [null, null, null]],
-        "ingredients": [["煤炭"]]
+        "ingredients": [["煤炭", 8]]
     },
     "压缩碳": {
         "type": "压缩机",
         "map": [["碳", null, null], [null, null, null], [null, null, null]],
-        "ingredients": [["碳"]]
+        "ingredients": [["碳", 4]]
     },
     "碳块": {
         "type": "增强型工作台",
@@ -976,7 +976,7 @@ let recipes = {
     "钢板": {
         "type": "压缩机",
         "map": [["钢锭", null, null], [null, null, null], [null, null, null]],
-        "ingredients": [["钢锭"]]
+        "ingredients": [["钢锭", 8]]
     },
     "锁链": {
         "type": "增强型工作台",
@@ -997,7 +997,7 @@ let recipes = {
     "盐": {
         "type": "洗矿机",
         "map": [["沙子", null, null], [null, null, null], [null, null, null]],
-        "ingredients": [["沙子"]]
+        "ingredients": [["沙子", 2]]
     },
     "浓奶油": {
         "type": "增强型工作台",
@@ -1055,7 +1055,7 @@ let recipes = {
     "钢筋板": {
         "type": "压缩机",
         "map": [["强化合金锭", null, null], [null, null, null], [null, null, null]],
-        "ingredients": [["强化合金锭"]]
+        "ingredients": [["强化合金锭", 8]]
     },
     "强力胶布": {
         "type": "增强型工作台",
