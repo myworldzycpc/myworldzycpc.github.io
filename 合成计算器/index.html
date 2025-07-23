@@ -1,0 +1,99 @@
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="recipes.js"></script>
+    <script src="icons.js"></script>
+    <script src="main.js"></script>
+    <title>合成计算器</title>
+</head>
+<body>
+<div class="container">
+    <br>
+    <div class="jumbotron">
+        <h1>合成计算器</h1>
+    </div>
+    <div class="alert alert-info">提示：点击物品可以添加到已有物品</div>
+    <div class="form-group">
+        <label for="input-item">
+            输入物品：
+        </label>
+        <input type="text" id="input-item" class="form-control">
+        <div id="search-result" class="panel panel-default">
+            <!-- 搜索结果列表 -->
+            <table class="table">
+                <tr class="active">
+                    <td><img src="https://via.placeholder.com/150x150" alt="物品图片"></td>
+                    <td>物品名称</td>
+                </tr>
+                <tr>
+                    <td><img src="https://via.placeholder.com/150x150" alt="物品图片"></td>
+                    <td>物品名称</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>已有物品：</label>
+        <table class="table">
+            <thead>
+            <tr id="item-already-have-header">
+                <th></th>
+                <th>物品名称</th>
+                <th>数量（留空表示不限制）</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="item-already-have"></tbody>
+            <tfoot>
+            <tr id="add-item-row">
+                <td colspan="4">
+                    <button class="btn btn-success btn-block" id="add-item">+ 添加物品</button>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary btn-lg btn-block" id="calculate">计算</button>
+    </div>
+    <div id="results" style="display: none;">
+        <div class="form-group">
+            <label>推导过程：</label>
+            <div class="panel panel-default">
+                <div class="panel-heading" id="inference-toggle">显示/隐藏推导过程</div>
+                <div class="panel-collapse collapse">
+                    <div class="panel-body" id="inference-panel"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>所需物品：</label>
+            <p id="item-needed" class="item-group">石头 x 1000 + 铁矿 x 500</p>
+        </div>
+        <div class="form-group">
+            <label>合成过程：</label>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>物品矩阵</th>
+                    <th>所需物品</th>
+                    <th>配方类型</th>
+                    <th>结果</th>
+                </tr>
+                </thead>
+                <tbody id="recipe-table"></tbody>
+            </table>
+        </div>
+        <div class="form-group">
+            <label>剩余物品：</label>
+            <div id="item-remain">石头 x 1000 + 铁矿 x 500</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
