@@ -486,5 +486,13 @@ $(function () {
         }
     });
 
+    $("#add-dusts").click(function () {
+        for (const dust of ["铁粉", "金粉", "铜粉", "锡粉", "银粉", "铅粉", "铝粉", "锌粉", "镁粉"]) {
+            if (window.alreadyHave[dust] === undefined) {
+                addAlreadyItem(dust);
+            }
+        }
+    });
+
     activateSearchItem("电动坩埚");
 });
