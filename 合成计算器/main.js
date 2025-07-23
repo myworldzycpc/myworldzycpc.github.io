@@ -494,5 +494,4 @@ $(function () {
         }
     });
 
-    activateSearchItem("电动坩埚");
 });
