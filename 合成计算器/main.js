@@ -3,6 +3,7 @@ window.activeSearchResultIndex = null;
 window.searchResult = [];
 window.order = [];
 window.count = {};
+window.times = {};
 window.basicCount = {};
 window.remainings = {};
 window.alreadyHave = {};
@@ -100,6 +101,14 @@ function addCount(key, count) {
     }
 }
 
+function addTimes(key, times) {
+    if (window.times[key]) {
+        window.times[key] += times;
+    } else {
+        window.times[key] = times;
+    }
+}
+
 function calculate(key, count, depth) {
     if (count <= 0) {
         return;
@@ -160,6 +169,7 @@ function calculate(key, count, depth) {
             calculate(ingredient[0], count1, depth + 1);
         }
         addCount(key, realCount);
+        addTimes(key, times);
         if (remaining > 0) {
             addRemaining(key, remaining);
         }
@@ -203,6 +213,8 @@ function showRecipe(key) {
     window.basicCount = {};
     window.alreadyHave = {};
     window.inferences = [];
+    window.remainings = {};
+    window.times = {};
     readAlreadyHave();
     if (window.alreadyHave[key]) {
         alert(`已经拥有 ${key}`);
@@ -219,11 +231,11 @@ function showRecipe(key) {
     $("#item-needed").html(basicCountHtml);
     let orderHtml = '';
     for (const item of order) {
-        console.log(`${recipes[item].type}: ${recipes[item].ingredients.map(i => `${i[0]} x ${i[1] ? i[1] * count[item] : count[item]}`).join(' + ')} => ${item} x ${count[item]}`);
+        console.log(`${recipes[item].type}: ${recipes[item].ingredients.map(i => `${i[0]} x ${i[1] ? i[1] * times[item] : times[item]}`).join(' + ')} => ${item} x ${count[item]}`);
         orderHtml += `
             <tr>
                 <td>${recipes[item].map ? renderMap(item) : ''}</td>
-                <td class="item-group">${recipes[item].ingredients.map(i => `${renderItem(i[0], i[1] ? i[1] * count[item] : count[item])}`).join('')}</td>
+                <td class="item-group">${recipes[item].ingredients.map(i => `${renderItem(i[0], i[1] ? i[1] * times[item] : times[item])}`).join('')}</td>
                 <td>${renderItem(recipes[item].type, 0)}</td>
                 <td>${renderItem(item, count[item])}</td>
             </tr>
@@ -305,6 +317,9 @@ function readAlreadyHave() {
 }
 
 function renderItem(key, count = 0) {
+    if (key === null) {
+        return `<span class="item-empty"></span>`;
+    }
     if (count === -1) {
         if (getIconUrl(key)) {
             return `<span class="item just-icon" data-key="${key}">${`<img class="item-icon" data-key="${key}" src="${getIconUrl(key)}" alt="" title="${key}">`}</span>`;
@@ -348,7 +363,7 @@ function showInference() {
             result += `</li><li>`;
         }
         currentDepth = inference.depth;
-        result += `${renderItem(inference.type)}: 合成 ${renderItem(inference.key, inference.count)} 需要 ${inference.ingredients.map(i => renderItem(i.key, i.count)).join('')}`;
+        result += `${renderItem(inference.type)}: 合成 ${renderItem(inference.key, inference.realCount)} 需要 ${inference.ingredients.map(i => renderItem(i.key, i.count)).join('')}`;
     }
     if (currentDepth > 0) {
         result += `</li></ul>`.repeat(currentDepth);
@@ -395,7 +410,7 @@ $(function () {
             }
         });
 
-    $("#search-result").on('mouseover', 'search-result-item', function (event) {
+    $("#search-result").on('mouseover', '.search-result-item', function (event) {
         setActiveSearchResult($(event.target).closest('tr'));
     }).on('click', 'td', function (event) {
         const key = $(event.target).closest('tr').data('key');
