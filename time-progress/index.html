@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间戳进度条</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .date-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+        
+        .input-group {
+            flex: 1;
+            min-width: 200px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        input[type="datetime-local"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="datetime-local"]:focus {
+            border-color: #4a86e8;
+            outline: none;
+        }
+        
+        .progress-container {
+            margin: 30px 0;
+        }
+        
+        .progress-bar {
+            height: 30px;
+            background-color: #f0f0f0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 15px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .percentage {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            margin: 15px 0;
+        }
+        
+        .timestamp-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .timestamp-info p {
+            margin: 8px 0;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .timestamp-info span {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        @media (max-width: 600px) {
+            .date-inputs {
+                flex-direction: column;
+            }
+            
+            .input-group {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>时间戳进度条</h1>
+        
+        <div class="date-inputs">
+            <div class="input-group">
+                <label for="start-date">起始时间：</label>
+                <input type="datetime-local" id="start-date">
+            </div>
+            
+            <div class="input-group">
+                <label for="end-date">结束时间：</label>
+                <input type="datetime-local" id="end-date">
+            </div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-info">
+                <div>进度：</div>
+                <div class="percentage">0%</div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+        </div>
+        
+        <div class="timestamp-info">
+            <p>当前时间戳：<span id="current-timestamp"></span></p>
+            <p>起始时间戳：<span id="start-timestamp"></span></p>
+            <p>结束时间戳：<span id="end-timestamp"></span></p>
+            <p>总持续时间：<span id="total-duration"></span></p>
+            <p>已过去时间：<span id="elapsed-time"></span></p>
+            <p>剩余时间：<span id="remaining-time"></span></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取DOM元素
+            const startDateInput = document.getElementById('start-date');
+            const endDateInput = document.getElementById('end-date');
+            const progressBar = document.querySelector('.progress');
+            const percentageElement = document.querySelector('.percentage');
+            const currentTimestampElement = document.getElementById('current-timestamp');
+            const startTimestampElement = document.getElementById('start-timestamp');
+            const endTimestampElement = document.getElementById('end-timestamp');
+            const totalDurationElement = document.getElementById('total-duration');
+            const elapsedTimeElement = document.getElementById('elapsed-time');
+            const remainingTimeElement = document.getElementById('remaining-time');
+            
+            // 设置默认时间（当前时间的前后30天）
+            const now = new Date();
+                
+            // 格式化日期为YYYY-MM-DDTHH:MM
+            function formatDateForInput(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                const hours = String(date.getHours()).padStart(2, '0');
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+                
+                return `${year}-${month}-${day}T${hours}:${minutes}`;
+            }
+            
+            startDateInput.value = formatDateForInput(new Date('2025-09-06T15:40:00'));
+            endDateInput.value = formatDateForInput(new Date('2025-09-19T12:00:00'));
+            
+            // 更新时间戳信息
+            function updateTimestampInfo() {
+                const currentTimestamp = Date.now();
+                const startTimestamp = new Date(startDateInput.value).getTime();
+                const endTimestamp = new Date(endDateInput.value).getTime();
+                
+                currentTimestampElement.textContent = currentTimestamp;
+                startTimestampElement.textContent = startTimestamp;
+                endTimestampElement.textContent = endTimestamp;
+                
+                const totalDuration = endTimestamp - startTimestamp;
+                const elapsed = currentTimestamp - startTimestamp;
+                const remaining = endTimestamp - currentTimestamp;
+                
+                totalDurationElement.textContent = formatTime(totalDuration);
+                elapsedTimeElement.textContent = formatTime(elapsed);
+                remainingTimeElement.textContent = formatTime(remaining);
+            }
+            
+            // 格式化时间为天、小时、分钟、秒
+            function formatTime(milliseconds) {
+                if (milliseconds <= 0) return "0秒";
+                
+                const seconds = Math.floor(milliseconds / 1000);
+                const days = Math.floor(seconds / (24 * 60 * 60));
+                const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
+                const minutes = Math.floor((seconds % (60 * 60)) / 60);
+                const secs = seconds % 60;
+                
+                let result = [];
+                if (days > 0) result.push(`${days}天`);
+                if (hours > 0) result.push(`${hours}小时`);
+                if (minutes > 0) result.push(`${minutes}分钟`);
+                if (secs > 0 || result.length === 0) result.push(`${secs}秒`);
+                
+                return result.join(' ');
+            }
+            
+            // 更新进度条
+            function updateProgressBar() {
+                const currentTimestamp = Date.now();
+                const startTimestamp = new Date(startDateInput.value).getTime();
+                const endTimestamp = new Date(endDateInput.value).getTime();
+                
+                // 验证时间范围
+                if (startTimestamp >= endTimestamp) {
+                    progressBar.style.width = '0%';
+                    percentageElement.textContent = '0%';
+                    return;
+                }
+                
+                if (currentTimestamp <= startTimestamp) {
+                    progressBar.style.width = '0%';
+                    percentageElement.textContent = '0%';
+                } else if (currentTimestamp >= endTimestamp) {
+                    progressBar.style.width = '100%';
+                    percentageElement.textContent = '100%';
+                } else {
+                    const progress = ((currentTimestamp - startTimestamp) / (endTimestamp - startTimestamp)) * 100;
+                    progressBar.style.width = `${progress}%`;
+                    percentageElement.textContent = `${progress.toFixed(4)}%`;
+                }
+                
+                updateTimestampInfo();
+            }
+            
+            // 初始更新
+            updateProgressBar();
+            
+            // 设置定时器，每秒更新一次
+            setInterval(updateProgressBar, 1000);
+            
+            // 当用户更改时间时更新
+            startDateInput.addEventListener('change', updateProgressBar);
+            endDateInput.addEventListener('change', updateProgressBar);
+        });
+    </script>
+</body>
+</html>
