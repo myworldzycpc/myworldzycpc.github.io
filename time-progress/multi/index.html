@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多时间进度条展示</title>
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --past-color: #6c757d;
+            --future-color: #17a2b8;
+            --completed-color: #28a745;
+            --card-bg: #ffffff;
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #6c757d;
+        }
+
+        .progress-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .progress-box {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .progress-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .time-container {
+            display: flex;
+            flex-direction: column;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .progress {
+            height: 12px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary-color), #6c8dff);
+            transition: width 0.5s ease;
+        }
+
+        .progress-box.past .progress-bar {
+            background: linear-gradient(90deg, var(--past-color), #8e9ba8);
+        }
+
+        .progress-box.future .progress-bar {
+            background: linear-gradient(90deg, var(--future-color), #4dc6da);
+        }
+
+        .progress-box.completed .progress-bar {
+            background: linear-gradient(90deg, var(--completed-color), #4ade80);
+        }
+
+        .details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .percent {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .progress-box.past .percent {
+            color: var(--past-color);
+        }
+
+        .progress-box.future .percent {
+            color: var(--future-color);
+        }
+
+        .progress-box.completed .percent {
+            color: var(--completed-color);
+        }
+
+        .status {
+            font-size: 0.9rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background-color: #f1f8ff;
+            color: var(--primary-color);
+        }
+
+        .progress-box.past .status {
+            background-color: #f8f9fa;
+            color: var(--past-color);
+        }
+
+        .progress-box.future .status {
+            background-color: #e6f7ff;
+            color: var(--future-color);
+        }
+
+        .progress-box.completed .status {
+            background-color: #f0fff4;
+            color: var(--completed-color);
+        }
+
+        .time-info {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .time-container {
+                flex-direction: row;
+                gap: 15px;
+            }
+
+            .details {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .time-info {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>时间进度条</h1>
+        <p class="description">直观展示不同时间段的进度情况</p>
+    </header>
+
+    <div class="progress-container" id="progressContainer">
+        <!-- 进度条将由JS动态生成 -->
+    </div>
+
+    <footer>
+        <p>注意：时间数据仅供参考，请以实际情况为准</p>
+        <p>页面会自动更新进度 - 最后刷新时间: <span id="lastUpdateTime"></span></p>
+    </footer>
+</div>
+
+<script>
+    // 进度条数据
+    const progressData = [
+        {
+            title: "TTHILLTT第25b1大周",
+            start: "2025-08-31 07:30:00",
+            end: "2025-09-12 11:30:00",
+            id: "tthilltt25b1"
+        },
+        {
+            title: "myworldzycpc2025年大一开学军训",
+            start: "2025-09-06 15:40:00",
+            end: "2025-09-19 12:00:00",
+            id: "mt2025"
+        },
+        {
+            title: "myworldzycpc第25b1大周",
+            start: "2025-09-06 15:40:00",
+            end: "2025-10-01 00:00:00",
+            id: "myworldzycpc25b1"
+        },
+    ];
+
+    // 格式化日期时间
+    function formatDateTime(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    }
+
+    // 计算时间间隔的描述
+    function getTimeDifference(start, end) {
+        const diff = end - start;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        return `${days}天${hours}小时`;
+    }
+
+    // 生成进度条HTML
+    function generateProgressBox(data, currentTime) {
+        const startTime = new Date(data.start);
+        const endTime = new Date(data.end);
+
+        // 确定状态
+        let status, percent, timeInfo;
+
+        if (currentTime < startTime) {
+            status = "future";
+            percent = 0;
+            timeInfo = `距离开始还有: ${getTimeDifference(currentTime, startTime)}`;
+        } else if (currentTime > endTime) {
+            status = "past completed";
+            percent = 100;
+            timeInfo = `已于 ${formatDateTime(endTime)} 结束`;
+        } else {
+            status = "current";
+            const totalTime = endTime - startTime;
+            const elapsedTime = currentTime - startTime;
+            percent = (elapsedTime / totalTime * 100).toFixed(4);
+            timeInfo = `剩余时间: ${getTimeDifference(currentTime, endTime)}`;
+        }
+
+        return `
+                <div class="progress-box ${status}" id="${data.id}">
+                    <div class="info">
+                        <span class="title">${data.title}</span>
+                        <div class="time-container">
+                            <time class="time start" datetime="${data.start}">开始: ${formatDateTime(startTime)}</time>
+                            <time class="time end" datetime="${data.end}">结束: ${formatDateTime(endTime)}</time>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: ${percent}%"></div>
+                    </div>
+                    <div class="details">
+                        <div class="percent">${status === "future" ? "未开始" : (status === "past completed" ? "已完成" : percent + "%")}</div>
+                        <span class="status">${status === "future" ? "未开始" : (status === "past completed" ? "已结束" : "进行中")}</span>
+                    </div>
+                    <div class="time-info">
+                        <span>${status === "future" ? "预计时长: " + getTimeDifference(startTime, endTime) : (status === "past completed" ? "总时长: " + getTimeDifference(startTime, endTime) : "已过: " + getTimeDifference(startTime, currentTime))}</span>
+                        <span>${timeInfo}</span>
+                    </div>
+                </div>
+            `;
+    }
+
+    // 渲染所有进度条
+    function renderAllProgressBars() {
+        const container = document.getElementById('progressContainer');
+        const currentTime = new Date();
+
+        container.innerHTML = progressData.map(data =>
+            generateProgressBox(data, currentTime)
+        ).join('');
+
+        // 更新最后刷新时间
+        document.getElementById('lastUpdateTime').textContent = formatDateTime(currentTime);
+    }
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', () => {
+        renderAllProgressBars();
+
+        // 每分钟更新一次
+        setInterval(renderAllProgressBars, 1000);
+    });
+</script>
+</body>
+</html>
