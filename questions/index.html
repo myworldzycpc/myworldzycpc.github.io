@@ -1125,7 +1125,7 @@
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
                 <td>${question.name}</td>
-                <td>${question.category}</td>
+                <td>${question.category || ''}</td>
                 <td>${question.details || (question.content ? question.content.slice(0, 100) + '...' : '')}</td>
                 <td>${question.date ?? ''}</td>
                 <td>${question.action || (question.content ? `<a href="#" onclick="alert(\`${question.content.replace(/`/g, '\\`')}\`);return false;">查看</a>` : '')}</td>
